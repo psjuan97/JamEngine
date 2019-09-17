@@ -1,11 +1,12 @@
+#include <iostream>
+
 #include "JamEngine.hpp"
 #include "AssetManager.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <Box2D/Box2D.h>
 
-#include <stdio.h>
-#include <glm/glm.hpp>
+
 
 // Textures IDs
 #define LOGO_PNG 0
@@ -96,7 +97,7 @@ int main(){
 		b2Vec2 position = body->GetPosition();
 		float32 angle = body->GetAngle();
 
-		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+		//printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
 
 		HOLI->setPosition(position.x, position.y);
 
