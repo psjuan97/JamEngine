@@ -1,74 +1,36 @@
+#include "JamEngine.hpp"
+#include "AssetManager.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <Box2D/Box2D.h>
 
 #include <stdio.h>
+#include <glm/glm.hpp>
 
-#define SCREEN_WIDTH 480
-#define SCREEN_HEIGHT 272
+// Textures IDs
+#define LOGO_PNG 0
+
+
+// Sprites IDs
+#define HOLI_SPRITE 0
 
 int main(){
 
+	JamEngine* JAM = JamEngine::Instance();
+	AssetManager* Assets = AssetManager::Instance();
 
-    SDL_Renderer* renderer = NULL;
-    SDL_Window* window = NULL;
+	JAM->Init();
 
-
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK ) < 0) {
-        fprintf(stderr, "Could not initialize SDL2: %s \n", SDL_GetError());
-        return -1;
-    }
-
-    window = SDL_CreateWindow(
-                "JamEngine",
-                SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                SCREEN_WIDTH, SCREEN_HEIGHT,
-                SDL_WINDOW_SHOWN
-                );
-
-
-    //se ha creado correctamente la ventana?
-    if (window == NULL) {
-        fprintf(stderr, "Could not create window: %s\n", SDL_GetError());
-        return -1;
-    }
-
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
-    // el render se ha creado?
-    if (renderer == NULL) {
-        fprintf(stderr, "Could not create renderer: %s\n", SDL_GetError());
-        return -1;
-    }
-
-    
-
-  SDL_Texture* imageTexture = NULL;
-  SDL_Surface* imageSurface = IMG_Load("assets/logo.png");
-
-    if( imageSurface == NULL ){
-            fprintf(stderr, "Error loading image, %s\n", SDL_GetError());
-			return -1;
-
-    }else{
-
-        imageTexture = SDL_CreateTextureFromSurface(renderer, imageSurface);
-        //liberamos la memoria de la surface, desde ahora se usa la texture (gpu)
-        SDL_FreeSurface(imageSurface);
-    }
-
-
-    SDL_Rect dst;
-    dst.h = 50;
-    dst.w = 50;
-	dst.x = 200;
-	dst.y = 100;
-
-
+    SDL_Texture* T = Assets->loadTexture(LOGO_PNG, "assets/logo.png");
+	
+	Sprite* HOLI = Assets->getSprite(HOLI_SPRITE);
+	HOLI->setTexture(T);
+	HOLI->setSize(50, 50); 
+	HOLI->setPosition(200, 100);
 
     //Copy paste sample BOX2D
 
-// Define the gravity vector.
+	// Define the gravity vector.
 	b2Vec2 gravity(10.0f, -10.0f);
 
 	// Construct a world object, which will hold and simulate the rigid bodies.
@@ -95,7 +57,7 @@ int main(){
 	// Define the dynamic body. We set its position and call the body factory.
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(dst.x, dst.y);
+	bodyDef.position.Set(HOLI->getPosition().x, HOLI->getPosition().y);
 	b2Body* body = world.CreateBody(&bodyDef);
 
 	// Define another box shape for our dynamic body.
@@ -125,7 +87,7 @@ int main(){
 	// This is our little game loop.
 	for (int32 i = 0; i < 1000; ++i)
 	{
-		SDL_RenderClear(renderer);
+		JAM->Clear();
 		// Instruct the world to perform a single step of simulation.
 		// It is generally best to keep the time step and iterations fixed.
 		world.Step(timeStep, velocityIterations, positionIterations);
@@ -136,12 +98,9 @@ int main(){
 
 		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
 
-		dst.x = position.x;
-		dst.y = position.y;
+		HOLI->setPosition(position.x, position.y);
 
-		SDL_RenderCopy(renderer, imageTexture, NULL, &dst);
-
-		SDL_RenderPresent(renderer);
+		JAM->Dro();
 
 	  SDL_Delay(5);
 
@@ -150,13 +109,4 @@ int main(){
 
 	// When the world destructor is called, all bodies and joints are freed. This can
 	// create orphaned pointers, so be careful about your world management.
-
-
-
-  SDL_DestroyTexture(imageTexture);
-  SDL_DestroyWindow(window);
-
-  SDL_Quit();
-
-
 }

@@ -1,0 +1,42 @@
+#include "Sprite.hpp"
+
+SDL_Renderer* Sprite::Renderer = nullptr;
+
+Sprite::Sprite()
+:Texture(nullptr)
+{
+    Size_Pos.h = 0;
+    Size_Pos.w = 0;
+    Size_Pos.x = 0;
+    Size_Pos.y = 0;
+}
+
+Sprite::Sprite(const Sprite& orig){
+    Texture = orig.Texture;
+    Size_Pos = orig.Size_Pos;
+}
+
+void Sprite::operator=(const Sprite& orig){
+    Texture = orig.Texture;
+    Size_Pos = orig.Size_Pos;
+}
+
+Sprite::~Sprite(){
+
+}
+
+void Sprite::setPosition(float x, float y){
+    Size_Pos.x = x;
+    Size_Pos.y = y;
+    SDL_RenderCopy(Renderer, Texture, NULL, &Size_Pos);
+}
+
+void Sprite::setSize(float w, float h){
+    Size_Pos.w = w;
+    Size_Pos.h = h;
+    SDL_RenderCopy(Renderer, Texture, NULL, &Size_Pos);
+}
+
+void Sprite::Dro(){
+
+}
