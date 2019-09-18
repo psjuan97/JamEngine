@@ -34,3 +34,5 @@
 
 JamEngine
 build/
+.vscode/
+.vscode

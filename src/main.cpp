@@ -1,11 +1,11 @@
+#include <iostream>
+
 #include "JamEngine.hpp"
 #include "AssetManager.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <Box2D/Box2D.h>
 
-#include <stdio.h>
-#include <glm/glm.hpp>
 #include "Tilemap.hpp"
 
 // Textures IDs
