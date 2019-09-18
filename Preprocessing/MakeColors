@@ -1,0 +1,42 @@
+COM_COLOR   = \033[0;34m
+OBJ_COLOR   = \033[0;36m
+OK_COLOR    = \033[0;32m
+ERROR_COLOR = \033[0;31m
+WARN_COLOR  = \033[0;33m
+NO_COLOR    = \033[m
+
+define printInfo
+    @printf "%b" "$(COM_COLOR)$1$(NO_COLOR)"
+endef
+
+define printSuccess
+    @printf "%b" "$(OK_COLOR)$1$(NO_COLOR)"
+endef
+
+define printDanger
+    @printf "%b" "$(ERROR_COLOR)$1$(NO_COLOR)"
+endef
+
+define printWarning
+    @printf "%b" "$(WARN_COLOR)$1$(NO_COLOR)"
+endef
+
+define printObj
+    @printf "%b" "$(OBJ_COLOR)$1$(NO_COLOR)"
+endef
+
+define printDefault
+    @printf "%b" "$(NO_COLOR)$1"
+endef
+
+define br
+    @printf "%b" "\n"
+endef
+
+define objColor
+    @printf "%b" "$(OBJ_COLOR)"
+endef
+
+define noColor
+    @printf "%b" "$(NO_COLOR)"
+endef

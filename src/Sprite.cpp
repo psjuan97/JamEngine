@@ -28,15 +28,13 @@ Sprite::~Sprite(){
 void Sprite::setPosition(float x, float y){
     Size_Pos.x = x;
     Size_Pos.y = y;
-    SDL_RenderCopy(Renderer, Texture, NULL, &Size_Pos);
 }
 
 void Sprite::setSize(float w, float h){
     Size_Pos.w = w;
     Size_Pos.h = h;
-    SDL_RenderCopy(Renderer, Texture, NULL, &Size_Pos);
 }
 
 void Sprite::Dro(){
-
+    SDL_RenderCopy(Renderer, Texture, NULL, &Size_Pos);
 }

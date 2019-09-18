@@ -6,9 +6,11 @@
 
 #include <stdio.h>
 #include <glm/glm.hpp>
+#include "Tilemap.hpp"
 
 // Textures IDs
 #define LOGO_PNG 0
+#define TILESHEET 1
 
 
 // Sprites IDs
@@ -22,7 +24,11 @@ int main(){
 	JAM->Init();
 
     SDL_Texture* T = Assets->loadTexture(LOGO_PNG, "assets/logo.png");
+    SDL_Texture* SP = Assets->loadTexture(TILESHEET, "assets/TILED/tilesheet.png");
 	
+	Tilemap TESTMAP(SP);
+	TESTMAP.loadTileMap("assets/BinaryFiles/TEST.map");
+
 	Sprite* HOLI = Assets->getSprite(HOLI_SPRITE);
 	HOLI->setTexture(T);
 	HOLI->setSize(50, 50); 
@@ -96,9 +102,11 @@ int main(){
 		b2Vec2 position = body->GetPosition();
 		float32 angle = body->GetAngle();
 
-		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+		//printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
 
+		TESTMAP.Dro();
 		HOLI->setPosition(position.x, position.y);
+		HOLI->Dro();
 
 		JAM->Dro();
 

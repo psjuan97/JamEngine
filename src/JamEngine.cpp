@@ -1,5 +1,6 @@
 #include "JamEngine.hpp"
 #include "Sprite.hpp"
+#include "Tilemap.hpp"
 
 JamEngine::JamEngine()
 :Renderer(nullptr),
@@ -34,6 +35,7 @@ bool JamEngine::Init() {
     if (!Renderer) return false;
 
     Sprite::setRenderer(Renderer);
+    Tilemap::setRenderer(Renderer);
 
     return true;
 }
