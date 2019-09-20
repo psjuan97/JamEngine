@@ -1,5 +1,5 @@
 #include "BinaryParser.hpp"
-//#include <iostream>
+#include <iostream>
 #include <fstream>
 //#include <experimental/filesystem>
 
@@ -13,7 +13,7 @@ void BinaryParser::LoadTilemap(const std::string &BinaryFile, uint16_t* WidthOut
     std::ifstream MAP(BinaryFile, std::ios::binary);
 
     if(!MAP.is_open()){
-        //std::cout << " Couldn't open " + BinaryFile << '\n';
+        std::cout << " Couldn't open " + BinaryFile << '\n';
         return;
     }
 

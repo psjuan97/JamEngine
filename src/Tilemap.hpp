@@ -2,12 +2,13 @@
 #define TILEMAP_H
 
 #include <SDL2/SDL.h>
-#include <cstdint>
+
 #include <vector>
 #include <string>
+#include <cstdint>
 
-#define TILE_WIDTH  70
-#define TILE_HEIGHT 70
+#define TILE_WIDTH  16
+#define TILE_HEIGHT 16
 
 
 struct TILE {
@@ -16,8 +17,8 @@ struct TILE {
 
     // Y Coord in Tilesheet
     uint16_t Y;
-
-    TILE(uint16_t _X, uint16_t _Y);
+public:
+    TILE(uint16_t _x, uint16_t _y);
 };
 
 class Tilemap{

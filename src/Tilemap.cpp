@@ -108,6 +108,6 @@ void Tilemap::Dro(){
 }
 
 
-TILE::TILE(uint16_t _X, uint16_t _Y)
-:X(_X), Y(_Y)
+TILE::TILE(uint16_t _x, uint16_t _y)
+:X(_x), Y(_y)
 {}

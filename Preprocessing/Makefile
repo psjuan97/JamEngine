@@ -6,7 +6,7 @@ SOURCES := $(shell find src/ -type f -name "*.cpp")
 OBJECTS := $(patsubst %.cpp,%.o, $(SOURCES))
 OBJECTS := $(addprefix $(BUILD),$(OBJECTS))
 
-LIBRARIES := -ltinyxml2
+LIBRARIES := -ltinyxml2 -ltmxparser
 
 COMPILER := g++ -O3
 

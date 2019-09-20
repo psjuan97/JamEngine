@@ -6,6 +6,7 @@
 #include "FILE_DIRECTORIES.hpp"
 #include <fstream>
 #include <cstdint>
+#include "Tmx.h"
 
 void MapParser::LoadMap(const std::string &Input, const std::string &Output){
 
@@ -24,34 +25,49 @@ void MapParser::LoadMap(const std::string &Input, const std::string &Output){
 
     std::vector<tile> Tiles;
 
-    tinyxml2::XMLDocument map_doc;
+    Tmx::Map *map = new Tmx::Map();
 
-    if(map_doc.LoadFile(Input.c_str()) != 0){
-        std::cout << " Couldn't open " << Input << '\n';
-        return;
-    }
+    map->ParseFile(Input.c_str());
 
     //CONSIGO EL ANCHO Y EL ALTO DEL NODO (Número de casillas del mapa)
-    tinyxml2::XMLElement *map;
-    map = map_doc.FirstChildElement("map");
-    map->QueryIntAttribute("width", &map_width);
-    map->QueryIntAttribute("height", &map_height);
+
+	map_width = map->GetWidth();
+	map_height = map->GetHeight();
+
+	printf("Width: %d\n", map_width);
+	printf("Height: %d\n", map_height);
+	printf("Tile Width: %d\n", map->GetTileWidth());
+	printf("Tile Height: %d\n", map->GetTileHeight());
 
 
-    //CONSIGO EL TEXTO
-    tinyxml2::XMLElement* data = map->FirstChildElement("layer")->FirstChildElement("data");
 
 
-    for(tinyxml2::XMLElement* id = data->FirstChildElement("tile"); id != nullptr; id = id->NextSiblingElement("tile")){
+    const Tmx::TileLayer *tileLayer = map->GetTileLayer(0);
 
-        int _I;
-        if(id->QueryIntAttribute("gid", &_I) == tinyxml2::XML_NO_ATTRIBUTE){
-            _I = 0;
+    for (int y = 0; y < tileLayer->GetHeight(); ++y)
+    {
+        for (int x = 0; x < tileLayer->GetWidth(); ++x)
+        {
+            if (tileLayer->GetTileTilesetIndex(x, y) == -1)
+            {
+                printf("........    ");
+            }
+            else
+            {
+                        Tiles.emplace_back(tileLayer->GetTileGid(x, y) - 1);
+
+
+            }
         }
 
-        Tiles.emplace_back(_I - 1);
+        printf("\n");
     }
-    
+        
+
+
+
+
+
 
 
     std::ofstream MAP(MAP_OUPUT_DIR+Output+".map", std::ios::binary);
