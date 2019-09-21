@@ -24,9 +24,10 @@ class JamEngine {
         ~JamEngine();
         
         bool Init();
+        bool isOpen();
         void Clear();
         void Dro();
-
+        void Update();
     private:
         JamEngine();
         JamEngine(const JamEngine& orig) = delete;

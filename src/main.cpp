@@ -33,6 +33,8 @@ PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_USER);
 PSP_HEAP_SIZE_KB(-1 * 1024);
 
 
+
+
 #endif
 
 int main(){
@@ -56,19 +58,17 @@ int main(){
 
     
 
-	// This is our little game loop.
-	for (int i = 0; i < 1000; ++i)
-	{
+	while(JAM->isOpen()){
 		JAM->Clear();
 
 		TESTMAP.Dro();
 
 		JAM->Dro();
 
-	  SDL_Delay(5);
-
+	 // SDL_Delay(5);
 
 	}
+
 
 JAM->~JamEngine();
 
