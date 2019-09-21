@@ -18,6 +18,23 @@
 // Sprites IDs
 #define HOLI_SPRITE 0
 
+
+
+#ifdef PSP
+
+#include <pspkernel.h>
+#include <pspdebug.h>
+#include <pspdisplay.h>
+
+#define VERS 1 //Talk about this
+#define REVS 0
+PSP_MODULE_INFO("SDL IS HERE", 0 , VERS, REVS);
+PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_USER);
+PSP_HEAP_SIZE_KB(-1 * 1024);
+
+
+#endif
+
 int main(){
 
 	JamEngine* JAM = JamEngine::Instance();

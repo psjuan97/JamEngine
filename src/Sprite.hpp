@@ -1,8 +1,10 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include <SDL2/SDL.h>
 #include "math/Vector2.hpp"
+#include <vector>
+
+#include <SDL2/SDL.h>
 
 class Sprite{
     friend class JamEngine;

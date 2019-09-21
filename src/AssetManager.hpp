@@ -1,11 +1,12 @@
 #ifndef ASSETMANAGER_H
 #define ASSETMANAGER_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+
 //#include <cstdint>
 
 #include "Sprite.hpp"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 #define MAX_TEXTURES 255
 #define MAX_SPRITES 255

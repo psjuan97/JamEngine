@@ -1,6 +1,9 @@
 #ifndef JAMENGINE_H
 #define JAM_H
 
+#include "Sprite.hpp"
+#include "Tilemap.hpp"
+
 #include <SDL2/SDL.h>
 
 #define SCREEN_WIDTH 480

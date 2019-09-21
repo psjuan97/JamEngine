@@ -1,6 +1,5 @@
 #include "JamEngine.hpp"
-#include "Sprite.hpp"
-#include "Tilemap.hpp"
+
 
 JamEngine::JamEngine()
 :Renderer(nullptr),

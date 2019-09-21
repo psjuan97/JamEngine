@@ -1,11 +1,12 @@
 #ifndef TILEMAP_H
 #define TILEMAP_H
 
-#include <SDL2/SDL.h>
 
 #include <vector>
 #include <string>
-#include <cstdint>
+
+#include <SDL2/SDL.h>
+
 
 #define TILE_WIDTH  16
 #define TILE_HEIGHT 16
