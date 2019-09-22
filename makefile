@@ -3,7 +3,7 @@
 
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	src src/math 
+SOURCES		:=	src src/math src/engineModules 
 DATA		:=	data
 INCLUDES	:=	src
 
@@ -62,7 +62,7 @@ BUILD_PRX = 1
 PSP_FW_VERSION = 371
 
 LIBDIR = ./lib
-LIBS =    -lstdc++ -lpspwlan -lpspgum -lpspgu -lpsputility -lpspaudiolib -lpspaudio -lpsppower -lm     -lSDL2_image  -lSDL2  -lpng -ljpeg  -lGL -lGLU -lglut  -lz \
+LIBS =    -lstdc++ -lpspwlan -lpspgum -lpspgu -lpsputility -lpspaudiolib -lpspaudio -lpsppower -lm -lSDL2_ttf -lSDL2_image  -lSDL2  -lfreetype -lpng -ljpeg  -lGL -lGLU -lglut  -lz \
          -lpspvfpu -lpsphprm -lpspsdk -lpspctrl -lpspumd -lpsprtc -lpsppower -lpspgum -lpspgu -lpspaudiolib -lpspaudio -lpsphttp -lpspssl -lpspwlan \
          -lpspnet_adhocmatching -lpspnet_adhoc -lpspnet_adhocctl -lm -lpspvram 
 LDFLAGS =

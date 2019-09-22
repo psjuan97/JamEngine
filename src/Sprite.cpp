@@ -36,5 +36,7 @@ void Sprite::setSize(float w, float h){
 }
 
 void Sprite::Dro(){
-    SDL_RenderCopy(Renderer, Texture, NULL, &Size_Pos);
+  //  SDL_RenderCopy(Renderer, );
+    JamEngine::Instance()->drawTexture(Texture, NULL, &Size_Pos);
+
 }

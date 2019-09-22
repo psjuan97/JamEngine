@@ -1,7 +1,7 @@
 #include "Tilemap.hpp"
 #include <iostream>
 #include "BinaryParser.hpp"
-
+#include "JamEngine.hpp"
 SDL_Renderer* Tilemap::Renderer = nullptr;
 
 Tilemap::Tilemap(SDL_Texture* _Tilesheet)
@@ -99,8 +99,7 @@ void Tilemap::Dro(){
             RendererDest.y = Y_COORD;
 
             X_COORD += TILE_WIDTH;
-
-            SDL_RenderCopy(Renderer, Tilesheet, &TilesheetSrc, &RendererDest);
+            JamEngine::Instance()->drawTexture(Tilesheet, &TilesheetSrc, &RendererDest);
         }
         Y_COORD += TILE_HEIGHT;
         X_COORD = X_OFFSET;

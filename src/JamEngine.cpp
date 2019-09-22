@@ -55,6 +55,7 @@ JamEngine::JamEngine()
 
 JamEngine::~JamEngine(){
     SDL_DestroyWindow(Window);
+    TTF_Quit();
     SDL_Quit();
 }
 
@@ -79,14 +80,30 @@ bool JamEngine::Init() {
 
     Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
 
+
+     	
+    if(TTF_Init() == -1) {
+      //  printf("TTF_Init: %s\n", TTF_GetError());
+        exit(2);
+    }
+
+
     // el render se ha creado?
     if (!Renderer) return false;
 
     Sprite::setRenderer(Renderer);
     Tilemap::setRenderer(Renderer);
+    eText::setRenderer(Renderer);
 
     return true;
 }
+
+
+void JamEngine::drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst){
+    SDL_RenderCopy(Renderer, texture, src, dst);
+}
+
+
 
 void JamEngine::Clear(){
     SDL_RenderClear(Renderer);

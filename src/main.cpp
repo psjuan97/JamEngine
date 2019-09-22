@@ -18,6 +18,9 @@
 // Sprites IDs
 #define HOLI_SPRITE 0
 
+//Fonts IDs 
+#define DEFAULT_FONT 90
+
 
 
 #ifdef PSP
@@ -47,7 +50,14 @@ int main(){
 	std::cout << TILESHEET+TILESHEET+TILESHEET << std::endl;
     SDL_Texture* T = Assets->loadTexture(LOGO_PNG, "assets/logo.png");
     SDL_Texture* SP = Assets->loadTexture(TILESHEET, "assets/TILED/tilesheet.png");
-	
+	eFont* font = Assets->loadFont(DEFAULT_FONT, "assets/DEFAULT.ttf");
+	eText::setFont(font);
+
+	eText texto(40,40);
+
+	texto.setString("Hola");
+
+
 	Tilemap TESTMAP(SP);
 	TESTMAP.loadTileMap("assets/BinaryFiles/TEST.map");
 
@@ -62,6 +72,8 @@ int main(){
 		JAM->Clear();
 
 		TESTMAP.Dro();
+		HOLI->Dro();
+		texto.draw();
 
 		JAM->Dro();
 
