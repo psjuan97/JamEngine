@@ -1,5 +1,49 @@
 #include "JamEngine.hpp"
 
+static int exitRequest = 0;
+
+
+#ifdef PSP
+
+#include <pspkernel.h>
+#include <pspdebug.h>
+#include <pspdisplay.h>
+
+////////////////////////////////////////////
+////                                    ////
+////           PSP ROUTINES             ////
+////////////////////////////////////////////
+
+
+int isRunning() {
+  return !exitRequest;
+}
+int exitCallback(int arg1, int arg2, void *common) {
+  exitRequest = 1;
+  return 0;
+}
+
+int callbackThread(SceSize args, void *argp) {
+  int callbackID;
+  callbackID = sceKernelCreateCallback("Exit Callback", exitCallback, NULL);
+  sceKernelRegisterExitCallback(callbackID);
+  sceKernelSleepThreadCB();
+  return 0;
+}
+int setupExitCallback() {
+  int threadID = 0;
+  threadID = sceKernelCreateThread("Callback Update Thread",
+    callbackThread, 0x11, 0xFA0, THREAD_ATTR_USER, 0);
+  if(threadID >= 0) {
+    sceKernelStartThread(threadID, 0, 0);
+  }
+  return threadID;
+}
+
+#endif
+/////////////////////////////////////////////////
+////////////////////////////////////////////////
+
 
 JamEngine::JamEngine()
 :Renderer(nullptr),
@@ -8,12 +52,18 @@ JamEngine::JamEngine()
 
 }
 
+
 JamEngine::~JamEngine(){
     SDL_DestroyWindow(Window);
+    TTF_Quit();
     SDL_Quit();
 }
 
 bool JamEngine::Init() {
+
+    #ifdef PSP
+            setupExitCallback();
+    #endif
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK ) < 0)
         return false;
@@ -30,14 +80,30 @@ bool JamEngine::Init() {
 
     Renderer = SDL_CreateRenderer(Window, -1, SDL_RENDERER_ACCELERATED);
 
+
+     	
+    if(TTF_Init() == -1) {
+      //  printf("TTF_Init: %s\n", TTF_GetError());
+        exit(2);
+    }
+
+
     // el render se ha creado?
     if (!Renderer) return false;
 
     Sprite::setRenderer(Renderer);
     Tilemap::setRenderer(Renderer);
+    eText::setRenderer(Renderer);
 
     return true;
 }
+
+
+void JamEngine::drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst){
+    SDL_RenderCopy(Renderer, texture, src, dst);
+}
+
+
 
 void JamEngine::Clear(){
     SDL_RenderClear(Renderer);
@@ -46,3 +112,17 @@ void JamEngine::Clear(){
 void JamEngine::Dro(){
     SDL_RenderPresent(Renderer);
 }
+
+
+
+void JamEngine::Update(){
+    //update inputs?
+    //update physics?
+}
+
+ bool JamEngine::isOpen(){
+     return !exitRequest;
+ }
+
+
+

@@ -5,11 +5,11 @@
 #include <vector>
 
 #include <SDL2/SDL.h>
-
+#include "JamEngine.hpp"
 class Sprite{
-    friend class JamEngine;
     // METHODS
     public:
+        friend class JamEngine;
         Sprite();
         Sprite(const Sprite& orig);
         void operator=(const Sprite &orig);

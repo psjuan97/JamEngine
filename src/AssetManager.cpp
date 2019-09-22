@@ -9,9 +9,10 @@
 AssetManager::AssetManager(){
 
     uint8_t i = MAX_TEXTURES;
-
-    while(i--)
+    while(i--){
         TexturesArray[i] = nullptr;
+        fontArray[i] = nullptr;
+    }
     
 }
 
@@ -28,6 +29,13 @@ SDL_Texture* AssetManager::loadTexture(uint8_t ID, const char* TexturePath){
     return TexturesArray[ID];
 }
 
+eFont* AssetManager::loadFont(uint8_t ID, const char* FontPath){
+     fontArray[ID] = new eFont(FontPath,35);
+    return  fontArray[ID];
+}
+
+
+
 
 void AssetManager::freeAssets(){
     uint8_t i = MAX_TEXTURES;
@@ -37,5 +45,10 @@ void AssetManager::freeAssets(){
             SDL_DestroyTexture(TexturesArray[i]);
 
         TexturesArray[i] = nullptr;
+
+        if(!fontArray[i]){
+            fontArray[i]->~eFont();
+            fontArray[i] = nullptr;
+        }
     }
 }

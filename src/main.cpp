@@ -18,6 +18,9 @@
 // Sprites IDs
 #define HOLI_SPRITE 0
 
+//Fonts IDs 
+#define DEFAULT_FONT 90
+
 
 
 #ifdef PSP
@@ -33,6 +36,8 @@ PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_USER);
 PSP_HEAP_SIZE_KB(-1 * 1024);
 
 
+
+
 #endif
 
 int main(){
@@ -45,7 +50,14 @@ int main(){
 	std::cout << TILESHEET+TILESHEET+TILESHEET << std::endl;
     SDL_Texture* T = Assets->loadTexture(LOGO_PNG, "assets/logo.png");
     SDL_Texture* SP = Assets->loadTexture(TILESHEET, "assets/TILED/tilesheet.png");
-	
+	eFont* font = Assets->loadFont(DEFAULT_FONT, "assets/DEFAULT.ttf");
+	eText::setFont(font);
+
+	eText texto(40,40);
+
+	texto.setString("Hola");
+
+
 	Tilemap TESTMAP(SP);
 	TESTMAP.loadTileMap("assets/BinaryFiles/TEST.map");
 
@@ -56,19 +68,19 @@ int main(){
 
     
 
-	// This is our little game loop.
-	for (int i = 0; i < 1000; ++i)
-	{
+	while(JAM->isOpen()){
 		JAM->Clear();
 
 		TESTMAP.Dro();
+		HOLI->Dro();
+		texto.draw();
 
 		JAM->Dro();
 
-	  SDL_Delay(5);
-
+	 // SDL_Delay(5);
 
 	}
+
 
 JAM->~JamEngine();
 

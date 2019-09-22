@@ -36,3 +36,9 @@ JamEngine
 build/
 .vscode/
 .vscode
+
+JamEngine.elf
+EBOOT.PBP
+PARAM.SFO
+JamEngine.prx
+

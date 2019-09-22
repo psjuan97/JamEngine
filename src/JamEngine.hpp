@@ -1,10 +1,11 @@
 #ifndef JAMENGINE_H
-#define JAM_H
+#define JAMENGINE_H
 
 #include "Sprite.hpp"
 #include "Tilemap.hpp"
-
+#include "engineModules/eText.hpp"
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 #define SCREEN_WIDTH 480
 #define SCREEN_HEIGHT 272
@@ -24,9 +25,13 @@ class JamEngine {
         ~JamEngine();
         
         bool Init();
+        bool isOpen();
         void Clear();
         void Dro();
+        void Update();
 
+
+        void drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst);
     private:
         JamEngine();
         JamEngine(const JamEngine& orig) = delete;
