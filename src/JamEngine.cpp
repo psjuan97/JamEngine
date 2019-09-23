@@ -47,6 +47,7 @@ int setupExitCallback() {
 
 JamEngine::JamEngine()
 :Renderer(nullptr),
+ GameController(nullptr),
  Window(nullptr)
 {
 
@@ -66,7 +67,7 @@ bool JamEngine::Init() {
             setupExitCallback();
     #endif
 
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO ) < 0)
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO ) < 0)
         return false;
     
 
@@ -83,6 +84,18 @@ bool JamEngine::Init() {
 
 
      	
+      //Check for joysticks
+		if( SDL_NumJoysticks() < 1 ){
+			//printf( "Warning: No joysticks connected!\n" );
+		}else{
+			//Load joystick
+			GameController = SDL_JoystickOpen( 0 );
+			if( GameController == nullptr )
+			{
+				//printf( "Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError() );
+			}
+		}
+
     if(TTF_Init() == -1) {
       //  printf("TTF_Init: %s\n", TTF_GetError());
         exit(2);

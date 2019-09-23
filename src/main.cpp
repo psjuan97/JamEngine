@@ -6,7 +6,7 @@
 #include <SDL2/SDL_image.h>
 
 #include "Tilemap.hpp"
-
+#include "EventManager.hpp"
 
 
 
@@ -40,9 +40,30 @@ PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_USER);
 PSP_HEAP_SIZE_KB(-1 * 1024);
 
 
-
-
 #endif
+Sprite* HOLI = nullptr;
+
+void moveLeft(){
+	HOLI->setPosition(HOLI->getPosition().x - 10, HOLI->getPosition().y);
+	return;
+}
+
+void moveUp(){
+	HOLI->setPosition(HOLI->getPosition().x, HOLI->getPosition().y - 10);
+	return;
+}
+
+
+void moveRight(){
+	HOLI->setPosition(HOLI->getPosition().x + 10, HOLI->getPosition().y);
+	return;
+}
+
+
+void moveDown(){
+	HOLI->setPosition(HOLI->getPosition().x , HOLI->getPosition().y + 10);
+	return;
+}
 
 int main(){
 
@@ -59,13 +80,13 @@ int main(){
 	eFont* font = Assets->loadFont(DEFAULT_FONT, "assets/DEFAULT.ttf");
 	eText::setFont(font);
 	eText texto(40,40);
-	texto.setString("Hola");
+	texto.setString("Ejmplo de texto");
 
 
 	Tilemap TESTMAP(SP);
 	TESTMAP.loadTileMap("assets/BinaryFiles/TEST.map");
 
-	Sprite* HOLI = Assets->getSprite(HOLI_SPRITE);
+	HOLI = Assets->getSprite(HOLI_SPRITE);
 	HOLI->setTexture(T);
 	HOLI->setSize(50, 50); 
 	HOLI->setPosition(200, 100);
@@ -75,7 +96,10 @@ int main(){
 	musica->play();
 
 
-
+	EventManager::Instance()->registerEvent(PspCtrlButtons::LEFT, (void *)moveLeft);
+	EventManager::Instance()->registerEvent(PspCtrlButtons::UP, (void *)moveUp);
+	EventManager::Instance()->registerEvent(PspCtrlButtons::RIGHT, (void *)moveRight);
+	EventManager::Instance()->registerEvent(PspCtrlButtons::DOWN, (void *)moveDown);
 
 	while(JAM->isOpen()){
 		JAM->Clear();
@@ -86,9 +110,9 @@ int main(){
 
 		JAM->Dro();
 
+		EventManager::Instance()->launch();
 	 // SDL_Delay(5);
-
-	}
+ 	}
 
 
 JAM->~JamEngine();

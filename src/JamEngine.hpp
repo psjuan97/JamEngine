@@ -4,6 +4,7 @@
 #include "Sprite.hpp"
 #include "Tilemap.hpp"
 #include "engineModules/eText.hpp"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
@@ -46,6 +47,7 @@ class JamEngine {
         SDL_Renderer* Renderer;
         SDL_Window* Window;
 
+        SDL_Joystick* GameController ;
 };
 
 #endif
