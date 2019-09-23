@@ -6,6 +6,7 @@
 #include "engineModules/eText.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 
 #define SCREEN_WIDTH 480
 #define SCREEN_HEIGHT 272

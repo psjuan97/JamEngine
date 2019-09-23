@@ -34,6 +34,11 @@ eFont* AssetManager::loadFont(uint8_t ID, const char* FontPath){
     return  fontArray[ID];
 }
 
+eMusic* AssetManager::loadMusic(uint8_t ID, const char* MusicPath){
+     musicArray[ID] = new eMusic(MusicPath);
+    return  musicArray[ID];
+}
+        
 
 
 

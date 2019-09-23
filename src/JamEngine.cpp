@@ -56,6 +56,7 @@ JamEngine::JamEngine()
 JamEngine::~JamEngine(){
     SDL_DestroyWindow(Window);
     TTF_Quit();
+   // Mix_CloseAudio();
     SDL_Quit();
 }
 
@@ -65,7 +66,7 @@ bool JamEngine::Init() {
             setupExitCallback();
     #endif
 
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK ) < 0)
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_AUDIO ) < 0)
         return false;
     
 
@@ -87,6 +88,12 @@ bool JamEngine::Init() {
         exit(2);
     }
 
+    //Initialize SDL_mixer
+  /*  if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
+        //printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+        exit(2);
+    }*/
 
     // el render se ha creado?
     if (!Renderer) return false;

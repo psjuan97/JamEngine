@@ -19,7 +19,11 @@
 #define HOLI_SPRITE 0
 
 //Fonts IDs 
-#define DEFAULT_FONT 90
+#define DEFAULT_FONT 0
+
+
+//MUSIC IDs 
+#define SAMPLE_MUSIC 0
 
 
 
@@ -50,11 +54,11 @@ int main(){
 	std::cout << TILESHEET+TILESHEET+TILESHEET << std::endl;
     SDL_Texture* T = Assets->loadTexture(LOGO_PNG, "assets/logo.png");
     SDL_Texture* SP = Assets->loadTexture(TILESHEET, "assets/TILED/tilesheet.png");
+	
+	
 	eFont* font = Assets->loadFont(DEFAULT_FONT, "assets/DEFAULT.ttf");
 	eText::setFont(font);
-
 	eText texto(40,40);
-
 	texto.setString("Hola");
 
 
@@ -66,7 +70,12 @@ int main(){
 	HOLI->setSize(50, 50); 
 	HOLI->setPosition(200, 100);
 
-    
+	//music
+	eMusic* musica = Assets->loadMusic(SAMPLE_MUSIC, "assets/SAMPLE.ogg");
+	musica->play();
+
+
+
 
 	while(JAM->isOpen()){
 		JAM->Clear();
