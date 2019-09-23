@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "JamEngine.hpp"
 
 static int exitRequest = 0;
@@ -46,10 +47,9 @@ int setupExitCallback() {
 
 
 JamEngine::JamEngine()
-:Renderer(nullptr),
- GameController(nullptr),
- Window(nullptr)
+:Renderer(nullptr),GameController(nullptr),Window(nullptr),camera(SCREEN_WIDTH,SCREEN_HEIGHT)
 {
+
 
 }
 
@@ -120,7 +120,20 @@ bool JamEngine::Init() {
 
 
 void JamEngine::drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst){
-    SDL_RenderCopy(Renderer, texture, src, dst);
+
+    SDL_Rect dstrect;
+    dstrect.x =   static_cast<int>(  (dst->x - ( (int)camera.getCenter().x - (int)camera.size_x/2) ) ) ;
+    dstrect.y =   static_cast<int>(  (dst->y - ( (int)camera.getCenter().y - (int)camera.size_y/2) ) ) ;
+    dstrect.w =   static_cast<int> (dst->w);
+    dstrect.h =   static_cast<int> (dst->h);
+    
+  //  printf("dstrect.x %f \n", mix);
+  //  printf("dstrect.x %i \n", (int)mix);
+
+
+
+
+    SDL_RenderCopy(Renderer, texture, src, &dstrect);
 }
 
 
@@ -146,3 +159,10 @@ void JamEngine::Update(){
 
 
 
+void JamEngine::setView(eView v){
+    camera = v;
+}   
+
+void JamEngine::moveView(int x, int y) {
+    camera.move(x,y);
+}

@@ -45,23 +45,30 @@ Sprite* HOLI = nullptr;
 
 void moveLeft(){
 	HOLI->setPosition(HOLI->getPosition().x - 10, HOLI->getPosition().y);
+	JamEngine::Instance()->moveView(-10,0);
 	return;
 }
 
 void moveUp(){
 	HOLI->setPosition(HOLI->getPosition().x, HOLI->getPosition().y - 10);
+		JamEngine::Instance()->moveView(0,-10);
+
 	return;
 }
 
 
 void moveRight(){
 	HOLI->setPosition(HOLI->getPosition().x + 10, HOLI->getPosition().y);
+		JamEngine::Instance()->moveView(+10,0);
+
 	return;
 }
 
 
 void moveDown(){
 	HOLI->setPosition(HOLI->getPosition().x , HOLI->getPosition().y + 10);
+		JamEngine::Instance()->moveView(0,10);
+
 	return;
 }
 

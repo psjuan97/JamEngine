@@ -30,7 +30,7 @@ SDL_Texture* AssetManager::loadTexture(uint8_t ID, const char* TexturePath){
 }
 
 eFont* AssetManager::loadFont(uint8_t ID, const char* FontPath){
-     fontArray[ID] = new eFont(FontPath,35);
+     fontArray[ID] = new eFont(FontPath,10);
     return  fontArray[ID];
 }
 

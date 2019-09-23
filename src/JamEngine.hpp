@@ -4,6 +4,7 @@
 #include "Sprite.hpp"
 #include "Tilemap.hpp"
 #include "engineModules/eText.hpp"
+#include "engineModules/eView.hpp"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
@@ -34,20 +35,24 @@ class JamEngine {
 
 
         void drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst);
+
+        //CAMARA
+        void setView(eView v);
+        void moveView(int x, int y);
+
     private:
         JamEngine();
         JamEngine(const JamEngine& orig) = delete;
         void operator=(const JamEngine &orig) = delete;
 
 
-    // VARIABLES
-    public:
     
     private:
         SDL_Renderer* Renderer;
         SDL_Window* Window;
-
         SDL_Joystick* GameController ;
+
+        eView camera;
 };
 
 #endif

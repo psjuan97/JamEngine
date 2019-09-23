@@ -26,8 +26,10 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
-find_package(tinyxml2 REQUIRED )
 find_package(Box2D REQUIRED)
+
+find_package(tinyxml2 REQUIRED )
+find_package(SDL2_mixer REQUIRED)
 
 if(PSP)
   message(STATUS "PSP COMPILATION \n" )
@@ -57,4 +59,6 @@ if(SDL2_TTF_FOUND)
   target_link_libraries(${PROJECT_NAME} ${SDL2_TTF_LIBRARIES})
 endif()
 
-
+if(SDLMIXER_FOUND)
+  target_link_libraries(${PROJECT_NAME} ${SDLMIXER_LIBRARY})
+endif()
