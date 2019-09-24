@@ -6,7 +6,8 @@
 #include "engineModules/eText.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_mixer.h>
+
+#include "engineModules/audio.h" // Audio engine
 
 #define SCREEN_WIDTH 480
 #define SCREEN_HEIGHT 272

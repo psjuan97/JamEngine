@@ -49,7 +49,8 @@ class AssetManager{
 
         SDL_Texture* loadTexture(uint8_t ID, const char* TexturePath);
         eFont* loadFont(uint8_t ID, const char* FontPath);
-        eMusic* loadMusic(uint8_t ID, const char* FontPath);
+        eMusic* loadMusic(uint8_t ID, const char* MusicPath);
+        eMusic* loadMusic(uint8_t ID, const char* MusicPath, const uint8_t loop, int volume);
 
 
 

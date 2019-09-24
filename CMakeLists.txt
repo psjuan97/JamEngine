@@ -14,7 +14,7 @@ project(${PROJECT_NAME})
 include_directories("src")
 
 ## Use all the *.cpp files we found under this folder for the project
-FILE(GLOB_RECURSE SRCS "src/*.cpp")
+FILE(GLOB_RECURSE SRCS "src/*.cpp" "src/*.c")
 
 ## Define the executable
 add_executable(${PROJECT_NAME} ${SRCS})
@@ -56,5 +56,4 @@ endif()
 if(SDL2_TTF_FOUND)
   target_link_libraries(${PROJECT_NAME} ${SDL2_TTF_LIBRARIES})
 endif()
-
 
