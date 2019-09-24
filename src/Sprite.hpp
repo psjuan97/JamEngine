@@ -45,6 +45,9 @@ class Sprite{
 
         SDL_Texture* Texture;
         SDL_Rect Size_Pos;
+        SDL_Rect* slice;
+
+
 };
 
 #endif

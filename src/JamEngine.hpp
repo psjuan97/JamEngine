@@ -13,6 +13,16 @@
 #define SCREEN_WIDTH 480
 #define SCREEN_HEIGHT 272
 
+#include <sstream>
+
+template<typename T>
+std::string to_string(const T& value)
+{
+    std::ostringstream oss;
+    oss << value;
+    return oss.str();
+}
+
 
 class JamEngine {
     friend class AssetManager;
@@ -32,6 +42,7 @@ class JamEngine {
         void Clear();
         void Dro();
         void Update();
+        int getTicks();
 
 
         void drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst);

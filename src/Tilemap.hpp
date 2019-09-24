@@ -35,7 +35,7 @@ class Tilemap{
         
         void loadTilesheet(SDL_Texture* _Tilesheet);
         void loadTileMap(std::string TILEMAP_PATH);
-        void setOffset(float X, float Y);
+        void setOffset(int X, int Y);
         void Dro();
 
     private:
@@ -55,8 +55,8 @@ class Tilemap{
         SDL_Texture* Tilesheet;
         static SDL_Renderer* Renderer;
 
-        float X_OFFSET;
-        float Y_OFFSET;
+        int X_OFFSET;
+        int Y_OFFSET;
         
         uint16_t MAP_WIDTH;
         uint16_t MAP_HEIGHT;

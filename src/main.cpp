@@ -41,6 +41,14 @@ PSP_HEAP_SIZE_KB(-1 * 1024);
 
 
 #endif
+
+
+
+
+
+
+
+
 Sprite* HOLI = nullptr;
 
 void moveLeft(){
@@ -89,7 +97,6 @@ int main(){
 	eText texto(40,40);
 	texto.setString("Ejmplo de texto");
 
-
 	Tilemap TESTMAP(SP);
 	TESTMAP.loadTileMap("assets/BinaryFiles/TEST.map");
 
@@ -108,16 +115,41 @@ int main(){
 	EventManager::Instance()->registerEvent(PspCtrlButtons::RIGHT, (void *)moveRight);
 	EventManager::Instance()->registerEvent(PspCtrlButtons::DOWN, (void *)moveDown);
 
+
+
+
+Uint32 startclock = 0;
+Uint32 deltaclock = 0;
+Uint32 currentFPS = 0;
+
+
+
+
+
+
+
+
 	while(JAM->isOpen()){
+
+		// at beginning of loop
+
+startclock = SDL_GetTicks();
+
 		JAM->Clear();
 
 		TESTMAP.Dro();
 		HOLI->Dro();
-		texto.draw();
 
 		JAM->Dro();
 
 		EventManager::Instance()->launch();
+		// actual fps calculation inside loop
+
+		deltaclock = SDL_GetTicks() - startclock;
+				
+		if ( deltaclock != 0 )
+			currentFPS = 1000 / deltaclock;
+
 	 // SDL_Delay(5);
  	}
 

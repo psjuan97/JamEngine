@@ -127,8 +127,8 @@ void JamEngine::drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst){
     dstrect.w =   static_cast<int> (dst->w);
     dstrect.h =   static_cast<int> (dst->h);
     
-  //  printf("dstrect.x %f \n", mix);
-  //  printf("dstrect.x %i \n", (int)mix);
+   // printf("dstrect.x %i \n", (int) dstrect.x );
+   // printf("src.x %i \n", (int) src->x );
 
 
 
@@ -166,3 +166,9 @@ void JamEngine::setView(eView v){
 void JamEngine::moveView(int x, int y) {
     camera.move(x,y);
 }
+
+
+int JamEngine::getTicks(){
+  return (int)SDL_GetTicks();
+}
+
