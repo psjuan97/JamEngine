@@ -7,8 +7,9 @@ eClock::eClock() {
 
 eTime eClock::restart() { 
     eTime timeToReturn;
-    timeToReturn.setMilisec(JamEngine::Instance()->getTicks() - (int)this->start.asMilliseconds());
-    start.setMilisec(JamEngine::Instance()->getTicks());
+    int ticks = JamEngine::Instance()->getTicks() ;
+    timeToReturn.setMilisec(ticks - (int)this->start.asMilliseconds());
+    start.setMilisec(ticks);
     return timeToReturn;
 }
 
