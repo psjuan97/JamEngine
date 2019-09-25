@@ -43,6 +43,13 @@ eMusic* AssetManager::loadMusic(uint8_t ID, const char* MusicPath){
 }
         
 
+Animation* AssetManager::loadAnimation(uint8_t animID,  uint8_t textureID, uint8_t nFrames, eTime const& duration, bool looping){
+    animArray[animID]  = new Animation(textureID,nFrames,duration, looping );
+    return animArray[animID];
+}
+
+
+
 
 
 void AssetManager::freeAssets(){

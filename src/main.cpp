@@ -8,11 +8,12 @@
 #include "Tilemap.hpp"
 #include "EventManager.hpp"
 
-
+#include "AnimatedSprite.hpp"
 
 // Textures IDs
 #define TILESHEET 0
 #define LOGO_PNG 1
+#define BIPEAL 2
 
 
 // Sprites IDs
@@ -25,6 +26,9 @@
 //MUSIC IDs 
 #define SAMPLE_MUSIC 0
 
+
+//MUSIC IDs 
+#define AnimBipedal 0
 
 
 #ifdef PSP
@@ -49,7 +53,7 @@ PSP_HEAP_SIZE_KB(-1 * 1024);
 
 
 
-Sprite* HOLI = nullptr;
+AnimatedSprite* HOLI = nullptr;
 
 void moveLeft(){
 	HOLI->setPosition(HOLI->getPosition().x - 10, HOLI->getPosition().y);
@@ -90,8 +94,11 @@ int main(){
 	std::cout << TILESHEET+TILESHEET+TILESHEET << std::endl;
     SDL_Texture* T = Assets->loadTexture(LOGO_PNG, "assets/logo.png");
     SDL_Texture* SP = Assets->loadTexture(TILESHEET, "assets/TILED/tilesheet.png");
-	
-	
+ 	SDL_Texture* Bipedal = Assets->loadTexture(BIPEAL, "assets/bipedal3.png");
+
+	Animation* anim = Assets->loadAnimation(AnimBipedal,BIPEAL,7,eTime(200),true);
+
+
 	eFont* font = Assets->loadFont(DEFAULT_FONT, "assets/DEFAULT.ttf");
 	eText::setFont(font);
 	eText texto(40,40);
@@ -100,8 +107,8 @@ int main(){
 	Tilemap TESTMAP(SP);
 	TESTMAP.loadTileMap("assets/BinaryFiles/TEST.map");
 
-	HOLI = Assets->getSprite(HOLI_SPRITE);
-	HOLI->setTexture(T);
+	HOLI = new AnimatedSprite();// Assets->getSprite(HOLI_SPRITE);
+	HOLI->setAnimation(AnimBipedal);
 	HOLI->setSize(50, 50); 
 	HOLI->setPosition(200, 100);
 
@@ -118,9 +125,9 @@ int main(){
 
 
 
-Uint32 startclock = 0;
-Uint32 deltaclock = 0;
-Uint32 currentFPS = 0;
+	Uint32 startclock = 0;
+	Uint32 deltaclock = 0;
+	Uint32 currentFPS = 0;
 
 
 
@@ -133,7 +140,7 @@ Uint32 currentFPS = 0;
 
 		// at beginning of loop
 
-startclock = SDL_GetTicks();
+	startclock = SDL_GetTicks();
 
 		JAM->Clear();
 

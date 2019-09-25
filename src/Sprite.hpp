@@ -40,13 +40,11 @@ class Sprite{
     // VARIABLES
     public:
     
-    private:
+    protected:
         static SDL_Renderer* Renderer;
-
         SDL_Texture* Texture;
         SDL_Rect Size_Pos;
         SDL_Rect* slice;
-
 
 };
 

@@ -8,12 +8,12 @@ eClock::eClock() {
 eTime eClock::restart() { 
     eTime timeToReturn;
     int ticks = JamEngine::Instance()->getTicks() ;
-    timeToReturn.setMilisec(ticks - (int)this->start.asMilliseconds());
+    timeToReturn.setMilisec(ticks - this->start.asMilliseconds());
     start.setMilisec(ticks);
     return timeToReturn;
 }
 
 eTime eClock::getElapsedTime() { 
-    return eTime(JamEngine::Instance()->getTicks() - (int)this->start.asMilliseconds());
+    return eTime(JamEngine::Instance()->getTicks() - this->start.asMilliseconds());
 }
 

@@ -9,6 +9,9 @@ Sprite::Sprite()
     Size_Pos.w = 0;
     Size_Pos.x = 0;
     Size_Pos.y = 0;
+
+    slice = &Size_Pos;
+
 }
 
 Sprite::Sprite(const Sprite& orig){
@@ -36,7 +39,6 @@ void Sprite::setSize(float w, float h){
 }
 
 void Sprite::Dro(){
-  //  SDL_RenderCopy(Renderer, );
-  //  JamEngine::Instance()->drawTexture(Texture, NULL, &Size_Pos);
+    JamEngine::Instance()->drawTexture(Texture, slice, &Size_Pos);
 
 }
