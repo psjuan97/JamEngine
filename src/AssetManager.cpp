@@ -1,7 +1,6 @@
 
 #include <iostream>
 
-
 #include "JamEngine.hpp"
 #include "AssetManager.hpp"
 
@@ -38,11 +37,14 @@ eFont* AssetManager::loadFont(uint8_t ID, const char* FontPath){
 }
 
 eMusic* AssetManager::loadMusic(uint8_t ID, const char* MusicPath){
-     musicArray[ID] = new eMusic(MusicPath);
+    musicArray[ID] = new eMusic(MusicPath);
     return  musicArray[ID];
 }
         
-
+eMusic* AssetManager::loadMusic(uint8_t ID, const char* MusicPath, const uint8_t loop, int volume){
+    musicArray[ID] = new eMusic(MusicPath,loop,volume);
+    return  musicArray[ID];
+}
 
 
 void AssetManager::freeAssets(){

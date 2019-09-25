@@ -1,25 +1,34 @@
 #pragma once
 #include <string>
 
-#include <SDL2/SDL_mixer.h>
+#include <iostream>
+#include <stdio.h>
 
+#include "audio.h"
+
+#define MAX_VOLUME 	SDL_MIX_MAXVOLUME	// 0 - 128
+#define TEST_VOLUME MAX_VOLUME/4.f
 
 class eMusic {
 public:
-    eMusic(const std::string & filename);
+	eMusic();
+    eMusic(const std::string& filename,  uint8_t loop = 0, int volume = TEST_VOLUME);
+	eMusic(const char* filename, 		 uint8_t loop = 0, int volume = TEST_VOLUME);
     ~eMusic();
     
-    bool openFromFile(const std::string & filename);
-    void play();
-    void stop();
-    void pause();
+    bool openFromFile(const char* filename, 		uint8_t loop = 0, int volume = TEST_VOLUME);
+    bool openFromFile(const std::string& filename,  uint8_t loop = 0, int volume = TEST_VOLUME);
     
-    void setVolume(float volume);
+    void playAsSound();
+    void playAsMusic();
+
+    // void stop();
+    // void pause();
+    // void setVolume(float volume);
         
     
 private:
-
-Mix_Music *music = nullptr;
-
+	Audio* sound;
+	int soundVolume;
 };
 

@@ -6,6 +6,9 @@
 #include <SDL2/SDL_image.h>
 
 #include "Tilemap.hpp"
+
+
+#include "engineModules/audio.h" // Pruebas audio
 #include "EventManager.hpp"
 
 
@@ -105,9 +108,15 @@ int main(){
 	HOLI->setSize(50, 50); 
 	HOLI->setPosition(200, 100);
 
-	//music
-	eMusic* musica = Assets->loadMusic(SAMPLE_MUSIC, "assets/SAMPLE.ogg");
-	musica->play();
+	//////////////////////////
+	// Prueba musica
+	//////////////////////////
+	// eMusic* musica = Assets->loadMusic(SAMPLE_MUSIC, "assets/SAMPLE.wav");
+	// musica->playAsSound();
+	
+	// Esto, en cambio, no
+	eMusic musica("assets/out_stereo.wav",0,SDL_MIX_MAXVOLUME/2);
+	musica.playAsSound();
 
 
 	EventManager::Instance()->registerEvent(PspCtrlButtons::LEFT, (void *)moveLeft);
@@ -152,7 +161,6 @@ startclock = SDL_GetTicks();
 
 	 // SDL_Delay(5);
  	}
-
 
 JAM->~JamEngine();
 
