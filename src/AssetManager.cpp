@@ -23,13 +23,16 @@ SDL_Texture* AssetManager::loadTexture(uint8_t ID, const char* TexturePath){
     
     SDL_Surface* imageSurface = IMG_Load(TexturePath);
     TexturesArray[ID] = SDL_CreateTextureFromSurface(JamEngine::Instance()->Renderer, imageSurface);
+    if(TexturesArray[ID] == nullptr){
+        std::cout << "[!] ERROR cargando textura " << std::endl;
+    }
     SDL_FreeSurface(imageSurface);
 
     return TexturesArray[ID];
 }
 
 eFont* AssetManager::loadFont(uint8_t ID, const char* FontPath){
-     fontArray[ID] = new eFont(FontPath,35);
+     fontArray[ID] = new eFont(FontPath,10);
     return  fontArray[ID];
 }
 

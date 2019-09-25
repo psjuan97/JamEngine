@@ -4,6 +4,8 @@
 #include "Sprite.hpp"
 #include "Tilemap.hpp"
 #include "engineModules/eText.hpp"
+#include "engineModules/eView.hpp"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
@@ -11,6 +13,16 @@
 
 #define SCREEN_WIDTH 480
 #define SCREEN_HEIGHT 272
+
+#include <sstream>
+
+template<typename T>
+std::string to_string(const T& value)
+{
+    std::ostringstream oss;
+    oss << value;
+    return oss.str();
+}
 
 
 class JamEngine {
@@ -31,22 +43,28 @@ class JamEngine {
         void Clear();
         void Dro();
         void Update();
+        int getTicks();
 
 
         void drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst);
+
+        //CAMARA
+        void setView(eView v);
+        void moveView(int x, int y);
+
     private:
         JamEngine();
         JamEngine(const JamEngine& orig) = delete;
         void operator=(const JamEngine &orig) = delete;
 
 
-    // VARIABLES
-    public:
     
     private:
         SDL_Renderer* Renderer;
         SDL_Window* Window;
+        SDL_Joystick* GameController ;
 
+        eView camera;
 };
 
 #endif
