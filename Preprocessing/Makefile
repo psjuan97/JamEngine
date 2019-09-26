@@ -32,6 +32,7 @@ clean:
 	$(call printObj,"BinaryFiles")
 	$(call printWarning,"..." )
 	@rm -rf $(BUILD)
+	@rm $(EXE)
 	@find ../assets/BinaryFiles/ -type f -name "*.map" -exec rm -f {} \;
 	$(call br)
 

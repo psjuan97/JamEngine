@@ -12,9 +12,10 @@ class eFont{
         eFont(const char* str, int size);
         ~eFont();
 
-        TTF_Font* getSDLFont(){
+        inline TTF_Font* getSDLFont() const {
             return sdl_font;
         };
+        
     private:
         TTF_Font* sdl_font = nullptr;
 

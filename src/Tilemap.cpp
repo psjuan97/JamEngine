@@ -3,10 +3,11 @@
 #include <iostream>
 #include "BinaryParser.hpp"
 #include "JamEngine.hpp"
+
 SDL_Renderer* Tilemap::Renderer = nullptr;
 
 Tilemap::Tilemap(SDL_Texture* _Tilesheet)
-:Tilesheet(_Tilesheet)
+:Tilesheet(_Tilesheet), X_OFFSET(0), Y_OFFSET(0), MAP_WIDTH(0), MAP_HEIGHT(0)
 {   
     loadTilesheet(_Tilesheet);
 }
@@ -75,7 +76,7 @@ void Tilemap::setOffset(int X, int Y){
     Y_OFFSET = Y;
 }
 
-void Tilemap::Dro(){
+void Tilemap::Draw(){
 
     int X_COORD = X_OFFSET;
     int Y_COORD = Y_OFFSET;
@@ -87,7 +88,7 @@ void Tilemap::Dro(){
 
     RendererDest.w = TILE_WIDTH;
     RendererDest.h = TILE_HEIGHT;
-    
+
     for(uint16_t i = 0; i < MAP_HEIGHT; ++i){
         for(uint16_t j = 0; j < MAP_WIDTH; ++j){
             uint16_t ID = MAP[j + i*MAP_WIDTH];

@@ -4,16 +4,18 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "eFont.hpp"
+#include "Drawable.hpp"
 
-class eText{
+class eText : public Drawable {
     public: 
         friend class JamEngine;
         static void setFont(eFont* font);
         eText(int x,int y);
         ~eText();
-        void draw();
+        virtual void Draw();
         void setPosition(int x,int y);
         void setString(std::string str);
+        
     private:
 
     static inline void setRenderer(SDL_Renderer* R){

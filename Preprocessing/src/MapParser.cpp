@@ -40,8 +40,6 @@ void MapParser::LoadMap(const std::string &Input, const std::string &Output){
 	printf("Tile Height: %d\n", map->GetTileHeight());
 
 
-
-
     const Tmx::TileLayer *tileLayer = map->GetTileLayer(0);
 
     for (int y = 0; y < tileLayer->GetHeight(); ++y)
@@ -54,20 +52,14 @@ void MapParser::LoadMap(const std::string &Input, const std::string &Output){
             }
             else
             {
-                        Tiles.emplace_back(tileLayer->GetTileGid(x, y) - 1);
-
-
+                Tiles.emplace_back(tileLayer->GetTileGid(x, y) - 1);
             }
         }
 
-        printf("\n");
+        //printf("\n");
     }
         
-
-
-
-
-
+    delete map;
 
 
     std::ofstream MAP(MAP_OUPUT_DIR+Output+".map", std::ios::binary);
@@ -90,5 +82,5 @@ void MapParser::LoadMap(const std::string &Input, const std::string &Output){
     }
 
     std::cout << "  -NODO: " << Input << " | " << map_width << " x " << map_height << '\n';
-
+    
 };

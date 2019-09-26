@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "JamEngine.hpp"
 #include "AssetManager.hpp"
 #include <SDL2/SDL.h>
@@ -19,8 +17,9 @@
 #define BIPEAL 2
 
 
-// Sprites IDs
+// Sprites IDs MAPA 1 
 #define HOLI_SPRITE 0
+
 
 //Fonts IDs 
 #define DEFAULT_FONT 0
@@ -94,7 +93,7 @@ int main(){
 
 	JAM->Init();
 
-	std::cout << TILESHEET+TILESHEET+TILESHEET << std::endl;
+	//std::cout << TILESHEET+TILESHEET+TILESHEET << std::endl;
     SDL_Texture* T = Assets->loadTexture(LOGO_PNG, "assets/logo.png");
     SDL_Texture* SP = Assets->loadTexture(TILESHEET, "assets/TILED/tilesheet.png");
  	SDL_Texture* Bipedal = Assets->loadTexture(BIPEAL, "assets/bipedal3.png");
@@ -110,7 +109,7 @@ int main(){
 	Tilemap TESTMAP(SP);
 	TESTMAP.loadTileMap("assets/BinaryFiles/TEST.map");
 
-	HOLI = new AnimatedSprite();// Assets->getSprite(HOLI_SPRITE);
+	HOLI = new AnimatedSprite();
 	HOLI->setAnimation(AnimBipedal);
 	HOLI->setSize(50, 50); 
 	HOLI->setPosition(200, 100);
@@ -121,37 +120,28 @@ int main(){
 	 eMusic* musica = Assets->loadMusic(SAMPLE_MUSIC, "assets/8-bitDetective.wav");
 	 musica->playAsSound();
 	
-	// Esto, en cambio, no
-	//eMusic musica("assets/out_stereo.wav",0,SDL_MIX_MAXVOLUME/2);
-	//musica.playAsSound();
-
 
 	EventManager::Instance()->registerEvent(PspCtrlButtons::LEFT, (void *)moveLeft);
 	EventManager::Instance()->registerEvent(PspCtrlButtons::UP, (void *)moveUp);
 	EventManager::Instance()->registerEvent(PspCtrlButtons::RIGHT, (void *)moveRight);
 	EventManager::Instance()->registerEvent(PspCtrlButtons::DOWN, (void *)moveDown);
 
-
-
-
-
-
-	while(JAM->isOpen()){
-
-
-
+    
+    JAM->setDrawable_ZIndex(&TESTMAP, 0);
+    JAM->setDrawable_ZIndex(HOLI, 1);
+    JAM->setDrawable_ZIndex(&texto, 3);
+    
+    while(JAM->isOpen()){
 		JAM->Clear();
-
-		TESTMAP.Dro();
-		HOLI->Dro();
-
-		JAM->Dro();
-
+    	
 		EventManager::Instance()->launch();
 
+		JAM->Dro();
+        // SDL_Delay(5);
+	}
 
- 	}
+ 	
 
-JAM->~JamEngine();
+//JAM->~JamEngine();
 
 }

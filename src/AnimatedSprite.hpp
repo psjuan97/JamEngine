@@ -22,7 +22,7 @@ class AnimatedSprite : public Sprite {
         eClock clock;
     public:
     void setAnimation(uint8_t id);
-    void Dro();
+    void Draw();
 
 
 

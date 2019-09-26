@@ -8,7 +8,7 @@ void AnimatedSprite::setAnimation(uint8_t id){
 }
 
 
-void AnimatedSprite::Dro(){
+void AnimatedSprite::Draw(){
     
 
     if(clock.getElapsedTime().asMilliseconds()  >  actualAnimation->getDuration().asMilliseconds() ){
@@ -16,6 +16,6 @@ void AnimatedSprite::Dro(){
         clock.restart();
     }
     //printf("w: %i", slice->w);
-    Sprite::Dro();
+    Sprite::Draw();
 
 }

@@ -11,7 +11,7 @@
 #include "Animation.hpp" 
 
 #define MAX_TEXTURES 255
-#define MAX_SPRITES 255
+#define MAX_SPRITES 30
 #define MAX_FONTS 255
 #define MAX_MUSICS 255
 #define MAX_ANIMATIONS 255
@@ -58,7 +58,8 @@ class AssetManager{
         eMusic* loadMusic(uint8_t ID, const char* MusicPath, const uint8_t loop, int volume);
 
 
-
+        void freeTextures();
+        void freeFonts();
         void freeAssets();
         
     private:

@@ -8,6 +8,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include "engineModules/Drawable.hpp"
 
 #include "engineModules/audio.h" // Audio engine
 
@@ -23,6 +24,8 @@ std::string to_string(const T& value)
     oss << value;
     return oss.str();
 }
+#define Z_INDEX_LEVELS 10
+#define DRAWABLES_PER_LEVEL 5
 
 
 class JamEngine {
@@ -51,6 +54,12 @@ class JamEngine {
         //CAMARA
         void setView(eView v);
         void moveView(int x, int y);
+        void setDrawable_ZIndex(Drawable* D, uint8_t Z_Index);
+        void setDrawable_ZIndex(Drawable* D, uint8_t Z_Index, uint8_t Position);
+        void clearAllDrawables();
+        void clearZLevel(uint8_t Z_Level);
+
+        //void printDrawablepool();
 
     private:
         JamEngine();
@@ -58,8 +67,12 @@ class JamEngine {
         void operator=(const JamEngine &orig) = delete;
 
 
+
     
     private:
+        Drawable* DRAWABLEPOOL[Z_INDEX_LEVELS*DRAWABLES_PER_LEVEL];
+        uint8_t CurrentMaxZIndexID[Z_INDEX_LEVELS];
+
         SDL_Renderer* Renderer;
         SDL_Window* Window;
         SDL_Joystick* GameController ;

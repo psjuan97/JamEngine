@@ -38,7 +38,7 @@ void Sprite::setSize(float w, float h){
     Size_Pos.h = h;
 }
 
-void Sprite::Dro(){
+void Sprite::Draw(){
     JamEngine::Instance()->drawTexture(Texture, slice, &Size_Pos);
 
 }

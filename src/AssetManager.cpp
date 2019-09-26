@@ -56,16 +56,30 @@ eMusic* AssetManager::loadMusic(uint8_t ID, const char* MusicPath, const uint8_t
 
 
 void AssetManager::freeAssets(){
+    
+    freeTextures();
+    freeFonts();
+    
+}
+
+void AssetManager::freeTextures(){
     uint8_t i = MAX_TEXTURES;
 
     while(i--){
-        if(!TexturesArray[i])
+        if(TexturesArray[i])
             SDL_DestroyTexture(TexturesArray[i]);
 
         TexturesArray[i] = nullptr;
+    }
+}
 
-        if(!fontArray[i]){
-            fontArray[i]->~eFont();
+void AssetManager::freeFonts(){
+    uint8_t i = MAX_FONTS;
+
+    while(i--){
+        if(fontArray[i]){
+            //fontArray[i]->~eFont();
+            delete fontArray[i];
             fontArray[i] = nullptr;
         }
     }

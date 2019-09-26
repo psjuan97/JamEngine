@@ -45,7 +45,7 @@ void eText::setString(std::string str){
 
 }
 
-void eText::draw(){
+void eText::Draw(){
     if(texture != nullptr){
         SDL_Rect Message_rect;
         Message_rect.x = posX; 
@@ -54,7 +54,7 @@ void eText::draw(){
         Message_rect.w = 0;
         SDL_QueryTexture(texture,  NULL,   NULL,      &Message_rect.w, &Message_rect.h);
 
-        //JamEngine::Instance()->drawTexture(texture, NULL, &Message_rect);    
+        JamEngine::Instance()->drawTexture(texture, NULL, &Message_rect);    
     }
 
 }

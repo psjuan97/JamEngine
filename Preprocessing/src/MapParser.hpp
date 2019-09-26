@@ -4,8 +4,8 @@
 #include "tinyxml2.h"
 #include <string>
 
-struct MapParser{
-    static void LoadMap(const std::string &Input, const std::string &Output);
+namespace MapParser{
+    void LoadMap(const std::string &Input, const std::string &Output);
 };
 
 #endif

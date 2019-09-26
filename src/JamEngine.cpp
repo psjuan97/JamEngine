@@ -142,6 +142,12 @@ void JamEngine::Clear(){
 }
 
 void JamEngine::Dro(){
+    uint16_t i = 0;
+    while(i < Z_INDEX_LEVELS * DRAWABLES_PER_LEVEL){
+        Drawable* Current = DRAWABLEPOOL[i];
+        if(Current) Current->Draw();
+        ++i;
+    }
     SDL_RenderPresent(Renderer);
 }
 
@@ -152,11 +158,21 @@ void JamEngine::Update(){
     //update physics?
 }
 
- bool JamEngine::isOpen(){
-     return !exitRequest;
- }
+bool JamEngine::isOpen(){
+    return !exitRequest;
+}
 
 
+
+//DRAWABLEPOOL
+void JamEngine::setDrawable_ZIndex(Drawable* D, uint8_t Z_Index){
+    uint8_t Position = CurrentMaxZIndexID[Z_Index]++;
+    if(Position > DRAWABLES_PER_LEVEL - 1){
+        CurrentMaxZIndexID[Z_Index] = 0;
+        Position = 0;
+    }
+    setDrawable_ZIndex(D, Z_Index, Position);
+}
 
 void JamEngine::setView(eView v){
     camera = v;
@@ -171,3 +187,49 @@ int JamEngine::getTicks(){
   return (int)SDL_GetTicks();
 }
 
+void JamEngine::setDrawable_ZIndex(Drawable* D, uint8_t Z_Index, uint8_t Position){
+    DRAWABLEPOOL[Z_Index*DRAWABLES_PER_LEVEL + Position] = D;
+}
+
+void JamEngine::clearAllDrawables(){
+
+    uint16_t i = 0;
+    while(i < Z_INDEX_LEVELS * DRAWABLES_PER_LEVEL){
+        DRAWABLEPOOL[i] = nullptr;
+        ++i;
+    }
+
+    i = 0;
+    while(i < Z_INDEX_LEVELS){
+        CurrentMaxZIndexID[i] = 0;
+        ++i;
+    }
+
+}
+
+void JamEngine::clearZLevel(uint8_t Z_Level){
+    uint16_t i = 0;
+    uint16_t LEVEL = Z_Level * DRAWABLES_PER_LEVEL;
+    while(i < DRAWABLES_PER_LEVEL){
+        DRAWABLEPOOL[LEVEL + i] = nullptr;
+        ++i;
+    }
+    CurrentMaxZIndexID[Z_Level] = 0;
+}
+
+
+// Debug
+/*
+#include <iostream>
+
+void JamEngine::printDrawablepool(){
+    std::cout << "POOL: " << Z_INDEX_LEVELS << " x " << DRAWABLES_PER_LEVEL << '\n';
+    for(uint8_t i = 0; i < Z_INDEX_LEVELS; ++i){
+        for(uint8_t j = 0; j < DRAWABLES_PER_LEVEL; ++j){
+            std::cout << DRAWABLEPOOL[i*DRAWABLES_PER_LEVEL + j] << " ";
+        }
+        std::cout << '\n';
+    }
+    std::cout << "POOL PRINTED ===========" << '\n' << '\n';
+}
+*/
