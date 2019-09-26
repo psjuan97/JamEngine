@@ -6,10 +6,11 @@
 #include <string>
 
 #include <SDL2/SDL.h>
+#include "engineModules/Drawable.hpp"
 
 
-#define TILE_WIDTH  16
-#define TILE_HEIGHT 16
+#define TILE_WIDTH  70
+#define TILE_HEIGHT 70
 
 
 struct TILE {
@@ -22,7 +23,7 @@ public:
     TILE(uint16_t _x, uint16_t _y);
 };
 
-class Tilemap{
+class Tilemap : public Drawable {
     friend class JamEngine;
 
     // METHODS
@@ -36,7 +37,7 @@ class Tilemap{
         void loadTilesheet(SDL_Texture* _Tilesheet);
         void loadTileMap(std::string TILEMAP_PATH);
         void setOffset(float X, float Y);
-        void Dro();
+        virtual void Draw();
 
     private:
 

@@ -1,7 +1,3 @@
-
-#include <iostream>
-
-
 #include "JamEngine.hpp"
 #include "AssetManager.hpp"
 
@@ -30,24 +26,36 @@ SDL_Texture* AssetManager::loadTexture(uint8_t ID, const char* TexturePath){
 }
 
 eFont* AssetManager::loadFont(uint8_t ID, const char* FontPath){
-     fontArray[ID] = new eFont(FontPath,35);
+    fontArray[ID] = new eFont(FontPath, 35);
     return  fontArray[ID];
 }
 
 
-
-
 void AssetManager::freeAssets(){
+    
+    freeTextures();
+    freeFonts();
+    
+}
+
+void AssetManager::freeTextures(){
     uint8_t i = MAX_TEXTURES;
 
     while(i--){
-        if(!TexturesArray[i])
+        if(TexturesArray[i])
             SDL_DestroyTexture(TexturesArray[i]);
 
         TexturesArray[i] = nullptr;
+    }
+}
 
-        if(!fontArray[i]){
-            fontArray[i]->~eFont();
+void AssetManager::freeFonts(){
+    uint8_t i = MAX_FONTS;
+
+    while(i--){
+        if(fontArray[i]){
+            //fontArray[i]->~eFont();
+            delete fontArray[i];
             fontArray[i] = nullptr;
         }
     }

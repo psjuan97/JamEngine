@@ -9,7 +9,7 @@
 #include <SDL2/SDL_image.h>
 #include "engineModules/eFont.hpp"
 #define MAX_TEXTURES 255
-#define MAX_SPRITES 255
+#define MAX_SPRITES 30
 #define MAX_FONTS 255
 
 class AssetManager{
@@ -41,7 +41,8 @@ class AssetManager{
         eFont* loadFont(uint8_t ID, const char* FontPath);
 
 
-
+        void freeTextures();
+        void freeFonts();
         void freeAssets();
         
     private:

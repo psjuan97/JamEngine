@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "JamEngine.hpp"
 #include "AssetManager.hpp"
 #include <SDL2/SDL.h>
@@ -15,8 +13,9 @@
 #define LOGO_PNG 1
 
 
-// Sprites IDs
+// Sprites IDs MAPA 1 
 #define HOLI_SPRITE 0
+
 
 //Fonts IDs 
 #define DEFAULT_FONT 90
@@ -47,7 +46,7 @@ int main(){
 
 	JAM->Init();
 
-	std::cout << TILESHEET+TILESHEET+TILESHEET << std::endl;
+	//std::cout << TILESHEET+TILESHEET+TILESHEET << std::endl;
     SDL_Texture* T = Assets->loadTexture(LOGO_PNG, "assets/logo.png");
     SDL_Texture* SP = Assets->loadTexture(TILESHEET, "assets/TILED/tilesheet.png");
 	eFont* font = Assets->loadFont(DEFAULT_FONT, "assets/DEFAULT.ttf");
@@ -63,25 +62,22 @@ int main(){
 
 	Sprite* HOLI = Assets->getSprite(HOLI_SPRITE);
 	HOLI->setTexture(T);
-	HOLI->setSize(50, 50); 
+	HOLI->setSize(50, 50);
 	HOLI->setPosition(200, 100);
 
     
-
-	while(JAM->isOpen()){
+    JAM->setDrawable_ZIndex(&TESTMAP, 0);
+    JAM->setDrawable_ZIndex(HOLI, 1);
+    JAM->setDrawable_ZIndex(&texto, 3);
+    
+    while(JAM->isOpen()){
 		JAM->Clear();
-
-		TESTMAP.Dro();
-		HOLI->Dro();
-		texto.draw();
-
+    
 		JAM->Dro();
-
-	 // SDL_Delay(5);
-
+        // SDL_Delay(5);
 	}
 
 
-JAM->~JamEngine();
+//JAM->~JamEngine();
 
 }

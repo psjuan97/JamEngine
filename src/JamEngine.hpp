@@ -6,9 +6,13 @@
 #include "engineModules/eText.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include "engineModules/Drawable.hpp"
 
 #define SCREEN_WIDTH 480
 #define SCREEN_HEIGHT 272
+
+#define Z_INDEX_LEVELS 10
+#define DRAWABLES_PER_LEVEL 5
 
 
 class JamEngine {
@@ -32,16 +36,28 @@ class JamEngine {
 
 
         void drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst);
+
+        void setDrawable_ZIndex(Drawable* D, uint8_t Z_Index);
+        void setDrawable_ZIndex(Drawable* D, uint8_t Z_Index, uint8_t Position);
+        void clearAllDrawables();
+        void clearZLevel(uint8_t Z_Level);
+
+        //void printDrawablepool();
+
     private:
         JamEngine();
         JamEngine(const JamEngine& orig) = delete;
         void operator=(const JamEngine &orig) = delete;
 
 
+
     // VARIABLES
     public:
     
     private:
+        Drawable* DRAWABLEPOOL[Z_INDEX_LEVELS*DRAWABLES_PER_LEVEL];
+        uint8_t CurrentMaxZIndexID[Z_INDEX_LEVELS];
+
         SDL_Renderer* Renderer;
         SDL_Window* Window;
 

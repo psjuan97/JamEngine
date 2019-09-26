@@ -38,7 +38,7 @@ void eText::setString(std::string str){
     }
 }
 
-void eText::draw(){
+void eText::Draw(){
     SDL_Rect Message_rect;
     Message_rect.x = posX; 
     Message_rect.y = posY; 

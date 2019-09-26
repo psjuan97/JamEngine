@@ -6,7 +6,10 @@
 
 #include <SDL2/SDL.h>
 #include "JamEngine.hpp"
-class Sprite{
+#include "engineModules/Drawable.hpp"
+
+
+class Sprite : public Drawable {
     // METHODS
     public:
         friend class JamEngine;
@@ -30,7 +33,7 @@ class Sprite{
             Texture = T;
         };
 
-        void Dro();
+        virtual void Draw();
 
     private:
         static inline void setRenderer(SDL_Renderer* R){
