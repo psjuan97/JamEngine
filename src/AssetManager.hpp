@@ -2,15 +2,19 @@
 #define ASSETMANAGER_H
 
 
-//#include <cstdint>
 
 #include "Sprite.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "engineModules/eFont.hpp"
+#include "engineModules/eMusic.hpp"
+#include "Animation.hpp" 
+
 #define MAX_TEXTURES 255
 #define MAX_SPRITES 30
 #define MAX_FONTS 255
+#define MAX_MUSICS 255
+#define MAX_ANIMATIONS 255
 
 class AssetManager{
 
@@ -36,9 +40,22 @@ class AssetManager{
             return fontArray[ID];
         };
 
+        inline eMusic* getMusic(uint8_t ID) {
+            return musicArray[ID];
+        };
+
+        inline Animation* getAnimation(uint8_t ID) {
+            return animArray[ID];
+        };
+
+
+
 
         SDL_Texture* loadTexture(uint8_t ID, const char* TexturePath);
         eFont* loadFont(uint8_t ID, const char* FontPath);
+        Animation* loadAnimation(uint8_t animID, uint8_t textureID, uint8_t nFrames,  eTime const& duration, bool looping);
+        eMusic* loadMusic(uint8_t ID, const char* MusicPath);
+        eMusic* loadMusic(uint8_t ID, const char* MusicPath, const uint8_t loop, int volume);
 
 
         void freeTextures();
@@ -60,6 +77,8 @@ class AssetManager{
         Sprite SpritesArray[MAX_SPRITES];
         SDL_Texture* TexturesArray[MAX_TEXTURES];
         eFont* fontArray[MAX_FONTS];
+        eMusic* musicArray[MAX_MUSICS];
+        Animation* animArray[MAX_ANIMATIONS];
 
 };
 

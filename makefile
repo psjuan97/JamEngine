@@ -62,9 +62,9 @@ BUILD_PRX = 1
 PSP_FW_VERSION = 371
 
 LIBDIR = ./lib
-LIBS =    -lstdc++ -lpspwlan -lpspgum -lpspgu -lpsputility -lpspaudiolib -lpspaudio -lpsppower -lm -lSDL2_ttf -lSDL2_image  -lSDL2  -lfreetype -lpng -ljpeg  -lGL -lGLU -lglut  -lz \
-         -lpspvfpu -lpsphprm -lpspsdk -lpspctrl -lpspumd -lpsprtc -lpsppower -lpspgum -lpspgu -lpspaudiolib -lpspaudio -lpsphttp -lpspssl -lpspwlan \
-         -lpspnet_adhocmatching -lpspnet_adhoc -lpspnet_adhocctl -lm -lpspvram 
+LIBS =   -lstdc++ -lpsputility   -lSDL2_ttf -lSDL2_image -lSDL2  -lvorbis -lfreetype -lpng -ljpeg  -lGL -lGLU -lglut  -lz \
+         -lpspvfpu -lpsphprm -lpspsdk -lpspctrl  -lpsprtc -lpsppower -lpspgum -lpspgu -lpspaudiolib -lpspaudio   \
+          -lm -lpspvram 
 LDFLAGS =
 
 EXTRA_TARGETS = EBOOT.PBP

@@ -4,13 +4,26 @@
 #include "Sprite.hpp"
 #include "Tilemap.hpp"
 #include "engineModules/eText.hpp"
+#include "engineModules/eView.hpp"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include "engineModules/Drawable.hpp"
 
+#include "engineModules/audio.h" // Audio engine
+
 #define SCREEN_WIDTH 480
 #define SCREEN_HEIGHT 272
 
+#include <sstream>
+
+template<typename T>
+std::string to_string(const T& value)
+{
+    std::ostringstream oss;
+    oss << value;
+    return oss.str();
+}
 #define Z_INDEX_LEVELS 10
 #define DRAWABLES_PER_LEVEL 5
 
@@ -33,10 +46,14 @@ class JamEngine {
         void Clear();
         void Dro();
         void Update();
+        int getTicks();
 
 
         void drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst);
 
+        //CAMARA
+        void setView(eView v);
+        void moveView(int x, int y);
         void setDrawable_ZIndex(Drawable* D, uint8_t Z_Index);
         void setDrawable_ZIndex(Drawable* D, uint8_t Z_Index, uint8_t Position);
         void clearAllDrawables();
@@ -51,8 +68,6 @@ class JamEngine {
 
 
 
-    // VARIABLES
-    public:
     
     private:
         Drawable* DRAWABLEPOOL[Z_INDEX_LEVELS*DRAWABLES_PER_LEVEL];
@@ -60,7 +75,9 @@ class JamEngine {
 
         SDL_Renderer* Renderer;
         SDL_Window* Window;
+        SDL_Joystick* GameController ;
 
+        eView camera;
 };
 
 #endif

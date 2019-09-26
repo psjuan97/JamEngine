@@ -14,7 +14,7 @@ project(${PROJECT_NAME})
 include_directories("src")
 
 ## Use all the *.cpp files we found under this folder for the project
-FILE(GLOB_RECURSE SRCS "src/*.cpp")
+FILE(GLOB_RECURSE SRCS "src/*.cpp" "src/*.c")
 
 ## Define the executable
 add_executable(${PROJECT_NAME} ${SRCS})
@@ -26,8 +26,10 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
-find_package(tinyxml2 REQUIRED )
 find_package(Box2D REQUIRED)
+
+find_package(tinyxml2 REQUIRED )
+find_package(SDL2_mixer REQUIRED)
 
 if(PSP)
   message(STATUS "PSP COMPILATION \n" )

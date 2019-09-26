@@ -1,4 +1,6 @@
 #include "Tilemap.hpp"
+#include <stdio.h>
+#include <iostream>
 #include "BinaryParser.hpp"
 #include "JamEngine.hpp"
 
@@ -69,37 +71,44 @@ void Tilemap::loadTileMap(std::string TILEMAP_PATH) {
     BinaryParser::LoadTilemap(TILEMAP_PATH, &MAP_WIDTH, &MAP_HEIGHT, &MAP);
 }
 
-void Tilemap::setOffset(float X, float Y){
+void Tilemap::setOffset(int X, int Y){
     X_OFFSET = X;
     Y_OFFSET = Y;
 }
 
 void Tilemap::Draw(){
 
-    uint16_t X_COORD = X_OFFSET;
-    uint16_t Y_COORD = Y_OFFSET;
+    int X_COORD = X_OFFSET;
+    int Y_COORD = Y_OFFSET;
 
     SDL_Rect TilesheetSrc;
     SDL_Rect RendererDest;
     TilesheetSrc.w = TILE_WIDTH;
     TilesheetSrc.h = TILE_HEIGHT;
+
     RendererDest.w = TILE_WIDTH;
     RendererDest.h = TILE_HEIGHT;
 
     for(uint16_t i = 0; i < MAP_HEIGHT; ++i){
         for(uint16_t j = 0; j < MAP_WIDTH; ++j){
-
             uint16_t ID = MAP[j + i*MAP_WIDTH];
             TilesheetSrc.x = TilesheetData[ID].X; 
             TilesheetSrc.y = TilesheetData[ID].Y;
-            //uint16_t ROW = ID/3;
-            //TilesheetSrc.x = (ID  - ROW * 3) * TILE_WIDTH; 
-            //TilesheetSrc.y = ROW * TILE_HEIGHT;
-            RendererDest.x = X_COORD;
-            RendererDest.y = Y_COORD;
 
-            X_COORD += TILE_WIDTH;
-            JamEngine::Instance()->drawTexture(Tilesheet, &TilesheetSrc, &RendererDest);
+
+
+                RendererDest.x = X_COORD;
+                RendererDest.y = Y_COORD;
+
+
+      //      if(RendererDest.x < 480 && RendererDest.y < 272){
+                X_COORD += TILE_WIDTH;
+                JamEngine::Instance()->drawTexture(Tilesheet, &TilesheetSrc, &RendererDest);
+
+      //      }
+
+
+
         }
         Y_COORD += TILE_HEIGHT;
         X_COORD = X_OFFSET;

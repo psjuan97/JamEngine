@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "JamEngine.hpp"
 
 static int exitRequest = 0;
@@ -46,16 +47,20 @@ int setupExitCallback() {
 
 
 JamEngine::JamEngine()
-:Renderer(nullptr),
- Window(nullptr)
+:Renderer(nullptr),GameController(nullptr),Window(nullptr),camera(SCREEN_WIDTH,SCREEN_HEIGHT)
 {
+
 
 }
 
 
 JamEngine::~JamEngine(){
+    // Clear del motor de audio
+    endAudio();
+    
     SDL_DestroyWindow(Window);
     TTF_Quit();
+   // Mix_CloseAudio();
     SDL_Quit();
 }
 
@@ -65,7 +70,7 @@ bool JamEngine::Init() {
             setupExitCallback();
     #endif
 
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK ) < 0)
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_AUDIO ) < 0)
         return false;
     
 
@@ -82,11 +87,25 @@ bool JamEngine::Init() {
 
 
      	
+      //Check for joysticks
+		if( SDL_NumJoysticks() < 1 ){
+			//printf( "Warning: No joysticks connected!\n" );
+		}else{
+			//Load joystick
+			GameController = SDL_JoystickOpen( 0 );
+			if( GameController == nullptr )
+			{
+				//printf( "Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError() );
+			}
+		}
+
     if(TTF_Init() == -1) {
       //  printf("TTF_Init: %s\n", TTF_GetError());
         exit(2);
     }
 
+    // Init del motor de audio
+    initAudio();
 
     // el render se ha creado?
     if (!Renderer) return false;
@@ -100,7 +119,20 @@ bool JamEngine::Init() {
 
 
 void JamEngine::drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst){
-    SDL_RenderCopy(Renderer, texture, src, dst);
+
+    SDL_Rect dstrect;
+    dstrect.x =   static_cast<int>(  (dst->x - ( (int)camera.getCenter().x - (int)camera.size_x/2) ) ) ;
+    dstrect.y =   static_cast<int>(  (dst->y - ( (int)camera.getCenter().y - (int)camera.size_y/2) ) ) ;
+    dstrect.w =   static_cast<int> (dst->w);
+    dstrect.h =   static_cast<int> (dst->h);
+    
+   // printf("dstrect.x %i \n", (int) dstrect.x );
+   // printf("src.x %i \n", (int) src->x );
+
+
+
+
+    SDL_RenderCopy(Renderer, texture, src, &dstrect);
 }
 
 
@@ -140,6 +172,19 @@ void JamEngine::setDrawable_ZIndex(Drawable* D, uint8_t Z_Index){
         Position = 0;
     }
     setDrawable_ZIndex(D, Z_Index, Position);
+}
+
+void JamEngine::setView(eView v){
+    camera = v;
+}   
+
+void JamEngine::moveView(int x, int y) {
+    camera.move(x,y);
+}
+
+
+int JamEngine::getTicks(){
+  return (int)SDL_GetTicks();
 }
 
 void JamEngine::setDrawable_ZIndex(Drawable* D, uint8_t Z_Index, uint8_t Position){

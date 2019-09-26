@@ -21,12 +21,12 @@ class Sprite : public Drawable {
         void setPosition(float x, float y);
         void setSize(float w, float h);
 
-        inline math::Vector2<int> getPosition(){
-            return math::Vector2<int>(Size_Pos.x, Size_Pos.y);
+        inline math::Vector2<float> getPosition(){
+            return math::Vector2<float>(Size_Pos.x, Size_Pos.y);
         };
 
-        inline math::Vector2<int> getSize(){
-            return math::Vector2<int>(Size_Pos.w, Size_Pos.h);
+        inline math::Vector2<float> getSize(){
+            return math::Vector2<float>(Size_Pos.w, Size_Pos.h);
         };
 
         inline void setTexture(SDL_Texture* T){
@@ -43,11 +43,12 @@ class Sprite : public Drawable {
     // VARIABLES
     public:
     
-    private:
+    protected:
         static SDL_Renderer* Renderer;
-
         SDL_Texture* Texture;
         SDL_Rect Size_Pos;
+        SDL_Rect* slice;
+
 };
 
 #endif
