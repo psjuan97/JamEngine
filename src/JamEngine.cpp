@@ -55,6 +55,9 @@ JamEngine::JamEngine()
 
 
 JamEngine::~JamEngine(){
+    // Clear del motor de audio
+    endAudio();
+    
     SDL_DestroyWindow(Window);
     TTF_Quit();
    // Mix_CloseAudio();
@@ -101,12 +104,8 @@ bool JamEngine::Init() {
         exit(2);
     }
 
-    //Initialize SDL_mixer
-  /*  if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
-    {
-        //printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
-        exit(2);
-    }*/
+    // Init del motor de audio
+    initAudio();
 
     // el render se ha creado?
     if (!Renderer) return false;

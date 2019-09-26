@@ -6,6 +6,9 @@
 #include <SDL2/SDL_image.h>
 
 #include "Tilemap.hpp"
+
+
+#include "engineModules/audio.h" // Pruebas audio
 #include "EventManager.hpp"
 
 #include "AnimatedSprite.hpp"
@@ -112,9 +115,15 @@ int main(){
 	HOLI->setSize(50, 50); 
 	HOLI->setPosition(200, 100);
 
-	//music
-	eMusic* musica = Assets->loadMusic(SAMPLE_MUSIC, "assets/SAMPLE.ogg");
-	musica->play();
+	//////////////////////////
+	// Prueba musica
+	//////////////////////////
+	 eMusic* musica = Assets->loadMusic(SAMPLE_MUSIC, "assets/8-bitDetective.wav");
+	 musica->playAsSound();
+	
+	// Esto, en cambio, no
+	//eMusic musica("assets/out_stereo.wav",0,SDL_MIX_MAXVOLUME/2);
+	//musica.playAsSound();
 
 
 	EventManager::Instance()->registerEvent(PspCtrlButtons::LEFT, (void *)moveLeft);
@@ -125,22 +134,11 @@ int main(){
 
 
 
-	Uint32 startclock = 0;
-	Uint32 deltaclock = 0;
-	Uint32 currentFPS = 0;
-
-
-
-
-
-
 
 
 	while(JAM->isOpen()){
 
-		// at beginning of loop
 
-	startclock = SDL_GetTicks();
 
 		JAM->Clear();
 
@@ -150,16 +148,9 @@ int main(){
 		JAM->Dro();
 
 		EventManager::Instance()->launch();
-		// actual fps calculation inside loop
 
-		deltaclock = SDL_GetTicks() - startclock;
-				
-		if ( deltaclock != 0 )
-			currentFPS = 1000 / deltaclock;
 
-	 // SDL_Delay(5);
  	}
-
 
 JAM->~JamEngine();
 
