@@ -6,8 +6,8 @@
 #include "Sprite.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "engineModules/eFont.hpp"
-#include "engineModules/eMusic.hpp"
+#include "eFont.hpp"
+#include "eMusic.hpp"
 #include "Animation.hpp" 
 
 #define MAX_TEXTURES 255

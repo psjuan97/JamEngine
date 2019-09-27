@@ -1,5 +1,5 @@
 #include "eClock.hpp"
-#include "../JamEngine.hpp"
+#include "JamEngine.hpp"
 //============================= RELOJ =============================//
 eClock::eClock() {
     this->start.Zero();

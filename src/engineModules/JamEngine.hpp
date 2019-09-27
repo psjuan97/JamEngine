@@ -3,14 +3,14 @@
 
 #include "Sprite.hpp"
 #include "Tilemap.hpp"
-#include "engineModules/eText.hpp"
-#include "engineModules/eView.hpp"
+#include "eText.hpp"
+#include "eView.hpp"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
-#include "engineModules/Drawable.hpp"
+#include "Drawable.hpp"
 
-#include "engineModules/audio.h" // Audio engine
+#include "audio.h" // Audio engine
 
 #define SCREEN_WIDTH 480
 #define SCREEN_HEIGHT 272

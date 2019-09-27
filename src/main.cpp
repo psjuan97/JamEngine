@@ -1,15 +1,16 @@
-#include "JamEngine.hpp"
-#include "AssetManager.hpp"
+#include "engineModules/JamEngine.hpp"
+#include "engineModules/AssetManager.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include "Tilemap.hpp"
+#include "engineModules/Tilemap.hpp"
 
 
 #include "engineModules/audio.h" // Pruebas audio
-#include "EventManager.hpp"
+#include "engineModules/EventManager.hpp"
 
-#include "AnimatedSprite.hpp"
+#include "engineModules/AnimatedSprite.hpp"
+#include "Player.hpp"
 
 // Textures IDs
 #define TILESHEET 0
@@ -48,43 +49,56 @@ PSP_HEAP_SIZE_KB(-1 * 1024);
 
 #endif
 
+#define BUTTON_DOWN SDL_JOYBUTTONDOWN
+#define BUTTON_UP 1540
+
+//AnimatedSprite* HOLI = nullptr;
+
+// void moveLeft(uint32_t status){
+// 	int velX;
+// 	if(status == BUTTON_DOWN){
+// 		HOLI->setPosition(HOLI->getPosition().x - 10, HOLI->getPosition().y);
 
 
+// 	}
+
+// 	return;
+// }
+
+// void moveUp(uint32_t status){
+// 	int velY;
+// 	if(status == BUTTON_DOWN){
+// 		HOLI->setPosition(HOLI->getPosition().x, HOLI->getPosition().y - 10);
+
+// 	}
+    
+// 	return;
+// }
 
 
+// void moveRight(uint32_t status){
+// 	int velX;
+// 	int ruido = 0;
+// 	if(status == BUTTON_DOWN){
+// 		HOLI->setPosition(HOLI->getPosition().x + 10, HOLI->getPosition().y);
 
 
+// 	}
 
-AnimatedSprite* HOLI = nullptr;
-
-void moveLeft(){
-	HOLI->setPosition(HOLI->getPosition().x - 10, HOLI->getPosition().y);
-	JamEngine::Instance()->moveView(-10,0);
-	return;
-}
-
-void moveUp(){
-	HOLI->setPosition(HOLI->getPosition().x, HOLI->getPosition().y - 10);
-		JamEngine::Instance()->moveView(0,-10);
-
-	return;
-}
+// 	return;
+// }
 
 
-void moveRight(){
-	HOLI->setPosition(HOLI->getPosition().x + 10, HOLI->getPosition().y);
-		JamEngine::Instance()->moveView(+10,0);
-
-	return;
-}
+// void moveDown(uint32_t status){
+// 	int velY;
+// 	if(status == BUTTON_DOWN){
+// 		HOLI->setPosition(HOLI->getPosition().x , HOLI->getPosition().y + 10);
 
 
-void moveDown(){
-	HOLI->setPosition(HOLI->getPosition().x , HOLI->getPosition().y + 10);
-		JamEngine::Instance()->moveView(0,10);
+// 	}
 
-	return;
-}
+// 	return;
+// }
 
 int main(){
 
@@ -98,7 +112,7 @@ int main(){
     SDL_Texture* SP = Assets->loadTexture(TILESHEET, "assets/TILED/tilesheet.png");
  	SDL_Texture* Bipedal = Assets->loadTexture(BIPEAL, "assets/bipedal3.png");
 
-	Animation* anim = Assets->loadAnimation(AnimBipedal,BIPEAL,7,eTime(200),true);
+	Assets->loadAnimation(AnimBipedal,BIPEAL,7,eTime(200),true);
 
 
 	eFont* font = Assets->loadFont(DEFAULT_FONT, "assets/DEFAULT.ttf");
@@ -109,10 +123,10 @@ int main(){
 	Tilemap TESTMAP(SP);
 	TESTMAP.loadTileMap("assets/BinaryFiles/TEST.map");
 
-	HOLI = new AnimatedSprite();
-	HOLI->setAnimation(AnimBipedal);
-	HOLI->setSize(50, 50); 
-	HOLI->setPosition(200, 100);
+	// HOLI = new AnimatedSprite();
+	// HOLI->setAnimation(AnimBipedal);
+	// HOLI->setSize(50, 50); 
+	// HOLI->setPosition(200, 100);
 
 	//////////////////////////
 	// Prueba musica
@@ -121,19 +135,22 @@ int main(){
 	 musica->playAsSound();
 	
 
-	EventManager::Instance()->registerEvent(PspCtrlButtons::LEFT, (void *)moveLeft);
-	EventManager::Instance()->registerEvent(PspCtrlButtons::UP, (void *)moveUp);
-	EventManager::Instance()->registerEvent(PspCtrlButtons::RIGHT, (void *)moveRight);
-	EventManager::Instance()->registerEvent(PspCtrlButtons::DOWN, (void *)moveDown);
+	// EventManager::Instance()->registerEvent(PspCtrlButtons::LEFT, (void *)moveLeft);
+	// EventManager::Instance()->registerEvent(PspCtrlButtons::UP, (void *)moveUp);
+	// EventManager::Instance()->registerEvent(PspCtrlButtons::RIGHT, (void *)moveRight);
+	// EventManager::Instance()->registerEvent(PspCtrlButtons::DOWN, (void *)moveDown);
 
     
     JAM->setDrawable_ZIndex(&TESTMAP, 0);
-    JAM->setDrawable_ZIndex(HOLI, 1);
+    //JAM->setDrawable_ZIndex(HOLI, 1);
     JAM->setDrawable_ZIndex(&texto, 3);
+
+	Player HERO;
     
     while(JAM->isOpen()){
 		JAM->Clear();
     	
+		HERO.FixedUpdate();
 		EventManager::Instance()->launch();
 
 		JAM->Dro();

@@ -1,5 +1,5 @@
 #include "eText.hpp"
-#include "../JamEngine.hpp"
+#include "JamEngine.hpp"
 #define DEFAULT_FONT 0
 #include <stdio.h>
 

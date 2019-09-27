@@ -1,12 +1,12 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include "math/Vector2.hpp"
+#include "../math/Vector2.hpp"
 #include <vector>
 
 #include <SDL2/SDL.h>
 #include "JamEngine.hpp"
-#include "engineModules/Drawable.hpp"
+#include "Drawable.hpp"
 
 
 class Sprite : public Drawable {
