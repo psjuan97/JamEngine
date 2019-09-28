@@ -3,8 +3,8 @@
 
 
 Zone::Zone()
-:ZONE_TIME_seconds(0), ObstaclesSpeed(0), SpawnFrom(0), SpawnTo(0), XY_Aux(0), ZoneElapsedTime(0), 
- Accumulator(0), SpawnRate(1), ObstaclesIterator(0), COUNTDOWN(40, 100)
+:ZONE_TIME_seconds(0), ObstaclesSpeed(0), XY_Aux(0), ZoneElapsedTime(0), 
+ Accumulator(0), SpawnRate(1), ObstaclesIterator(0), COUNTDOWN(40, 100), END(false)
 {
     ObstacleSize.x = 15;
     ObstacleSize.y = 15;
@@ -30,33 +30,29 @@ void Zone::setZIndex(uint8_t Z){
     JamEngine* JAM = JamEngine::Instance();
 
     for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
-        JAM->setDrawable_ZIndex(&OBSTACLES[i], Z);
+        JAM->setDrawable_ZIndex(&OBSTACLES[i].ObstacleSprite, Z);
     }
 }
-
-
 
 void Zone::setZoneTime(uint16_t Seconds){
     ZONE_TIME_seconds = Seconds;
     ZoneTimer.restart();
 }
 
-void Zone::setSpawnArea(float From, float To, float Aux){
-    SpawnFrom = From;
-    SpawnTo = To;
+void Zone::setSpawnAreaAndDivisions(float From, float To, float Aux, uint8_t Divisions){
+
     XY_Aux = Aux;
-}
 
-void Zone::setSpawnRate(float Seconds){
-    SpawnRate = Seconds;
-}
-
-
-void Zone::setSpawnAreaDivisions(uint8_t Divisions){
     OBSTACLES_SPAWNPOINTS.clear();
-    float DivisibleArea = SpawnTo - SpawnFrom;
 
+    // From                                  To  
+    //   |     <------ Distance ------->     |
+    float DivisibleArea = To - From;
+
+    //   |=====|     |     |     |     |     |
     float BlockSize = DivisibleArea/Divisions;
+
+    //   |==x==|     |     |     |     |     |
     float BlockMiddlePoint = BlockSize/2;
 
     // Punto medio teniendo en cuenta el ancho del obstáculo
@@ -68,7 +64,7 @@ void Zone::setSpawnAreaDivisions(uint8_t Divisions){
         MiddlePoint = BlockMiddlePoint - ObstacleSize.y/2;
     }
     
-    MiddlePoint += SpawnFrom;
+    MiddlePoint += From;
 
     for(uint8_t i = 0; i < Divisions; ++i){
         OBSTACLES_SPAWNPOINTS.emplace_back(MiddlePoint);
@@ -76,9 +72,16 @@ void Zone::setSpawnAreaDivisions(uint8_t Divisions){
     }
 }
 
+void Zone::setSpawnRate(float Seconds){
+    SpawnRate = Seconds;
+}
+
 
 void Zone::setObstaclesDirection(ObstaclesDirection Dir){
     Direction = Dir;
+    for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
+        OBSTACLES[i].Direction = Dir;
+    }
 }
 
 
@@ -91,27 +94,50 @@ void Zone::setObstaclesTexture(SDL_Texture* Texture){
     oTexture = Texture;
 }
 
-void Zone::Update(){
+void Zone::setObstacleInitialAndMaxVelocity(float Initial, float MAX){
+
+    int8_t X_AXIS = 0;
+    int8_t Y_AXIS = 0;
+    if(Direction == ObstaclesDirection::Top2Bottom){
+        Y_AXIS = 1;
+    }
+    else if(Direction == ObstaclesDirection::Bottom2Top){
+        Y_AXIS = -1;
+    }
+    else if(Direction == ObstaclesDirection::Left2Right){
+        X_AXIS = 1;
+    }
+    else{
+        X_AXIS = -1;
+    }
+
+    for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
+        OBSTACLES[i].setObstacleSpeed(X_AXIS, Y_AXIS, Initial, MAX);
+    }
+}
+
+
+void Zone::FixedUpdate(){
+
+    if(END) return;
 
     float dt = ZoneTimer.restart().asSeconds();
     ZoneElapsedTime += dt;
     Accumulator += dt;
 
+    if(ZoneElapsedTime > ZONE_TIME_seconds)
+        END = true;
+
     Countdown();
     SpawnHandler();
-    
+    ObstaclesUpdate();
 
-    for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
-        if(Direction == ObstaclesDirection::Top2Bottom)
-            OBSTACLES[i].setY(OBSTACLES[i].getPosition().y + 2);
-        if(Direction == ObstaclesDirection::Bottom2Top)
-            OBSTACLES[i].setY(OBSTACLES[i].getPosition().y - 2);
-    }
 }
 
 void Zone::Countdown(){
     int CD = ZONE_TIME_seconds-ZoneElapsedTime;
     std::string Countdown = to_string(CD);
+    
     if(CD < 10)
         Countdown = "0"+Countdown;
   
@@ -123,22 +149,44 @@ void Zone::SpawnHandler(){
     if(Accumulator > SpawnRate){
         Accumulator -= SpawnRate;
 
-        Sprite& Target = OBSTACLES[ObstaclesIterator];
+        Obstacle& Target = OBSTACLES[ObstaclesIterator];
+        Target.alive = true;
+        Target.ObstacleSprite.Visibility = true;
 
-        int randon = rand() % (OBSTACLES_SPAWNPOINTS.size());
-        float COORD = OBSTACLES_SPAWNPOINTS[randon];
+        int random = rand() % (OBSTACLES_SPAWNPOINTS.size());
+        float COORD = OBSTACLES_SPAWNPOINTS[random];
 
         if(Direction == Top2Bottom || Direction == Bottom2Top){
-            Target.setPosition( COORD , XY_Aux);
+            Target.Position = math::Vector2f(COORD , XY_Aux);
         }
         else{
-            Target.setPosition( XY_Aux, COORD);
+            // std::cout << "random [" << random << "] " << XY_Aux << ", " << COORD << std::endl;
+            Target.Position = math::Vector2f(XY_Aux, COORD);
         }
+        
+        Target.saveCurrentState();
+        Target.savePreviousState();
 
-        Target.setSize(ObstacleSize.x, ObstacleSize.y);
-        Target.setTexture(oTexture);
+        Target.ObstacleSprite.setSize(ObstacleSize.x, ObstacleSize.y);
+        Target.ObstacleSprite.setTexture(oTexture);
         ++ObstaclesIterator;
         if(ObstaclesIterator >= OBSTACLES.size()) 
             ObstaclesIterator = 0;
+    }
+}
+
+void Zone::ObstaclesUpdate(){
+    for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
+        OBSTACLES[i].savePreviousState();
+
+        OBSTACLES[i].FixedUpdate(ZoneElapsedTime/ZONE_TIME_seconds);
+        
+        OBSTACLES[i].saveCurrentState();
+    }
+}
+
+void Zone::InterpolateObstacles(float Tick){
+    for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
+        OBSTACLES[i].Interpolate(Tick);
     }
 }

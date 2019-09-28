@@ -5,9 +5,10 @@
 #include <array>
 
 #include "engineModules/EventManager.hpp"
+#include "Interpolable_Object.hpp"
 
 
-class Player{
+class Player : public Interpolable_Object {
     // METHODS
     public:
         Player();
@@ -16,9 +17,7 @@ class Player{
 
         void FixedUpdate();
 
-        void SavePreviousState();
-        void SaveCurrentState();
-        void Interpolate(float tick);
+        virtual void Interpolate(float tick);
 
     private:
 
@@ -39,14 +38,6 @@ class Player{
         std::array<Button2Func, 2> BUTTON_MAPPING;
 
         Sprite PlayerSprite;
-        math::Vector2f SPEED;
-        math::Vector2f Position;
-
-        struct State{
-            math::Vector2f Position;
-        };
-        State Previous;
-        State Current;
 
         EventManager* eventManager;
 };

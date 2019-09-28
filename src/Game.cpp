@@ -13,8 +13,8 @@ Game::Game()
     LeftArea.setObstaclesSize(15, 15);
     LeftArea.setObstaclesDirection(ObstaclesDirection::Top2Bottom);
     LeftArea.setObstaclesTexture(Assets->getTexture(BLACKCUBE));
-    LeftArea.setSpawnArea(0, 242, -20);
-    LeftArea.setSpawnAreaDivisions(10);
+    LeftArea.setObstacleInitialAndMaxVelocity(5, 50);
+    LeftArea.setSpawnAreaAndDivisions(0, 242, -20, 10);
     LeftArea.setSpawnRate(0.5);
     LeftArea.setZoneTime(12);
     LeftArea.setZIndex(3);
@@ -23,8 +23,8 @@ Game::Game()
     RightArea.setObstaclesSize(15, 15);
     RightArea.setObstaclesDirection(ObstaclesDirection::Bottom2Top);
     RightArea.setObstaclesTexture(Assets->getTexture(WHITECUBE));
-    RightArea.setSpawnArea(240, 480, 292);
-    RightArea.setSpawnAreaDivisions(5);
+    RightArea.setObstacleInitialAndMaxVelocity(10, 20);
+    RightArea.setSpawnAreaAndDivisions(240, 480, 292, 5);
     RightArea.setSpawnRate(0.5);
     RightArea.setZoneTime(12);
     RightArea.setZIndex(4);
@@ -47,17 +47,18 @@ void Game::Update(){
         HERO.FixedUpdate();
 
 
+        LeftArea.FixedUpdate();
+        RightArea.FixedUpdate();
+        HERO.saveCurrentState();
 
         accumulator -= 1/UPDATE_STEP;
-        HERO.SaveCurrentState();
     }
 
-    //Debería estar en el Fixed Update, pero hay que hacer primero la clase enemigos y su interpolación
-    LeftArea.Update();
-    RightArea.Update();
 
     // Tick para interpolar
     tick = std::min(1.f, static_cast<float>( accumulator/(1/UPDATE_STEP) ));
 
     HERO.Interpolate(tick);
+    LeftArea.InterpolateObstacles(tick);
+    RightArea.InterpolateObstacles(tick);
 }

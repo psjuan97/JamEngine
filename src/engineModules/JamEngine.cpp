@@ -145,7 +145,7 @@ void JamEngine::Dro(){
     uint16_t i = 0;
     while(i < Z_INDEX_LEVELS * DRAWABLES_PER_LEVEL){
         Drawable* Current = DRAWABLEPOOL[i];
-        if(Current) Current->Draw();
+        if(Current && Current->Visibility) Current->Draw();
         ++i;
     }
     SDL_RenderPresent(Renderer);

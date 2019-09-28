@@ -28,6 +28,7 @@ Player::Player(){
 	// EventManager::Instance()->registerEvent(PspCtrlButtons::RIGHT, (void *)&Player::MoveRight);
 	// EventManager::Instance()->registerEvent(PspCtrlButtons::DOWN, (void *)&Player::MoveDown);
 
+    // Cada tecla tiene asociado un método
     BUTTON_MAPPING[0] = {PspCtrlButtons::CROSS, &Player::Dash};
     BUTTON_MAPPING[1] = {PspCtrlButtons::CIRCLE, &Player::Skill2};
 
@@ -42,7 +43,7 @@ Player::~Player(){
 
 void Player::FixedUpdate(){
 
-    SavePreviousState();
+    savePreviousState();
 
     CheckMovement();
 
@@ -83,14 +84,6 @@ void Player::Skill2(){
 
 }
 
-
-void Player::SavePreviousState(){
-    Previous = Current;
-}
-
-void Player::SaveCurrentState(){
-    Current.Position = Position;
-}
 
 void Player::Interpolate(float tick){
 
