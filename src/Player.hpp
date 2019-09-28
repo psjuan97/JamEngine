@@ -6,7 +6,7 @@
 
 #include "engineModules/EventManager.hpp"
 #include "Interpolable_Object.hpp"
-
+#include "Zone.hpp"
 
 class Player : public Interpolable_Object {
     // METHODS
@@ -15,7 +15,7 @@ class Player : public Interpolable_Object {
         Player(const Player& orig) = delete;
         ~Player();
 
-        void Init();
+        void Init(Zone*, Zone*);
 
         void FixedUpdate();
 
@@ -24,7 +24,7 @@ class Player : public Interpolable_Object {
     private:
 
         void Dash();
-        void Skill2();
+        void CleanArea();
 
         void CheckMovement();
 
@@ -42,6 +42,9 @@ class Player : public Interpolable_Object {
         Sprite PlayerSprite;
 
         EventManager* eventManager;
+
+        Zone* leftArea;
+        Zone* rightArea;
 };
 
 #endif

@@ -217,3 +217,10 @@ void Zone::setAlertTargetInstance(sGame* Target){
 ObstaclesDirection Zone::getObstacleDirection() {
     return OBSTACLES[0].Direction;
 }
+
+void Zone::CleanZone() {
+    for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
+        OBSTACLES[i].alive = false;
+        OBSTACLES[i].ObstacleSprite.Visibility = false;
+    }
+}

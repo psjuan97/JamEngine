@@ -47,6 +47,7 @@ class Zone{
         void FixedUpdate();
         void InterpolateObstacles(float Tick);
         void setSlowDown();
+        void CleanZone();
     private:
         void Countdown();
         void SpawnHandler();
