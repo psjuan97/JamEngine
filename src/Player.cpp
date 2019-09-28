@@ -27,16 +27,20 @@ Player::Player(){
 
     // Cada tecla tiene asociado un método
     BUTTON_MAPPING[0] = {PspCtrlButtons::CROSS, &Player::Dash};
-    BUTTON_MAPPING[1] = {PspCtrlButtons::CIRCLE, &Player::Skill2};
+    BUTTON_MAPPING[1] = {PspCtrlButtons::CIRCLE, &Player::CleanArea};
 
     eventManager = EventManager::Instance();
 }
 
 Player::~Player(){
-
+    leftArea = nullptr;
+    rightArea = nullptr;
 }
 
-void Player::Init(){
+void Player::Init(Zone* lzone, Zone* rzone){
+    leftArea = lzone;
+    rightArea = rzone;
+    
     JamEngine::Instance()->setDrawable_ZIndex(&PlayerSprite, 9);
 
     PlayerSprite.setTexture(AssetManager::Instance()->getTexture(PLAYER));
@@ -84,8 +88,12 @@ void Player::Dash(){
     Position = Position + AuxSpeed;
 }
 
-void Player::Skill2(){
-
+void Player::CleanArea(){
+    if (PlayerSprite.getPosition().x < 240) {
+        leftArea->CleanZone();
+    } else {
+        rightArea->CleanZone();
+    }
 }
 
 

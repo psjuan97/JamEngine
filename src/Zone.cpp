@@ -240,3 +240,9 @@ void Zone::checkPlayerCollisions(math::Vector2f PlayerPosition, math::Vector2f P
             }
     }
 }
+void Zone::CleanZone() {
+    for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
+        OBSTACLES[i].alive = false;
+        OBSTACLES[i].ObstacleSprite.Visibility = false;
+    }
+}

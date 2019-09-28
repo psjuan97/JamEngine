@@ -23,7 +23,7 @@ void sGame::queryAlert(SDL_Texture* T, float X, float Y, float W, float H, float
     ALERT.Image.setPosition(X, Y);
     ALERT.Image.setSize(W, H);
 
-    ALERT.setDisplayingTime(DisplayTime);
+    ALERT.setDisplayingTime(50);
     ALERT.setFlickeringInterval(FlickerInterval);
     ALERT.ResetClock();
 }
@@ -39,7 +39,7 @@ void sGame::Init(){
     LeftArea.setObstacleInitialAndMaxVelocity(3, 15);
     LeftArea.setSpawnAreaAndDivisions(0, 242, -20, 10);
     LeftArea.setSpawnRate(0.25);
-    LeftArea.setZoneTime(30);
+    LeftArea.setZoneTime(50);
     LeftArea.setZIndex(3);
 
 	RightArea.setZoneBackground(Assets->getTexture(BLACK_BACKGROUND), 240, 0, 240, 272);
@@ -49,10 +49,10 @@ void sGame::Init(){
     RightArea.setObstacleInitialAndMaxVelocity(10, 20);
     RightArea.setSpawnAreaAndDivisions(240, 480, 292, 5);
     RightArea.setSpawnRate(0.5);
-    RightArea.setZoneTime(30);
+    RightArea.setZoneTime(50);
     RightArea.setZIndex(4);
 
-    HERO.Init();
+    HERO.Init(&LeftArea, &RightArea);
     setMiddle(240);
     CurrentUpdate = &sGame::NormalUpdate;
     masterClock.restart();
