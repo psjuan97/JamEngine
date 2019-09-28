@@ -31,6 +31,7 @@ class sGame : public State {
         inline void setMiddle(uint16_t middle){
             middleX = middle;
         };
+
     // VARIABLES
     public:
         //PopUp ALERT;
@@ -43,16 +44,20 @@ class sGame : public State {
         Zone RightArea;
         
         Handler GameHandler;
-        uint16_t middleX;
         PopUp ALERT;
 
         // Interpolation things
         eClock masterClock;
 
         double dt;
-        float accumulator;
         double tick;
+        float accumulator;
 
+        float SCORE;
+
+        uint16_t middleX;
+
+        Zone* ActiveZone;
         void (sGame::*CurrentUpdate)();
 };
 

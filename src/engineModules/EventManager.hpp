@@ -23,8 +23,6 @@ class EventManager{
 
         ~EventManager();
 
-        
-        void registerEvent(PspCtrlButtons key, void* callback);
         void launch(); // execute all callbacks from the list
 
         // Devuelve el estado de un botón

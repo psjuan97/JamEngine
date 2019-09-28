@@ -2,7 +2,8 @@
 #include <string>
 #include "ASSETS_IDs.hpp"
 #include "sGame.hpp"
-
+#include "engineModules/StateMachine.hpp"
+#include "sScore.hpp"
 
 
 Zone::Zone()
@@ -137,7 +138,8 @@ void Zone::FixedUpdate(){
     Accumulator += dt;
 
     if(ZoneElapsedTime > ZONE_TIME_seconds){
-        ALERT_TARGET->queryAlert(AssetManager::Instance()->getTexture(POPUP), 100, 100, 150, 151, 3, 0.25);
+        // ALERT_TARGET->queryAlert(AssetManager::Instance()->getTexture(POPUP), 100, 100, 150, 151, 3, 0.25);
+        StateMachine::Instance()->setState(new sScore);
         END = true;
     }
 
@@ -216,4 +218,25 @@ void Zone::setAlertTargetInstance(sGame* Target){
 
 ObstaclesDirection Zone::getObstacleDirection() {
     return OBSTACLES[0].Direction;
+}
+
+
+#define PLAYER_WIDTH 8
+
+void Zone::checkPlayerCollisions(math::Vector2f PlayerPosition, math::Vector2f PlayerSize){
+    
+    for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
+        Obstacle& CurrentObstacle = OBSTACLES[i];
+        math::Vector2f ObstaclePostion = CurrentObstacle.Position;
+        math::Vector2f ObstacleSize = CurrentObstacle.ObstacleSprite.getSize();
+
+        if( PlayerPosition.x < ObstaclePostion.x + ObstacleSize.x &&
+            PlayerPosition.x + PlayerSize.x > ObstaclePostion.x &&
+            PlayerPosition.y < ObstaclePostion.y + ObstacleSize.y &&
+            PlayerPosition.y + PlayerSize.y > ObstaclePostion.y
+          ) {
+              CurrentObstacle.alive = false;
+              CurrentObstacle.ObstacleSprite.Visibility = false;
+            }
+    }
 }

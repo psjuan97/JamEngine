@@ -1,11 +1,14 @@
 #include "sGame.hpp"
+#include "engineModules/JamEngine.hpp"
+#include "engineModules/AssetManager.hpp"
 #include "ASSETS_IDs.hpp"
+#include "Score.hpp"
 
 #define FRAMERATE 60.f
 #define UPDATE_STEP 30.f
 
 sGame::sGame()
-:dt(0), accumulator(0), tick(0)
+:dt(0), accumulator(0), tick(0), SCORE(0), ActiveZone(&LeftArea)
 {
     CurrentUpdate = &sGame::NormalUpdate;
 }
@@ -36,7 +39,7 @@ void sGame::Init(){
     LeftArea.setObstacleInitialAndMaxVelocity(3, 15);
     LeftArea.setSpawnAreaAndDivisions(0, 242, -20, 10);
     LeftArea.setSpawnRate(0.25);
-    LeftArea.setZoneTime(5);
+    LeftArea.setZoneTime(30);
     LeftArea.setZIndex(3);
 
 	RightArea.setZoneBackground(Assets->getTexture(BLACK_BACKGROUND), 240, 0, 240, 272);
@@ -46,7 +49,7 @@ void sGame::Init(){
     RightArea.setObstacleInitialAndMaxVelocity(10, 20);
     RightArea.setSpawnAreaAndDivisions(240, 480, 292, 5);
     RightArea.setSpawnRate(0.5);
-    RightArea.setZoneTime(12);
+    RightArea.setZoneTime(30);
     RightArea.setZIndex(4);
 
     HERO.Init();
@@ -73,6 +76,8 @@ void sGame::NormalUpdate(){
 
     dt = masterClock.restart().asSeconds();
 
+    SCORE += dt * 10;
+
     //Spiral of death
     if(dt > 0.25f)   dt = 0.25f;
 
@@ -88,8 +93,8 @@ void sGame::NormalUpdate(){
 
         LeftArea.FixedUpdate();
         RightArea.FixedUpdate();
-
-
+        
+        ActiveZone->checkPlayerCollisions(HERO.getPosition(), HERO.getSize());
         HERO.saveCurrentState();
 
         accumulator -= 1/UPDATE_STEP;
@@ -104,15 +109,19 @@ void sGame::NormalUpdate(){
 }
 
 void sGame::Exit(){
-    
+    JamEngine::Instance()->clearAllDrawables();
+    SCORE_S::Instance()->SCORE = SCORE;
 }
+
+
 void sGame::setHeroToZone(){
     if(HERO.getPositionX() < 240 ){
         RightArea.setObstacleInitialAndMaxVelocity(SLOWVEL,SLOWVEL);
-        LeftArea.setObstacleInitialAndMaxVelocity(5,15);
+        LeftArea.setObstacleInitialAndMaxVelocity(3,8);
+        ActiveZone = &LeftArea;
     }else{
         LeftArea.setObstacleInitialAndMaxVelocity(SLOWVEL,SLOWVEL);
-        RightArea.setObstacleInitialAndMaxVelocity(5,15);
-
+        RightArea.setObstacleInitialAndMaxVelocity(3,8);
+        ActiveZone = &RightArea;
     }
 }

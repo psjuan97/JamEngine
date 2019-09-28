@@ -21,6 +21,11 @@ class Player : public Interpolable_Object {
 
         virtual void Interpolate(float tick);
 
+
+        inline math::Vector2f getSize(){
+            return PlayerSprite.getSize(); 
+        }
+
     private:
 
         void Dash();

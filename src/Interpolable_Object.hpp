@@ -11,6 +11,11 @@ class Interpolable_Object{
         inline float getPositionX(){
             return Position.x;
         }
+
+        inline math::Vector2f getPosition(){
+            return Position;
+        };
+
     protected:
         struct State{
             math::Vector2f Position;

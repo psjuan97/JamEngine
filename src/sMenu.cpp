@@ -8,7 +8,6 @@ sMenu::sMenu()
 :PRESS_STARTO(200, 150)
 {
     PRESS_STARTO.setString("PRESS ANY KEY TO STARTO");
-    JamEngine::Instance()->setDrawable_ZIndex(&PRESS_STARTO, 2);
 }
 
 
@@ -18,6 +17,7 @@ sMenu::~sMenu(){
 
 
 void sMenu::Init(){
+    JamEngine::Instance()->setDrawable_ZIndex(&PRESS_STARTO, 2);
 
 }
 
@@ -29,5 +29,4 @@ void sMenu::Update(){
 
 void sMenu::Exit(){
     JamEngine::Instance()->clearAllDrawables();
-    AssetManager::Instance()->freeTextures();
 }

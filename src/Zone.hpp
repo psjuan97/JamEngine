@@ -44,6 +44,8 @@ class Zone{
 
         void setSpawnRate(float Seconds);
 
+
+        void checkPlayerCollisions(math::Vector2f PlayerPosition, math::Vector2f PlayerSize);
         void FixedUpdate();
         void InterpolateObstacles(float Tick);
         void setSlowDown();

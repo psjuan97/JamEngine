@@ -43,14 +43,11 @@ void EventManager::launch(){
 
 bool EventManager::isAnyKeyPressed(){
     for(uint8_t i = 0; i < PspCtrlButtons::PSPKEYCOUNT; ++i){
-        if(PSP_BUTTONS_STATE[i])
+        if(PSP_BUTTONS_STATE[i]){
+            PSP_BUTTONS_STATE[i] = false;
             return true;
+        }
     }
 
     return false;
-}
-
-
-void EventManager::registerEvent(PspCtrlButtons key, void* callback){
-    //callbacks[static_cast<int>(key)] = callback;
 }
