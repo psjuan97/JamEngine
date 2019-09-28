@@ -128,7 +128,12 @@ void Zone::FixedUpdate(){
     if(ZoneElapsedTime > ZONE_TIME_seconds)
         END = true;
 
-    Countdown();
+    int CD = ZONE_TIME_seconds-ZoneElapsedTime;
+
+    if(CD != ZONE_LAST_TIME){
+        Countdown();
+        ZONE_LAST_TIME  = CD;
+    }
     SpawnHandler();
     ObstaclesUpdate();
 
@@ -190,3 +195,5 @@ void Zone::InterpolateObstacles(float Tick){
         OBSTACLES[i].Interpolate(Tick);
     }
 }
+
+

@@ -23,6 +23,7 @@ class Obstacle : public Interpolable_Object {
             return alive;
         }
 
+        void setSlow(bool slow);
     private:
         void checkBounds();
 

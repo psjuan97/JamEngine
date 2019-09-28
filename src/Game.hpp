@@ -4,6 +4,7 @@
 #include "Player.hpp"
 #include "engineModules/eClock.hpp"
 #include "Zone.hpp"
+#define SLOWVEL 2
 
 class Game{
     // METHODS
@@ -13,7 +14,11 @@ class Game{
         ~Game();
 
         void Update();
+        void setHeroToZone();
 
+        inline void setMiddle(uint16_t middle){
+            middleX = middle;
+        };
     // VARIABLES
     private:
         //Entities
@@ -22,6 +27,7 @@ class Game{
         Zone LeftArea;
         Zone RightArea;
         
+        uint16_t middleX;
 
         // Interpolation things
         eClock masterClock;

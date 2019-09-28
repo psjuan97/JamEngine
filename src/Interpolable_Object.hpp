@@ -8,7 +8,9 @@ class Interpolable_Object{
         void savePreviousState();
         void saveCurrentState();
         virtual void Interpolate(float Tick) = 0;
-
+        inline float getPositionX(){
+            return Position.x;
+        }
     protected:
         struct State{
             math::Vector2f Position;

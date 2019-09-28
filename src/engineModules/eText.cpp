@@ -31,8 +31,11 @@ void eText::setString(std::string str){
     //     SDL_DestroyTexture(texture);
     //     // texture = nullptr;
     // }else{
-        SDL_Color black = {125, 125, 125};  
-        SDL_Surface* surfaceMessage = TTF_RenderText_Solid( font->getSDLFont(), str.c_str() , black); 
+        SDL_Color black = {0, 0, 0, 0};  
+        SDL_Color yellow = {0, 255, 255, 0};  
+
+
+        SDL_Surface* surfaceMessage = TTF_RenderText_Shaded( font->getSDLFont(), str.c_str() , black, yellow); 
         if(surfaceMessage != nullptr){
             texture = SDL_CreateTextureFromSurface(Renderer, surfaceMessage); //now you can convert it into a texture
             if(texture == nullptr){
@@ -52,9 +55,15 @@ void eText::Draw(){
         SDL_Rect Message_rect;
         Message_rect.x = posX; 
         Message_rect.y = posY; 
-        Message_rect.h = 0;
-        Message_rect.w = 0;
-        SDL_QueryTexture(texture,  NULL,   NULL,      &Message_rect.w, &Message_rect.h);
+        Message_rect.h = 60;
+        Message_rect.w = 60;
+
+        SDL_Rect src;
+        src.x = 10; 
+        src.y = 0; 
+        src.h = 70;
+        src.w = 30;
+        //SDL_QueryTexture(texture,  NULL,   NULL,      &Message_rect.w, &Message_rect.h);
 
         JamEngine::Instance()->drawTexture(texture, NULL, &Message_rect);    
     }
