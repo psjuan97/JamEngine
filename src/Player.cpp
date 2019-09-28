@@ -16,9 +16,9 @@
 #define SCREEN_HEIGHT 272
 
 Player::Player(){
-    //aSprite.setAnimation(PlayerAnimation1);
-    PlayerSprite.setTexture(AssetManager::Instance()->getTexture(PLAYER));
-    PlayerSprite.setSize(8, 8);
+    // PlayerSprite.setTexture(AssetManager::Instance()->getTexture(PLAYER));
+    PlayerSprite.setAnimation(PLAYER_ANIMATION);
+    PlayerSprite.setSize(30,30);
     PlayerSprite.setPosition(120, 136);
 
     JamEngine::Instance()->setDrawable_ZIndex(&PlayerSprite, 9);

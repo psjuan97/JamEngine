@@ -37,7 +37,7 @@ class Player : public Interpolable_Object {
 
         std::array<Button2Func, 2> BUTTON_MAPPING;
 
-        Sprite PlayerSprite;
+        AnimatedSprite PlayerSprite;
 
         EventManager* eventManager;
 };

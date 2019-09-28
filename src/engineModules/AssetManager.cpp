@@ -22,9 +22,6 @@ AssetManager::~AssetManager(){
 
 void AssetManager::loadInitialAssets(){
     // loadTexture(LOGO_PNG, "assets/logo.png");
- 	// loadTexture(BIPEAL, "assets/bipedal3.png");
-
-	// loadAnimation(AnimBipedal, BIPEAL,7,eTime(200),true);
     loadTexture(PLAYER, "assets/Textures/Player.jpg");
     loadTexture(BLACK_BACKGROUND, "assets/Textures/Black2.png");
     loadTexture(WHITE_BACKGROUND, "assets/Textures/White.jpg");
@@ -32,6 +29,10 @@ void AssetManager::loadInitialAssets(){
     loadTexture(WHITECUBE, "assets/Textures/White15x15.jpg");
     loadTexture(WARNING, "assets/Textures/Warning.jpg");
     loadTexture(POPUP, "assets/Textures/manes.jpg");
+
+ 	loadTexture(PLAYER_ANIMATION_TEX, "assets/Textures/Cubo_rosa_anim.png");
+	loadAnimation(PLAYER_ANIMATION, PLAYER_ANIMATION_TEX,4,eTime(60),true);
+
 
     loadFont(DEFAULT_FONT, "assets/font.ttf");
 }

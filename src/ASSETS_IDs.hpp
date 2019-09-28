@@ -8,8 +8,11 @@
 #define BLACKCUBE 3
 #define WHITECUBE 4
 #define WARNING 5
-#define POPUP 5
+#define POPUP 6
+#define PLAYER_ANIMATION_TEX 7
 
+// Animations IDs
+#define PLAYER_ANIMATION 0
 
 
 // Sprites IDs MAPA 1 

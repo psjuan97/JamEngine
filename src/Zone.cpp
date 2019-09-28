@@ -133,7 +133,7 @@ void Zone::FixedUpdate(){
     Accumulator += dt;
 
     if(ZoneElapsedTime > ZONE_TIME_seconds){
-        Game::Instance()->queryAlert(AssetManager::Instance()->getTexture(POPUP), 100, 100, 107, 147, 3, 0.25);
+        // Game::Instance()->queryAlert(AssetManager::Instance()->getTexture(POPUP), 100, 100, 107, 147, 3, 0.25);
 
         END = true;
     }
