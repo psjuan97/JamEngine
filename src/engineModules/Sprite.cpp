@@ -10,7 +10,7 @@ Sprite::Sprite()
     Size_Pos.x = 0;
     Size_Pos.y = 0;
 
-    slice = &Size_Pos;
+    slice = nullptr;
 
 }
 
