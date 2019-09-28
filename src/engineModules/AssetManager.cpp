@@ -3,6 +3,7 @@
 
 #include "JamEngine.hpp"
 #include "AssetManager.hpp"
+#include "../ASSETS_IDs.hpp"
 
 
 AssetManager::AssetManager(){
@@ -12,11 +13,22 @@ AssetManager::AssetManager(){
         TexturesArray[i] = nullptr;
         fontArray[i] = nullptr;
     }
-    
+
 }
 
 AssetManager::~AssetManager(){
     freeAssets();
+}
+
+void AssetManager::loadInitialAssets(){
+    loadTexture(LOGO_PNG, "assets/logo.png");
+    loadTexture(TILESHEET, "assets/TILED/tilesheet.png");
+ 	loadTexture(BIPEAL, "assets/bipedal3.png");
+
+	loadAnimation(AnimBipedal, BIPEAL,7,eTime(200),true);
+
+
+    loadFont(DEFAULT_FONT, "assets/DEFAULT.ttf");
 }
 
 SDL_Texture* AssetManager::loadTexture(uint8_t ID, const char* TexturePath){

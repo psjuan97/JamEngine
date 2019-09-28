@@ -16,13 +16,19 @@ class Player{
 
         void FixedUpdate();
 
+        void SavePreviousState();
+        void SaveCurrentState();
+        void Interpolate(float tick);
 
     private:
-        
+
+        void Dash();
+        void Skill2();
+
+        void CheckMovement();
+
 
     // VARIABLES
-    public:
-
     private:
 
         struct Button2Func{
@@ -30,15 +36,18 @@ class Player{
             void (Player::*Target)();
         };
 
-        void Dash();
-        void Skill2();
 
         std::array<Button2Func, 2> BUTTON_MAPPING;
 
-        void CheckMovement();
-
         AnimatedSprite aSprite;
         math::Vector2f SPEED;
+        math::Vector2f Position;
+
+        struct State{
+            math::Vector2f Position;
+        };
+        State Previous;
+        State Current;
 
         EventManager* eventManager;
 };

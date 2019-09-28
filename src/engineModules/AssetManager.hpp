@@ -49,6 +49,7 @@ class AssetManager{
         };
 
 
+        void loadInitialAssets();
 
 
         SDL_Texture* loadTexture(uint8_t ID, const char* TexturePath);
@@ -56,7 +57,6 @@ class AssetManager{
         Animation* loadAnimation(uint8_t animID, uint8_t textureID, uint8_t nFrames,  eTime const& duration, bool looping);
         eMusic* loadMusic(uint8_t ID, const char* MusicPath);
         eMusic* loadMusic(uint8_t ID, const char* MusicPath, const uint8_t loop, int volume);
-
 
         void freeTextures();
         void freeFonts();

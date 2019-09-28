@@ -7,7 +7,7 @@
 #define BUTTON_DOWN SDL_JOYBUTTONDOWN
 #define BUTTON_UP 1540
 
-#define PLAYER_SPEED 2
+#define PLAYER_SPEED 4
 
 Player::Player(){
     aSprite.setAnimation(PlayerAnimation1);
@@ -25,6 +25,8 @@ Player::Player(){
     BUTTON_MAPPING[1] = {PspCtrlButtons::CIRCLE, &Player::Skill2};
 
     eventManager = EventManager::Instance();
+    Position = aSprite.getPosition();
+    Previous.Position = Current.Position = Position;
 }
 
 Player::~Player(){
@@ -32,6 +34,8 @@ Player::~Player(){
 }
 
 void Player::FixedUpdate(){
+
+    SavePreviousState();
 
     CheckMovement();
 
@@ -41,11 +45,7 @@ void Player::FixedUpdate(){
             (this->*BUTTON_MAPPING[i].Target)();
     }
 
-    math::Vector2f CurrentPosition = aSprite.getPosition();
-
-    CurrentPosition += SPEED;
-
-    aSprite.setPosition(CurrentPosition.x, CurrentPosition.y);
+    Position += SPEED;
 }
 
 
@@ -66,3 +66,18 @@ void Player::Skill2(){
 }
 
 
+void Player::SavePreviousState(){
+    Previous = Current;
+}
+
+void Player::SaveCurrentState(){
+    Current.Position = Position;
+}
+
+void Player::Interpolate(float tick){
+
+    float x = Previous.Position.x *(1-tick) + Current.Position.x*tick;
+    float y = Previous.Position.y *(1-tick) + Current.Position.y*tick;
+
+    aSprite.setPosition(x, y);
+}
