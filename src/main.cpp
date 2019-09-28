@@ -46,9 +46,8 @@ int main(){
 	Assets->loadInitialAssets();
 
 	eText::setFont(Assets->getFont(DEFAULT_FONT));
-	Game THE_GAME;
 
-
+	Game* THE_GAME = Game::Instance();
 	
 
 	//////////////////////////
@@ -64,7 +63,7 @@ int main(){
 
 		EventManager::Instance()->launch();
     	
-		THE_GAME.Update();
+		THE_GAME->Update();
 
 		JAM->Dro();
         // SDL_Delay(5);

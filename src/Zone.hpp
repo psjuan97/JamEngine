@@ -7,6 +7,8 @@
 #include <cstdint>
 #include <vector>
 #include <array>
+#include "PopUp.hpp"
+
 
 #include "enumObstacleDir.hpp"
 
@@ -71,7 +73,6 @@ class Zone{
 
         ObstaclesDirection Direction;
         uint8_t ObstaclesIterator;
-
 
         //Para las colisiones
         //math::Vector2f* PlayerPosition;

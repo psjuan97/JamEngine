@@ -30,6 +30,7 @@ void AssetManager::loadInitialAssets(){
     loadTexture(WHITE_BACKGROUND, "assets/Textures/White.jpg");
     loadTexture(BLACKCUBE, "assets/Textures/Black15x15.jpg");
     loadTexture(WHITECUBE, "assets/Textures/White15x15.jpg");
+    loadTexture(POPUP, "assets/Textures/manes.jpg");
 
     loadFont(DEFAULT_FONT, "assets/DEFAULT.ttf");
 }
