@@ -8,7 +8,7 @@ enum PspCtrlButtons  {
     TRIANGLE = 0,  CIRCLE,  CROSS,  SQUARE,
     LTRIGGER,  RTRIGGER,
     DOWN,  LEFT,  UP,  RIGHT,
-    SELECT,  START,  HOME,  HOLD,
+    SELECT,  START,  HOME,  HOLD, JOY,
     PSPKEYCOUNT
 };
 
@@ -39,6 +39,7 @@ class EventManager{
             return RESULT;
         }
 
+        bool isAnyKeyPressed();
 
     private:
         EventManager();

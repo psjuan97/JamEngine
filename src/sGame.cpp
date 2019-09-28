@@ -1,14 +1,34 @@
-#include "Game.hpp"
+#include "sGame.hpp"
 #include "ASSETS_IDs.hpp"
 
 #define FRAMERATE 60.f
 #define UPDATE_STEP 30.f
 
-Game::Game()
+sGame::sGame()
 :dt(0), accumulator(0), tick(0)
 {
-    masterClock.restart();
+    CurrentUpdate = &sGame::NormalUpdate;
+}
+
+sGame::~sGame(){
+
+}
+
+void sGame::queryAlert(SDL_Texture* T, float X, float Y, float W, float H, float DisplayTime, float FlickerInterval){
+    CurrentUpdate = &sGame::AlertUpdate;
+    ALERT.Image.setTexture(T);
+    ALERT.Image.setPosition(X, Y);
+    ALERT.Image.setSize(W, H);
+
+    ALERT.setDisplayingTime(DisplayTime);
+    ALERT.setFlickeringInterval(FlickerInterval);
+    ALERT.ResetClock();
+}
+
+void sGame::Init(){
     AssetManager* Assets = AssetManager::Instance();
+    Assets->loadInitialAssets();
+
 	LeftArea.setZoneBackground(Assets->getTexture(WHITE_BACKGROUND), 0, 0, 240, 272);
     LeftArea.setObstaclesSize(15, 15);
     LeftArea.setObstaclesDirection(ObstaclesDirection::Top2Bottom);
@@ -29,38 +49,27 @@ Game::Game()
     RightArea.setZoneTime(12);
     RightArea.setZIndex(4);
 
+    HERO.Init();
     setMiddle(240);
-    CurrentUpdate = &Game::NormalUpdate;
+    CurrentUpdate = &sGame::NormalUpdate;
+    masterClock.restart();
+
+    LeftArea.setAlertTargetInstance(this);
+    RightArea.setAlertTargetInstance(this);
 }
 
-Game::~Game(){
-
-}
-
-void Game::queryAlert(SDL_Texture* T, float X, float Y, float W, float H, float DisplayTime, float FlickerInterval){
-    CurrentUpdate = &Game::AlertUpdate;
-    ALERT.Image.setTexture(T);
-    ALERT.Image.setPosition(X, Y);
-    ALERT.Image.setSize(W, H);
-
-    ALERT.setDisplayingTime(DisplayTime);
-    ALERT.setFlickeringInterval(FlickerInterval);
-    ALERT.ResetClock();
-}
-
-
-void Game::Update(){
+void sGame::Update(){
     (this->*CurrentUpdate)();
 }
 
-void Game::AlertUpdate(){
+void sGame::AlertUpdate(){
     if(ALERT.Update())
-        CurrentUpdate = &Game::NormalUpdate;
+        CurrentUpdate = &sGame::NormalUpdate;
 
     NormalUpdate();
 }
 
-void Game::NormalUpdate(){
+void sGame::NormalUpdate(){
 
     dt = masterClock.restart().asSeconds();
 
@@ -71,6 +80,7 @@ void Game::NormalUpdate(){
 
     // FIXED UPDATE
     while(accumulator >= 1/UPDATE_STEP){
+
         HERO.FixedUpdate();
       
         GameHandler.ShowWarning(HERO.getPositionX(), LeftArea, RightArea );
@@ -78,6 +88,8 @@ void Game::NormalUpdate(){
 
         LeftArea.FixedUpdate();
         RightArea.FixedUpdate();
+
+
         HERO.saveCurrentState();
 
         accumulator -= 1/UPDATE_STEP;
@@ -91,13 +103,16 @@ void Game::NormalUpdate(){
     RightArea.InterpolateObstacles(tick);
 }
 
-void Game::setHeroToZone(){
+void sGame::Exit(){
+    
+}
+void sGame::setHeroToZone(){
     if(HERO.getPositionX() < 240 ){
         RightArea.setObstacleInitialAndMaxVelocity(SLOWVEL,SLOWVEL);
-        LeftArea.setObstacleInitialAndMaxVelocity(5,50);
+        LeftArea.setObstacleInitialAndMaxVelocity(5,15);
     }else{
         LeftArea.setObstacleInitialAndMaxVelocity(SLOWVEL,SLOWVEL);
-        RightArea.setObstacleInitialAndMaxVelocity(5,50);
+        RightArea.setObstacleInitialAndMaxVelocity(5,15);
 
     }
 }

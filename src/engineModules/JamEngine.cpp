@@ -196,17 +196,13 @@ void JamEngine::setDrawable_ZIndex(Drawable* D, uint8_t Z_Index, uint8_t Positio
 
 void JamEngine::clearAllDrawables(){
 
-    uint16_t i = 0;
-    while(i < Z_INDEX_LEVELS * DRAWABLES_PER_LEVEL){
-        DRAWABLEPOOL[i] = nullptr;
-        ++i;
-    }
 
-    i = 0;
-    while(i < Z_INDEX_LEVELS){
+    for(uint16_t i = 0; i < Z_INDEX_LEVELS * DRAWABLES_PER_LEVEL; ++i)
+        DRAWABLEPOOL[i] = nullptr;
+    
+
+    for(uint16_t i = 0; i < Z_INDEX_LEVELS; ++i)
         CurrentMaxZIndexID[i] = 0;
-        ++i;
-    }
 
 }
 

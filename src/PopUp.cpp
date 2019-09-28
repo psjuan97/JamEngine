@@ -3,13 +3,14 @@
 PopUp::PopUp()
 :DisplayingTime(0), FlickeringInterval(0), DisplayAccumulator(0), FlickerAccumulator(0)
 {
-    JamEngine::Instance()->setDrawable_ZIndex(&Image, 9);
     Image.Visibility = false;
 }
 
 PopUp::~PopUp(){}
 
 void PopUp::setDisplayingTime(float Seconds){
+    JamEngine::Instance()->setDrawable_ZIndex(&Image, 9);
+
     DisplayingTime = Seconds;
     ResetAccumulators();
 }

@@ -11,7 +11,6 @@
 #include "Animation.hpp" 
 
 #define MAX_TEXTURES 255
-#define MAX_SPRITES 30
 #define MAX_FONTS 255
 #define MAX_MUSICS 255
 #define MAX_ANIMATIONS 255
@@ -30,10 +29,6 @@ class AssetManager{
 
         inline SDL_Texture* getTexture(uint8_t ID) const {
             return TexturesArray[ID];
-        };
-
-        inline Sprite* getSprite(uint8_t ID) {
-            return &SpritesArray[ID];
         };
 
         inline eFont* getFont(uint8_t ID) {
@@ -74,7 +69,6 @@ class AssetManager{
     public:
 
     private:
-        Sprite SpritesArray[MAX_SPRITES];
         SDL_Texture* TexturesArray[MAX_TEXTURES];
         eFont* fontArray[MAX_FONTS];
         eMusic* musicArray[MAX_MUSICS];

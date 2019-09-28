@@ -12,7 +12,7 @@
 
 #include "enumObstacleDir.hpp"
 
-
+class sGame;
 
 class Zone{
     // METHODS
@@ -22,8 +22,7 @@ class Zone{
         ~Zone();
 
 
-        
-
+        void setAlertTargetInstance(sGame* Target);
         void setZoneBackground(SDL_Texture* Texture, float x, float y, float w, float h);
         void setZoneTime(uint16_t Seconds);
         
@@ -78,6 +77,8 @@ class Zone{
 
         math::Vector2f ObstacleSize;
         SDL_Texture* oTexture;
+
+        sGame* ALERT_TARGET;
 
         ObstaclesDirection Direction;
         uint8_t ObstaclesIterator;

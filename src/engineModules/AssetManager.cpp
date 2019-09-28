@@ -27,14 +27,15 @@ void AssetManager::loadInitialAssets(){
     loadTexture(WHITE_BACKGROUND, "assets/Textures/White.jpg");
     loadTexture(BLACKCUBE, "assets/Textures/Black15x15.jpg");
     loadTexture(WHITECUBE, "assets/Textures/White15x15.jpg");
+    loadTexture(POPUP, "assets/Textures/BITCONNEEEEECT.png");
     loadTexture(WARNING, "assets/Textures/Warning.jpg");
-    loadTexture(POPUP, "assets/Textures/manes.jpg");
 
  	loadTexture(PLAYER_ANIMATION_TEX, "assets/Textures/Cubo_rosa_anim.png");
 	loadAnimation(PLAYER_ANIMATION, PLAYER_ANIMATION_TEX,4,eTime(60),true);
 
 
     loadFont(DEFAULT_FONT, "assets/font.ttf");
+
 }
 
 SDL_Texture* AssetManager::loadTexture(uint8_t ID, const char* TexturePath){

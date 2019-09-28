@@ -20,8 +20,9 @@ Player::Player(){
     PlayerSprite.setAnimation(PLAYER_ANIMATION);
     PlayerSprite.setSize(30,30);
     PlayerSprite.setPosition(120, 136);
+    //aSprite.setAnimation(PlayerAnimation1);
 
-    JamEngine::Instance()->setDrawable_ZIndex(&PlayerSprite, 9);
+
     
     // EventManager::Instance()->registerEvent(PspCtrlButtons::LEFT, (void *)&Player::MoveLeft );
 	// EventManager::Instance()->registerEvent(PspCtrlButtons::UP, (void *)&Player::MoveUp);
@@ -33,12 +34,21 @@ Player::Player(){
     BUTTON_MAPPING[1] = {PspCtrlButtons::CIRCLE, &Player::Skill2};
 
     eventManager = EventManager::Instance();
-    Position = PlayerSprite.getPosition();
-    Previous.Position = Current.Position = Position;
 }
 
 Player::~Player(){
 
+}
+
+void Player::Init(){
+    JamEngine::Instance()->setDrawable_ZIndex(&PlayerSprite, 9);
+
+    PlayerSprite.setTexture(AssetManager::Instance()->getTexture(PLAYER));
+    PlayerSprite.setSize(8, 8);
+    PlayerSprite.setPosition(120, 136);
+
+    Position = PlayerSprite.getPosition();
+    Previous.Position = Current.Position = Position;
 }
 
 void Player::FixedUpdate(){
@@ -81,6 +91,8 @@ void Player::Dash(){
 void Player::Skill2(){
 
 }
+
+
 
 
 void Player::Interpolate(float tick){
