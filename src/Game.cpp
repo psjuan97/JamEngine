@@ -13,9 +13,9 @@ Game::Game()
     LeftArea.setObstaclesSize(15, 15);
     LeftArea.setObstaclesDirection(ObstaclesDirection::Top2Bottom);
     LeftArea.setObstaclesTexture(Assets->getTexture(BLACKCUBE));
-    LeftArea.setObstacleInitialAndMaxVelocity(5, 50);
+    LeftArea.setObstacleInitialAndMaxVelocity(3, 15);
     LeftArea.setSpawnAreaAndDivisions(0, 242, -20, 10);
-    LeftArea.setSpawnRate(0.5);
+    LeftArea.setSpawnRate(0.25);
     LeftArea.setZoneTime(12);
     LeftArea.setZIndex(3);
 
@@ -45,7 +45,6 @@ void Game::Update(){
     // FIXED UPDATE
     while(accumulator >= 1/UPDATE_STEP){
         HERO.FixedUpdate();
-
 
         LeftArea.FixedUpdate();
         RightArea.FixedUpdate();

@@ -19,12 +19,17 @@ Obstacle::~Obstacle(){
     
 }
 
-void Obstacle::setObstacleSpeed(int8_t X_Axis_Multiplier, int8_t Y_Axis_Multiplier, float _SPEED, float MAX){
-    SPEED.x = X_Axis_Multiplier * _SPEED;
-    SPEED.y = Y_Axis_Multiplier * _SPEED;
+void Obstacle::setObstacleSpeed(math::Vector2f _SPEED, float MAX){
+    SPEED = _SPEED;
 
-    BaseSpeed = _SPEED;
-    SpeedBoostPercentage = (MAX-_SPEED)/_SPEED;
+    if(_SPEED.x){
+        BaseSpeed = _SPEED.x;
+        SpeedBoostPercentage = MAX/_SPEED.x;
+    }
+    else{
+        BaseSpeed = _SPEED.y;
+        SpeedBoostPercentage = MAX/_SPEED.y;
+    }
 }
 
 
@@ -34,12 +39,12 @@ void Obstacle::FixedUpdate(float BoostTick){
 
     checkBounds();
 
-    // float newSpeed = BaseSpeed - BaseSpeed*(BoostTick*SpeedBoostPercentage);
+    float newSpeed = BaseSpeed + BaseSpeed*(BoostTick*SpeedBoostPercentage);
 
-    // if(SPEED.x)
-    //     SPEED.x = newSpeed;
-    // else if(SPEED.y)
-    //     SPEED.y = newSpeed;
+    if(SPEED.x)
+        SPEED.x = newSpeed;
+    else if(SPEED.y)
+        SPEED.y = newSpeed;
     
     Position += SPEED;
 }

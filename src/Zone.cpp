@@ -103,16 +103,20 @@ void Zone::setObstacleInitialAndMaxVelocity(float Initial, float MAX){
     }
     else if(Direction == ObstaclesDirection::Bottom2Top){
         Y_AXIS = -1;
+        MAX = -MAX;
     }
     else if(Direction == ObstaclesDirection::Left2Right){
         X_AXIS = 1;
     }
     else{
         X_AXIS = -1;
+        MAX = -MAX;
     }
 
-    for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
-        OBSTACLES[i].setObstacleSpeed(X_AXIS, Y_AXIS, Initial, MAX);
+    math::Vector2f Speed(X_AXIS*Initial, Y_AXIS*Initial);
+
+    for(uint8_t i = 0; i < OBSTACLES.size(); ++i) {
+        OBSTACLES[i].setObstacleSpeed(Speed, MAX);
     }
 }
 

@@ -14,7 +14,7 @@ class Obstacle : public Interpolable_Object {
         Obstacle(const Obstacle& orig);
         ~Obstacle();
 
-        void setObstacleSpeed(int8_t X_Axis_Multiplier, int8_t Y_Axis_Multiplier, float _SPEED, float MAX);
+        void setObstacleSpeed(math::Vector2f _SPEED, float MAX);
 
         void FixedUpdate(float BoostTick);
         virtual void Interpolate(float tick);
