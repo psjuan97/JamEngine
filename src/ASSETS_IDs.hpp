@@ -2,9 +2,12 @@
 #define ASSETS_IDS
 
 // Textures IDs
-#define TILESHEET 0
-#define LOGO_PNG 1
-#define BIPEAL 2
+#define PLAYER 0
+#define BLACK_BACKGROUND 1
+#define WHITE_BACKGROUND 2
+#define BLACKCUBE 3
+#define WHITECUBE 4
+
 
 
 // Sprites IDs MAPA 1 

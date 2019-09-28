@@ -3,6 +3,7 @@
 
 #include "Player.hpp"
 #include "engineModules/eClock.hpp"
+#include "Zone.hpp"
 
 class Game{
     // METHODS
@@ -15,11 +16,17 @@ class Game{
 
     // VARIABLES
     private:
+        //Entities
 	    Player HERO;
+        
+        Zone LeftArea;
+        Zone RightArea;
+        
 
+        // Interpolation things
         eClock masterClock;
 
-        float dt;
+        double dt;
         float accumulator;
         double tick;
 };

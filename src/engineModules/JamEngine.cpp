@@ -132,7 +132,7 @@ void JamEngine::drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst){
 
 
 
-    SDL_RenderCopy(Renderer, texture, src, &dstrect);
+    SDL_RenderCopy(Renderer, texture, nullptr, &dstrect);
 }
 
 

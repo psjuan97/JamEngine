@@ -23,12 +23,14 @@ void eText::setPosition(int x,int y){
 
 //font static pointer faster than singleton ?
 
+
+// Hay que arreglar esto
 void eText::setString(std::string str){
-    if(texture != nullptr){
-        //liberamos lo anterior
-        SDL_DestroyTexture(texture);
-        //texture = nullptr;
-    }else{
+    // if(texture != nullptr){
+    //     //liberamos lo anterior
+    //     SDL_DestroyTexture(texture);
+    //     // texture = nullptr;
+    // }else{
         SDL_Color black = {125, 125, 125};  
         SDL_Surface* surfaceMessage = TTF_RenderText_Solid( font->getSDLFont(), str.c_str() , black); 
         if(surfaceMessage != nullptr){
@@ -40,7 +42,7 @@ void eText::setString(std::string str){
             SDL_FreeSurface(surfaceMessage);
         }
 
-    }
+    //}
 
 
 }

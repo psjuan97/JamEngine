@@ -19,6 +19,8 @@ class Sprite : public Drawable {
         ~Sprite();
         
         void setPosition(float x, float y);
+        void setX(float x);
+        void setY(float y);
         void setSize(float w, float h);
 
         inline math::Vector2<float> getPosition(){

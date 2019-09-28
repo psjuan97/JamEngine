@@ -21,12 +21,15 @@ AssetManager::~AssetManager(){
 }
 
 void AssetManager::loadInitialAssets(){
-    loadTexture(LOGO_PNG, "assets/logo.png");
-    loadTexture(TILESHEET, "assets/TILED/tilesheet.png");
- 	loadTexture(BIPEAL, "assets/bipedal3.png");
+    // loadTexture(LOGO_PNG, "assets/logo.png");
+ 	// loadTexture(BIPEAL, "assets/bipedal3.png");
 
-	loadAnimation(AnimBipedal, BIPEAL,7,eTime(200),true);
-
+	// loadAnimation(AnimBipedal, BIPEAL,7,eTime(200),true);
+    loadTexture(PLAYER, "assets/Textures/Player.jpg");
+    loadTexture(BLACK_BACKGROUND, "assets/Textures/Black.jpg");
+    loadTexture(WHITE_BACKGROUND, "assets/Textures/White.jpg");
+    loadTexture(BLACKCUBE, "assets/Textures/Black15x15.jpg");
+    loadTexture(WHITECUBE, "assets/Textures/White15x15.jpg");
 
     loadFont(DEFAULT_FONT, "assets/DEFAULT.ttf");
 }

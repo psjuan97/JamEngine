@@ -45,15 +45,11 @@ int main(){
 	AssetManager* Assets = AssetManager::Instance();
 	Assets->loadInitialAssets();
 
+	eText::setFont(Assets->getFont(DEFAULT_FONT));
 	Game THE_GAME;
 
 
-	eText::setFont(Assets->getFont(DEFAULT_FONT));
-	eText texto(40,40);
-	texto.setString("Ejmplo de texto");
-
-	Tilemap TESTMAP(Assets->getTexture(TILESHEET));
-	TESTMAP.loadTileMap("assets/BinaryFiles/TEST.map");
+	
 
 	//////////////////////////
 	// Prueba musica
@@ -61,14 +57,11 @@ int main(){
 	 eMusic* musica = Assets->loadMusic(SAMPLE_MUSIC, "assets/8-bitDetective.wav");
 	 musica->playAsSound();
 	
-
-    JAM->setDrawable_ZIndex(&TESTMAP, 0);
-    JAM->setDrawable_ZIndex(&texto, 3);
-
+	
     
     while(JAM->isOpen()){
 		JAM->Clear();
-		
+
 		EventManager::Instance()->launch();
     	
 		THE_GAME.Update();

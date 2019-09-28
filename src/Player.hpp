@@ -36,10 +36,9 @@ class Player{
             void (Player::*Target)();
         };
 
-
         std::array<Button2Func, 2> BUTTON_MAPPING;
 
-        AnimatedSprite aSprite;
+        Sprite PlayerSprite;
         math::Vector2f SPEED;
         math::Vector2f Position;
 

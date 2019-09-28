@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "ASSETS_IDs.hpp"
 
 #define FRAMERATE 60.f
 #define UPDATE_STEP 30.f
@@ -7,6 +8,26 @@ Game::Game()
 :dt(0), accumulator(0), tick(0)
 {
     masterClock.restart();
+    AssetManager* Assets = AssetManager::Instance();
+	LeftArea.setZoneBackground(Assets->getTexture(WHITE_BACKGROUND), 0, 0, 240, 272);
+    LeftArea.setObstaclesSize(15, 15);
+    LeftArea.setObstaclesDirection(ObstaclesDirection::Top2Bottom);
+    LeftArea.setObstaclesTexture(Assets->getTexture(BLACKCUBE));
+    LeftArea.setSpawnArea(0, 242, -20);
+    LeftArea.setSpawnAreaDivisions(10);
+    LeftArea.setSpawnRate(0.5);
+    LeftArea.setZoneTime(12);
+    LeftArea.setZIndex(3);
+
+	RightArea.setZoneBackground(Assets->getTexture(BLACK_BACKGROUND), 240, 0, 240, 272);
+    RightArea.setObstaclesSize(15, 15);
+    RightArea.setObstaclesDirection(ObstaclesDirection::Bottom2Top);
+    RightArea.setObstaclesTexture(Assets->getTexture(WHITECUBE));
+    RightArea.setSpawnArea(240, 480, 292);
+    RightArea.setSpawnAreaDivisions(5);
+    RightArea.setSpawnRate(0.5);
+    RightArea.setZoneTime(12);
+    RightArea.setZIndex(4);
 }
 
 Game::~Game(){
@@ -20,18 +41,23 @@ void Game::Update(){
     if(dt > 0.25f)   dt = 0.25f;
 
     accumulator += dt;
+
+    // FIXED UPDATE
     while(accumulator >= 1/UPDATE_STEP){
         HERO.FixedUpdate();
 
 
-        HERO.SaveCurrentState();
 
         accumulator -= 1/UPDATE_STEP;
+        HERO.SaveCurrentState();
     }
+
+    //Debería estar en el Fixed Update, pero hay que hacer primero la clase enemigos y su interpolación
+    LeftArea.Update();
+    RightArea.Update();
 
     // Tick para interpolar
     tick = std::min(1.f, static_cast<float>( accumulator/(1/UPDATE_STEP) ));
-
 
     HERO.Interpolate(tick);
 }

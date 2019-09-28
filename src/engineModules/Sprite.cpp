@@ -33,6 +33,15 @@ void Sprite::setPosition(float x, float y){
     Size_Pos.y = y;
 }
 
+void Sprite::setX(float x){
+    Size_Pos.x = x;
+}
+
+void Sprite::setY(float y){
+    Size_Pos.y = y;
+}
+
+
 void Sprite::setSize(float w, float h){
     Size_Pos.w = w;
     Size_Pos.h = h;
