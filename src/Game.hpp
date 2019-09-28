@@ -4,6 +4,7 @@
 #include "Player.hpp"
 #include "engineModules/eClock.hpp"
 #include "Zone.hpp"
+#include "Handler.hpp"
 
 class Game{
     // METHODS
@@ -22,6 +23,7 @@ class Game{
         Zone LeftArea;
         Zone RightArea;
         
+        Handler GameHandler;
 
         // Interpolation things
         eClock masterClock;

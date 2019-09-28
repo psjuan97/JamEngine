@@ -46,7 +46,7 @@ void Game::Update(){
     while(accumulator >= 1/UPDATE_STEP){
         HERO.FixedUpdate();
 
-
+        GameHandler.handleEvents();
         LeftArea.FixedUpdate();
         RightArea.FixedUpdate();
         HERO.saveCurrentState();

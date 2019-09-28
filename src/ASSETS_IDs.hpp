@@ -7,6 +7,7 @@
 #define WHITE_BACKGROUND 2
 #define BLACKCUBE 3
 #define WHITECUBE 4
+#define WARNING 5
 
 
 
