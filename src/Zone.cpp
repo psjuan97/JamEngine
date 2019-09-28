@@ -5,7 +5,7 @@
 
 Zone::Zone()
 :ZONE_TIME_seconds(0), ObstaclesSpeed(0), XY_Aux(0), ZoneElapsedTime(0), 
- Accumulator(0), SpawnRate(1), ObstaclesIterator(0), COUNTDOWN(40, 100), END(false)
+ Accumulator(0), SpawnRate(1), ObstaclesIterator(0), COUNTDOWN(230, 0), END(false)
 {
     ObstacleSize.x = 15;
     ObstacleSize.y = 15;
@@ -85,7 +85,6 @@ void Zone::setObstaclesDirection(ObstaclesDirection Dir){
     }
 }
 
-
 void Zone::setObstaclesSize(float W, float H){
     ObstacleSize.x = W;
     ObstacleSize.y = H;
@@ -139,7 +138,12 @@ void Zone::FixedUpdate(){
         END = true;
     }
 
-    Countdown();
+    int CD = ZONE_TIME_seconds-ZoneElapsedTime;
+
+    if(CD != ZONE_LAST_TIME){
+        Countdown();
+        ZONE_LAST_TIME  = CD;
+    }
     SpawnHandler();
     ObstaclesUpdate();
 
@@ -200,4 +204,13 @@ void Zone::InterpolateObstacles(float Tick){
     for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
         OBSTACLES[i].Interpolate(Tick);
     }
+}
+
+
+ObstaclesDirection setObstaclesDirection(ObstaclesDirection Dir) {
+    return Dir;
+}
+
+ObstaclesDirection Zone::getObstacleDirection() {
+    return OBSTACLES[0].Direction;
 }

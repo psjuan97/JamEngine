@@ -29,6 +29,7 @@ Game::Game()
     RightArea.setZoneTime(12);
     RightArea.setZIndex(4);
 
+    setMiddle(240);
     CurrentUpdate = &Game::NormalUpdate;
 }
 
@@ -71,6 +72,10 @@ void Game::NormalUpdate(){
     // FIXED UPDATE
     while(accumulator >= 1/UPDATE_STEP){
         HERO.FixedUpdate();
+      
+        GameHandler.ShowWarning(HERO.getPositionX(), LeftArea, RightArea );
+        setHeroToZone();
+
         LeftArea.FixedUpdate();
         RightArea.FixedUpdate();
         HERO.saveCurrentState();
@@ -84,4 +89,15 @@ void Game::NormalUpdate(){
     HERO.Interpolate(tick);
     LeftArea.InterpolateObstacles(tick);
     RightArea.InterpolateObstacles(tick);
+}
+
+void Game::setHeroToZone(){
+    if(HERO.getPositionX() < 240 ){
+        RightArea.setObstacleInitialAndMaxVelocity(SLOWVEL,SLOWVEL);
+        LeftArea.setObstacleInitialAndMaxVelocity(5,50);
+    }else{
+        LeftArea.setObstacleInitialAndMaxVelocity(SLOWVEL,SLOWVEL);
+        RightArea.setObstacleInitialAndMaxVelocity(5,50);
+
+    }
 }

@@ -25,6 +25,7 @@
 
 #define VERS 1 //Talk about this
 #define REVS 0
+
 PSP_MODULE_INFO("SDL IS HERE", 0 , VERS, REVS);
 PSP_MAIN_THREAD_ATTR(PSP_THREAD_ATTR_USER);
 PSP_HEAP_SIZE_KB(-1 * 1024);
@@ -73,4 +74,10 @@ int main(){
 
 //JAM->~JamEngine();
 
+
+#ifdef PSP
+	sceKernelExitGame();
+#endif
+
+return 0;
 }

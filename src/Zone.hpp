@@ -12,6 +12,8 @@
 
 #include "enumObstacleDir.hpp"
 
+
+
 class Zone{
     // METHODS
     public:
@@ -19,6 +21,8 @@ class Zone{
         Zone(const Zone& orig) = delete;
         ~Zone();
 
+
+        
 
         void setZoneBackground(SDL_Texture* Texture, float x, float y, float w, float h);
         void setZoneTime(uint16_t Seconds);
@@ -37,12 +41,13 @@ class Zone{
         void setObstaclesTexture(SDL_Texture* Texture);
         void setZIndex(uint8_t Z);
 
+        ObstaclesDirection getObstacleDirection();
 
         void setSpawnRate(float Seconds);
 
         void FixedUpdate();
         void InterpolateObstacles(float Tick);
-
+        void setSlowDown();
     private:
         void Countdown();
         void SpawnHandler();
@@ -60,6 +65,9 @@ class Zone{
         eText COUNTDOWN;
 
         uint16_t ZONE_TIME_seconds;
+        uint16_t ZONE_LAST_TIME = 0;
+
+
         float ObstaclesSpeed;
         float XY_Aux;
 
