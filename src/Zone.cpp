@@ -4,7 +4,7 @@
 
 Zone::Zone()
 :ZONE_TIME_seconds(0), ObstaclesSpeed(0), XY_Aux(0), ZoneElapsedTime(0), 
- Accumulator(0), SpawnRate(1), ObstaclesIterator(0), COUNTDOWN(40, 100), END(false)
+ Accumulator(0), SpawnRate(1), ObstaclesIterator(0), COUNTDOWN(230, 0), END(false)
 {
     ObstacleSize.x = 15;
     ObstacleSize.y = 15;

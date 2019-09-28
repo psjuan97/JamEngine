@@ -58,12 +58,7 @@ void eText::Draw(){
         Message_rect.h = 60;
         Message_rect.w = 60;
 
-        SDL_Rect src;
-        src.x = 10; 
-        src.y = 0; 
-        src.h = 70;
-        src.w = 30;
-        //SDL_QueryTexture(texture,  NULL,   NULL,      &Message_rect.w, &Message_rect.h);
+        SDL_QueryTexture(texture,  NULL,   NULL,      &Message_rect.w, &Message_rect.h);
 
         JamEngine::Instance()->drawTexture(texture, NULL, &Message_rect);    
     }
