@@ -26,13 +26,13 @@ void AssetManager::loadInitialAssets(){
 
 	// loadAnimation(AnimBipedal, BIPEAL,7,eTime(200),true);
     loadTexture(PLAYER, "assets/Textures/Player.jpg");
-    loadTexture(BLACK_BACKGROUND, "assets/Textures/Black.jpg");
+    loadTexture(BLACK_BACKGROUND, "assets/Textures/Black2.png");
     loadTexture(WHITE_BACKGROUND, "assets/Textures/White.jpg");
     loadTexture(BLACKCUBE, "assets/Textures/Black15x15.jpg");
     loadTexture(WHITECUBE, "assets/Textures/White15x15.jpg");
     loadTexture(WARNING, "assets/Textures/Warning.jpg");
 
-    loadFont(DEFAULT_FONT, "assets/DEFAULT.ttf");
+    loadFont(DEFAULT_FONT, "assets/font.ttf");
 }
 
 SDL_Texture* AssetManager::loadTexture(uint8_t ID, const char* TexturePath){
@@ -48,7 +48,7 @@ SDL_Texture* AssetManager::loadTexture(uint8_t ID, const char* TexturePath){
 }
 
 eFont* AssetManager::loadFont(uint8_t ID, const char* FontPath){
-     fontArray[ID] = new eFont(FontPath,10);
+     fontArray[ID] = new eFont(FontPath,20);
     return  fontArray[ID];
 }
 

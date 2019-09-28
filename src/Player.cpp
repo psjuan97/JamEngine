@@ -43,6 +43,7 @@ Player::~Player(){
 
 void Player::FixedUpdate(){
 
+
     savePreviousState();
 
     CheckMovement();
@@ -54,6 +55,9 @@ void Player::FixedUpdate(){
     }
 
     Position += SPEED;
+
+ 
+
 }
 
 
