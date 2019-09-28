@@ -55,9 +55,12 @@ void Player::FixedUpdate(){
     }
 
     Position += SPEED;
+  
+    if(Position.x < 0) Position.x = 0;
+    else if (Position.x + PLAYER_WIDTH > SCREEN_WIDTH) Position.x = SCREEN_WIDTH - PLAYER_WIDTH;
 
- 
-
+    if(Position.y < 0) Position.y = 0;
+    else if(Position.y + PLAYER_HEIGHT > SCREEN_HEIGHT) Position.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
 }
 
 
@@ -65,23 +68,14 @@ void Player::CheckMovement(){
     int8_t X_AXIS = eventManager->getButtonState(PspCtrlButtons::RIGHT) - eventManager->getButtonState(PspCtrlButtons::LEFT);
     int8_t Y_AXIS = eventManager->getButtonState(PspCtrlButtons::DOWN) - eventManager->getButtonState(PspCtrlButtons::UP);
 
-    // Check screen bounds:
-
-    /*              Left                                                                Right                               */
-    if( (X_AXIS < 0 && (Position.x + SPEED.x) < 0) || (X_AXIS > 0 && (Position.x + SPEED.x + PLAYER_WIDTH) > SCREEN_WIDTH) )
-        SPEED.x = 0;
-    else
-        SPEED.x = PLAYER_SPEED * X_AXIS;
-
-    /*              Top                                                                Bottom                               */
-    if( (Y_AXIS < 0 && (Position.y + SPEED.y) < 0) || (Y_AXIS > 0 && (Position.y + SPEED.y + PLAYER_HEIGHT) > SCREEN_HEIGHT) )
-        SPEED.y = 0;
-    else
-        SPEED.y = PLAYER_SPEED * Y_AXIS;
+    SPEED.x = PLAYER_SPEED * X_AXIS;
+    SPEED.y = PLAYER_SPEED * Y_AXIS;
 }
 
+#define DASH_FACTOR 4
 void Player::Dash(){
-
+    math::Vector2f AuxSpeed(SPEED.x * DASH_FACTOR, SPEED.y * DASH_FACTOR);
+    Position = Position + AuxSpeed;
 }
 
 void Player::Skill2(){

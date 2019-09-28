@@ -1,6 +1,7 @@
 #include "Zone.hpp"
 #include <string>
-
+#include "ASSETS_IDs.hpp"
+#include "Game.hpp"
 
 Zone::Zone()
 :ZONE_TIME_seconds(0), ObstaclesSpeed(0), XY_Aux(0), ZoneElapsedTime(0), 
@@ -102,30 +103,40 @@ void Zone::setObstacleInitialAndMaxVelocity(float Initial, float MAX){
     }
     else if(Direction == ObstaclesDirection::Bottom2Top){
         Y_AXIS = -1;
+        MAX = -MAX;
     }
     else if(Direction == ObstaclesDirection::Left2Right){
         X_AXIS = 1;
     }
     else{
         X_AXIS = -1;
+        MAX = -MAX;
     }
 
-    for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
-        OBSTACLES[i].setObstacleSpeed(X_AXIS, Y_AXIS, Initial, MAX);
+    math::Vector2f Speed(X_AXIS*Initial, Y_AXIS*Initial);
+
+    for(uint8_t i = 0; i < OBSTACLES.size(); ++i) {
+        OBSTACLES[i].setObstacleSpeed(Speed, MAX);
     }
 }
 
 
 void Zone::FixedUpdate(){
 
-    if(END) return;
+    if(END) {
+ 
+        return;
+    };
 
     float dt = ZoneTimer.restart().asSeconds();
     ZoneElapsedTime += dt;
     Accumulator += dt;
 
-    if(ZoneElapsedTime > ZONE_TIME_seconds)
+    if(ZoneElapsedTime > ZONE_TIME_seconds){
+        Game::Instance()->queryAlert(AssetManager::Instance()->getTexture(POPUP), 100, 100, 107, 147, 3, 0.25);
+
         END = true;
+    }
 
     int CD = ZONE_TIME_seconds-ZoneElapsedTime;
 

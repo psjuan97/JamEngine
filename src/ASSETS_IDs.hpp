@@ -8,6 +8,7 @@
 #define BLACKCUBE 3
 #define WHITECUBE 4
 #define WARNING 5
+#define POPUP 5
 
 
 
