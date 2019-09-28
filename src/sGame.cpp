@@ -50,13 +50,13 @@ void sGame::Init(){
     RightArea.setZIndex(4);
 
     HERO.Init();
-
+    setMiddle(240);
+    CurrentUpdate = &sGame::NormalUpdate;
     masterClock.restart();
 
     LeftArea.setAlertTargetInstance(this);
     RightArea.setAlertTargetInstance(this);
 }
-
 
 void sGame::Update(){
     (this->*CurrentUpdate)();
@@ -82,6 +82,10 @@ void sGame::NormalUpdate(){
     while(accumulator >= 1/UPDATE_STEP){
 
         HERO.FixedUpdate();
+      
+        GameHandler.ShowWarning(HERO.getPositionX(), LeftArea, RightArea );
+        setHeroToZone();
+
         LeftArea.FixedUpdate();
         RightArea.FixedUpdate();
 
@@ -101,4 +105,14 @@ void sGame::NormalUpdate(){
 
 void sGame::Exit(){
     
+}
+void sGame::setHeroToZone(){
+    if(HERO.getPositionX() < 240 ){
+        RightArea.setObstacleInitialAndMaxVelocity(SLOWVEL,SLOWVEL);
+        LeftArea.setObstacleInitialAndMaxVelocity(5,15);
+    }else{
+        LeftArea.setObstacleInitialAndMaxVelocity(SLOWVEL,SLOWVEL);
+        RightArea.setObstacleInitialAndMaxVelocity(5,15);
+
+    }
 }

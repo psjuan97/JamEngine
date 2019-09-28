@@ -129,7 +129,13 @@ void JamEngine::drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst){
    // printf("dstrect.x %i \n", (int) dstrect.x );
    // printf("src.x %i \n", (int) src->x );
 
-    SDL_RenderCopy(Renderer, texture, nullptr, &dstrect);
+    if(src != nullptr){
+          SDL_RenderCopy(Renderer, texture, src, &dstrect);
+
+    }else{
+            SDL_RenderCopy(Renderer, texture, nullptr, &dstrect);
+
+    }
 }
 
 

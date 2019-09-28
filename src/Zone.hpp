@@ -40,12 +40,13 @@ class Zone{
         void setObstaclesTexture(SDL_Texture* Texture);
         void setZIndex(uint8_t Z);
 
+        ObstaclesDirection getObstacleDirection();
 
         void setSpawnRate(float Seconds);
 
         void FixedUpdate();
         void InterpolateObstacles(float Tick);
-
+        void setSlowDown();
     private:
         void Countdown();
         void SpawnHandler();
@@ -63,6 +64,9 @@ class Zone{
         eText COUNTDOWN;
 
         uint16_t ZONE_TIME_seconds;
+        uint16_t ZONE_LAST_TIME = 0;
+
+
         float ObstaclesSpeed;
         float XY_Aux;
 

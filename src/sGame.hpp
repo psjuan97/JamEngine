@@ -5,6 +5,8 @@
 #include "engineModules/eClock.hpp"
 #include "Zone.hpp"
 #include "engineModules/State.hpp"
+#include "Handler.hpp"
+#define SLOWVEL 2
 
 class sGame : public State {
     // METHODS
@@ -18,6 +20,7 @@ class sGame : public State {
         virtual void Update();
         virtual void Exit();
 
+        void setHeroToZone();
         void queryAlert(SDL_Texture* T, float X, float Y, float W, float H, float DisplayTime, float FlickerInterval);
 
     private:
@@ -25,6 +28,9 @@ class sGame : public State {
         void NormalUpdate();
         void AlertUpdate();
 
+        inline void setMiddle(uint16_t middle){
+            middleX = middle;
+        };
     // VARIABLES
     public:
         //PopUp ALERT;
@@ -36,6 +42,8 @@ class sGame : public State {
         Zone LeftArea;
         Zone RightArea;
         
+        Handler GameHandler;
+        uint16_t middleX;
         PopUp ALERT;
 
         // Interpolation things

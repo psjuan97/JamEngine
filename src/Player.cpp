@@ -49,6 +49,7 @@ void Player::Init(){
 
 void Player::FixedUpdate(){
 
+
     savePreviousState();
 
     CheckMovement();
@@ -60,6 +61,7 @@ void Player::FixedUpdate(){
     }
 
     Position += SPEED;
+  
     if(Position.x < 0) Position.x = 0;
     else if (Position.x + PLAYER_WIDTH > SCREEN_WIDTH) Position.x = SCREEN_WIDTH - PLAYER_WIDTH;
 

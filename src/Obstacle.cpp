@@ -32,13 +32,12 @@ void Obstacle::setObstacleSpeed(math::Vector2f _SPEED, float MAX){
     }
 }
 
-
+#include <iostream>
 void Obstacle::FixedUpdate(float BoostTick){
 
     if(!alive) return;
 
     checkBounds();
-
     float newSpeed = BaseSpeed + BaseSpeed*(BoostTick*SpeedBoostPercentage);
 
     if(SPEED.x)
