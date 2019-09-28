@@ -11,9 +11,11 @@
 #include "engineModules/eClock.hpp"
 
 #include "engineModules/AnimatedSprite.hpp"
-#include "Game.hpp"
+#include "sMenu.hpp"
 
 #include "ASSETS_IDs.hpp"
+
+#include "engineModules/StateMachine.hpp"
 
 
 
@@ -42,28 +44,30 @@ int main(){
 	JamEngine* JAM = JamEngine::Instance();
 	JAM->Init();
 
-	AssetManager* Assets = AssetManager::Instance();
-	Assets->loadInitialAssets();
-
-	eText::setFont(Assets->getFont(DEFAULT_FONT));
-
-	Game* THE_GAME = Game::Instance();
 	
+		AssetManager* Assets = AssetManager::Instance();
+		
+    	Assets->loadFont(DEFAULT_FONT, "assets/DEFAULT.ttf");
 
-	//////////////////////////
-	// Prueba musica
-	//////////////////////////
-	 eMusic* musica = Assets->loadMusic(SAMPLE_MUSIC, "assets/8-bitDetective.wav");
-	 musica->playAsSound();
+		eText::setFont(Assets->getFont(DEFAULT_FONT));
+
+		//////////////////////////
+		// Prueba musica
+		//////////////////////////
+		eMusic* musica = Assets->loadMusic(SAMPLE_MUSIC, "assets/8-bitDetective.wav");
+		musica->playAsSound();
 	
 	
+	
+	StateMachine* mashin = StateMachine::Instance();
+	mashin->setState(new sMenu);
     
     while(JAM->isOpen()){
 		JAM->Clear();
 
 		EventManager::Instance()->launch();
     	
-		THE_GAME->Update();
+		mashin->Update();
 
 		JAM->Dro();
         // SDL_Delay(5);

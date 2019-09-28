@@ -39,6 +39,7 @@ class EventManager{
             return RESULT;
         }
 
+        bool isAnyKeyPressed();
 
     private:
         EventManager();

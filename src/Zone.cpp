@@ -1,7 +1,9 @@
 #include "Zone.hpp"
 #include <string>
 #include "ASSETS_IDs.hpp"
-#include "Game.hpp"
+#include "sGame.hpp"
+
+
 
 Zone::Zone()
 :ZONE_TIME_seconds(0), ObstaclesSpeed(0), XY_Aux(0), ZoneElapsedTime(0), 
@@ -12,7 +14,6 @@ Zone::Zone()
 
     OBSTACLES_SPAWNPOINTS.reserve(10);
 	COUNTDOWN.setString("00");
-    JamEngine::Instance()->setDrawable_ZIndex(&COUNTDOWN, 2);
 }
 
 Zone::~Zone(){
@@ -20,6 +21,7 @@ Zone::~Zone(){
 }
 
 void Zone::setZoneBackground(SDL_Texture* Texture, float x, float y, float w, float h){
+    
     Background.setTexture(Texture);
     Background.setPosition(x, y);
     Background.setSize(w, h);
@@ -36,6 +38,8 @@ void Zone::setZIndex(uint8_t Z){
 }
 
 void Zone::setZoneTime(uint16_t Seconds){
+    JamEngine::Instance()->setDrawable_ZIndex(&COUNTDOWN, 2);
+
     ZONE_TIME_seconds = Seconds;
     ZoneTimer.restart();
 }
@@ -134,8 +138,7 @@ void Zone::FixedUpdate(){
     Accumulator += dt;
 
     if(ZoneElapsedTime > ZONE_TIME_seconds){
-        Game::Instance()->queryAlert(AssetManager::Instance()->getTexture(POPUP), 100, 100, 107, 147, 3, 0.25);
-
+        ALERT_TARGET->queryAlert(AssetManager::Instance()->getTexture(POPUP), 100, 100, 107, 147, 3, 0.25);
         END = true;
     }
 
@@ -200,4 +203,9 @@ void Zone::InterpolateObstacles(float Tick){
     for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
         OBSTACLES[i].Interpolate(Tick);
     }
+}
+
+
+void Zone::setAlertTargetInstance(sGame* Target){
+    ALERT_TARGET = Target;
 }

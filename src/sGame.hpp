@@ -1,26 +1,26 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef SGAME_H
+#define SGAME_H
 
 #include "Player.hpp"
 #include "engineModules/eClock.hpp"
 #include "Zone.hpp"
+#include "engineModules/State.hpp"
 
-class Game{
+class sGame : public State {
     // METHODS
     public:
-        static Game* Instance(){
-            static Game instance;
-            return &instance;
-        }
-        ~Game();
+        sGame();
+        sGame(const sGame& orig) = delete;
+        void operator=(const sGame& orig) = delete;
+        ~sGame();
 
-        void Update();
+        virtual void Init();
+        virtual void Update();
+        virtual void Exit();
+
         void queryAlert(SDL_Texture* T, float X, float Y, float W, float H, float DisplayTime, float FlickerInterval);
 
     private:
-        Game();
-        Game(const Game& orig) = delete;
-        void operator=(const Game& orig) = delete;
 
         void NormalUpdate();
         void AlertUpdate();
@@ -45,7 +45,7 @@ class Game{
         float accumulator;
         double tick;
 
-        void (Game::*CurrentUpdate)();
+        void (sGame::*CurrentUpdate)();
 };
 
 #endif

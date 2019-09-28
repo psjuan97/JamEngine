@@ -32,7 +32,6 @@ void AssetManager::loadInitialAssets(){
     loadTexture(WHITECUBE, "assets/Textures/White15x15.jpg");
     loadTexture(POPUP, "assets/Textures/manes.jpg");
 
-    loadFont(DEFAULT_FONT, "assets/DEFAULT.ttf");
 }
 
 SDL_Texture* AssetManager::loadTexture(uint8_t ID, const char* TexturePath){

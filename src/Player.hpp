@@ -15,6 +15,8 @@ class Player : public Interpolable_Object {
         Player(const Player& orig) = delete;
         ~Player();
 
+        void Init();
+
         void FixedUpdate();
 
         virtual void Interpolate(float tick);
