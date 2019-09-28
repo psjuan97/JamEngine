@@ -49,7 +49,7 @@ void Game::Update(){
     while(accumulator >= 1/UPDATE_STEP){
         HERO.FixedUpdate();
 
-        GameHandler.handleEvents();
+        GameHandler.ShowWarning(HERO.getPositionX(), LeftArea, RightArea );
         setHeroToZone();
 
         LeftArea.FixedUpdate();

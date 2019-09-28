@@ -84,7 +84,6 @@ void Zone::setObstaclesDirection(ObstaclesDirection Dir){
     }
 }
 
-
 void Zone::setObstaclesSize(float W, float H){
     ObstacleSize.x = W;
     ObstacleSize.y = H;
@@ -197,3 +196,10 @@ void Zone::InterpolateObstacles(float Tick){
 }
 
 
+ObstaclesDirection setObstaclesDirection(ObstaclesDirection Dir) {
+    return Dir;
+}
+
+ObstaclesDirection Zone::getObstacleDirection() {
+    return OBSTACLES[0].Direction;
+}

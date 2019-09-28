@@ -39,6 +39,7 @@ class Zone{
         void setObstaclesTexture(SDL_Texture* Texture);
         void setZIndex(uint8_t Z);
 
+        ObstaclesDirection getObstacleDirection();
 
         void setSpawnRate(float Seconds);
 
