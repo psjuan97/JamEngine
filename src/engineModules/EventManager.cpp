@@ -6,6 +6,10 @@
 #define BUTTON_DOWN SDL_JOYBUTTONDOWN
 #define BUTTON_UP 1540
 
+
+#define JOYSTICK_DEAD_ZONE  8000
+
+
 EventManager::EventManager(){
 
     // for(int i = 0;  i < MAXEvents ; i++){
@@ -35,6 +39,54 @@ void EventManager::launch(){
             else{
                 PSP_BUTTONS_STATE[event.jbutton.button] = false;
             }
+        }
+
+        if(event.type == SDL_JOYAXISMOTION){
+            std::cout << event.jaxis.value << std::endl;
+            
+
+                         //X axis motion
+							if( event.jaxis.axis == 0 )
+							{
+                                 //Left of dead zone
+                                if( event.jaxis.value < -JOYSTICK_DEAD_ZONE )
+                                {
+                                    PSP_BUTTONS_STATE[LEFT] = true;
+                                }
+                                //Right of dead zone
+                                else if( event.jaxis.value > JOYSTICK_DEAD_ZONE )
+                                {
+                                    PSP_BUTTONS_STATE[RIGHT] = true;
+                                }
+                                else
+                                {
+     
+                                    PSP_BUTTONS_STATE[LEFT] = false;
+                                    PSP_BUTTONS_STATE[RIGHT] = false;
+                                }
+							}
+							//Y axis motion
+							else if( event.jaxis.axis == 1 )
+							{
+								//Below of dead zone
+								if( event.jaxis.value < -JOYSTICK_DEAD_ZONE )
+								{
+                                     PSP_BUTTONS_STATE[UP] = true;
+								}
+								//Above of dead zone
+								else if( event.jaxis.value > JOYSTICK_DEAD_ZONE )
+								{
+                                    PSP_BUTTONS_STATE[DOWN] = true;								
+								}
+								else
+								{
+                                    PSP_BUTTONS_STATE[DOWN] = false;
+                                    PSP_BUTTONS_STATE[UP] = false;								
+							}
+
+
+                            }
+
         }
 
     }
