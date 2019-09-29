@@ -56,7 +56,7 @@ int main(){
 		//////////////////////////
 		// Prueba musica
 		//////////////////////////
-		eMusic* musica = Assets->loadMusic(SAMPLE_MUSIC, "assets/8-bitDetective.wav");
+		eMusic* musica = Assets->loadMusic(SAMPLE_MUSIC, "assets/theme.wav");
 		musica->playAsSound();
 	
 	
