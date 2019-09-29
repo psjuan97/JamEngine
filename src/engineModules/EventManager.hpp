@@ -39,6 +39,12 @@ class EventManager{
 
         bool isAnyKeyPressed();
 
+        inline void resetKeys(){
+            for(uint8_t i = 0; i < PspCtrlButtons::PSPKEYCOUNT; ++i){
+                PSP_BUTTONS_STATE[i] = false;
+            }
+        }
+
     private:
         EventManager();
         EventManager(const EventManager& orig) = delete;

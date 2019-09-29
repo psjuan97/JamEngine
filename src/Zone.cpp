@@ -3,6 +3,7 @@
 #include "ASSETS_IDs.hpp"
 #include "sGame.hpp"
 #include "engineModules/StateMachine.hpp"
+#include "engineModules/EventManager.hpp"
 #include "sScore.hpp"
 
 
@@ -214,6 +215,7 @@ void Zone::checkPlayerCollisions(math::Vector2f PlayerPosition, math::Vector2f P
               CurrentObstacle.alive = false;
               CurrentObstacle.ObstacleSprite.Visibility = false;
 
+                EventManager::Instance()->resetKeys();
                 StateMachine::Instance()->setState(new sScore);
 
             }
