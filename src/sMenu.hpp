@@ -3,6 +3,7 @@
 
 #include "engineModules/State.hpp"
 #include "engineModules/eText.hpp"
+#include "engineModules/Sprite.hpp"
 
 class sMenu : public State {
     public: 
@@ -16,6 +17,7 @@ class sMenu : public State {
 
     private:
         eText PRESS_STARTO;
+        Sprite MenuStartSprite;
 };
 
 #endif

@@ -9,7 +9,7 @@
 #define WHITECUBE 4
 #define WARNING 5
 #define POPUP 6
-
+#define MENUSTART 7
 
 
 // Sprites IDs MAPA 1 

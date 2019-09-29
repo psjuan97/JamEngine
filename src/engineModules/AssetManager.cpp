@@ -32,7 +32,7 @@ void AssetManager::loadInitialAssets(){
     loadTexture(WHITECUBE, "assets/Textures/White15x15.jpg");
     loadTexture(POPUP, "assets/Textures/BITCONNEEEEECT.png");
     loadTexture(WARNING, "assets/Textures/Warning.jpg");
-
+    loadTexture(MENUSTART, "assets/Textures/MenuStart.png");
 }
 
 SDL_Texture* AssetManager::loadTexture(uint8_t ID, const char* TexturePath){
