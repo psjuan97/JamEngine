@@ -20,13 +20,12 @@ void sMenu::Init(){
     
     AssetManager::Instance()->loadInitialAssets();
 
-   /* MenuStartSprite.setTexture(AssetManager::Instance()->getTexture(MENUSTART));
+    MenuStartSprite.setTexture(AssetManager::Instance()->getTexture(MENUSTART));
     MenuStartSprite.setSize(480, 280);
     MenuStartSprite.setPosition(0, 0);
     MenuStartSprite.Visibility = true;
-*/
    // JamEngine::Instance()->setDrawable_ZIndex(&PRESS_STARTO, 2);
-  //  JamEngine::Instance()->setDrawable_ZIndex(&MenuStartSprite, 2);
+    JamEngine::Instance()->setDrawable_ZIndex(&MenuStartSprite, 2);
     
 }
 
@@ -37,5 +36,5 @@ void sMenu::Update(){
 }
 
 void sMenu::Exit(){
-    //JamEngine::Instance()->clearAllDrawables();
+    JamEngine::Instance()->clearAllDrawables();
 }

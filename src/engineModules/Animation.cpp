@@ -6,6 +6,10 @@ Animation::Animation( uint8_t textureID, int nframes, eTime const& duration, boo
 
             this->texture = AssetManager::Instance()->getTexture(textureID);
 
+            if (this->texture == nullptr) {
+                std::cout << "##################### ANIMATIONTEXTURA ES NULLPTR" << std::endl;
+            }
+
             int w;
             SDL_Rect rect; 
             SDL_QueryTexture(texture, NULL, NULL, &w, &rect.h);

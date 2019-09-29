@@ -12,6 +12,7 @@ AssetManager::AssetManager(){
     while(i--){
         TexturesArray[i] = nullptr;
         fontArray[i] = nullptr;
+        animArray[i] = nullptr;
     }
 
 }
@@ -56,8 +57,10 @@ void AssetManager::loadInitialAssets(){
 }
 
 SDL_Texture* AssetManager::loadTexture(uint8_t ID, const char* TexturePath){
-    
     SDL_Surface* imageSurface = IMG_Load(TexturePath);
+    if(imageSurface == nullptr){
+        std::cout << "ASDASDASDASDASDASDASDASDASASSSSSSSSSSSSSS" << std::endl;
+    }
     TexturesArray[ID] = SDL_CreateTextureFromSurface(JamEngine::Instance()->Renderer, imageSurface);
     if(TexturesArray[ID] == nullptr){
         std::cout << "[!] ERROR cargando textura " << std::endl;

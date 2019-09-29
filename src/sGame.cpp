@@ -47,7 +47,7 @@ void sGame::Init(){
     LeftArea.setObstaclesSize(15, 15);
     LeftArea.setObstaclesDirection(ObstaclesDirection::Top2Bottom);
     //LeftArea.setObstaclesTexture(Assets->getTexture(GREENCUBE));
-    RightArea.setObstaclesAnim(GREENENEMYANIM);
+    LeftArea.setObstaclesAnim(GREENENEMYANIM);
     std::cout << "GREEN ANIM LOADING" << std::endl;
     LeftArea.setObstacleInitialAndMaxVelocity(3, 15);
     std::cout << "setObstacleInitialAndMaxVelocity " << std::endl;

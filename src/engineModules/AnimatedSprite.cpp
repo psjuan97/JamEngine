@@ -9,8 +9,13 @@
 void AnimatedSprite::setAnimation(uint8_t id){
 
     actualAnimation = AssetManager::Instance()->getAnimation(id);
-    this->Texture = actualAnimation->getTexture();
 
+    if (actualAnimation == nullptr) {
+        std::cout << "*************************** ACTUALANIMATION ES NULLPTR" << std::endl;
+    } else {
+        std::cout << "*************************** ACTUALANIMATION --NO-- ES NULLPTR" << std::endl;
+        this->Texture = actualAnimation->getTexture(); 
+    }
 }
 
 
