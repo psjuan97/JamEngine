@@ -16,7 +16,7 @@ sScore::~sScore(){
 }
 
 void sScore::Init(){
-    EndGameSprite.setTexture(AssetManager::Instance()->getTexture(MENUSTART));
+    EndGameSprite.setTexture(AssetManager::Instance()->getTexture(MENUFIN));
     EndGameSprite.setSize(480, 280);
     EndGameSprite.setPosition(0, 0);
     EndGameSprite.Visibility = true;

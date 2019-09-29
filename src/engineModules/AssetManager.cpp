@@ -33,6 +33,8 @@ void AssetManager::loadInitialAssets(){
     loadTexture(POPUP, "assets/Textures/BITCONNEEEEECT.png");
     loadTexture(WARNING, "assets/Textures/Warning.jpg");
     loadTexture(MENUSTART, "assets/Textures/MenuStart.png");
+    loadTexture(MENUFIN, "assets/Textures/MenuFin.png");
+
     loadTexture(SPLASH, "assets/Textures/splash.png");
 
     ////////////////////

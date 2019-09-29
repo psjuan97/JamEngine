@@ -12,7 +12,7 @@
 #define MENUSTART 7
 #define COVER 8
 #define SPLASH 9
-
+#define MENUFIN 10
 
 
 //Fonts IDs 
