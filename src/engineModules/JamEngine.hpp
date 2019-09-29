@@ -25,7 +25,7 @@ std::string to_string(const T& value)
     return oss.str();
 }
 #define Z_INDEX_LEVELS 11
-#define DRAWABLES_PER_LEVEL 20
+#define DRAWABLES_PER_LEVEL 35
 
 
 class JamEngine {

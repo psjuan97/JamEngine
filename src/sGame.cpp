@@ -19,30 +19,30 @@ sGame::sGame()
     CurrentUpdate = &sGame::NormalUpdate;
 
 
-    ArrowPos[0] = {40,  250};
-    ArrowPos[1] = {40,   20};
-    ArrowPos[2] = {300,  20};
-    ArrowPos[3] = {300, 250};
-    ArrowPos[4] = {20,   50};
-    ArrowPos[5] = {430,  50};
+    ArrowPos[0] = {60,  220};
+    ArrowPos[1] = {60,   20};
+    ArrowPos[2] = {330,  20};
+    ArrowPos[3] = {330, 220};
+    ArrowPos[4] = {20,   110};
+    ArrowPos[5] = {430,  110};
 
     //  LEFT: PspDirTarget {0, 1} | ObstaclesDir { Top2Bottom, Bottom2Top}
     // RIGHT: PspDirTarget {2, 3} | ObstaclesDir { Top2Bottom, Bottom2Top}
     // TOTAL: PspDirTarget {4, 5} | ObstaclesDir { ALL }
 
     // PRESET 0
-    RUN_PRESETS[0][0] = {AreaType::LEFT_AREA, 1, ObstaclesDirection::Top2Bottom, 3, 0.3};
-    RUN_PRESETS[0][1] = {AreaType::RIGHT_AREA, 3, ObstaclesDirection::Bottom2Top, 3, 0.5};
-    RUN_PRESETS[0][2] = {AreaType::TOTAL_AREA, 5, ObstaclesDirection::Top2Bottom, 4, 0.3};
-    RUN_PRESETS[0][3] = {AreaType::TOTAL_AREA, 4, ObstaclesDirection::Left2Right, 4.5, 0.5};
-    RUN_PRESETS[0][4] = {AreaType::LEFT_AREA, 1, ObstaclesDirection::Top2Bottom, 3, 0.3};
+    RUN_PRESETS[0][0] = {AreaType::TOTAL_AREA, 5, ObstaclesDirection::Left2Right, 12, 0.3};
+    RUN_PRESETS[0][1] = {AreaType::LEFT_AREA, 0, ObstaclesDirection::Top2Bottom, 9, 0.5};
+    RUN_PRESETS[0][2] = {AreaType::TOTAL_AREA, 4, ObstaclesDirection::Right2Left, 12, 0.4};
+    RUN_PRESETS[0][3] = {AreaType::RIGHT_AREA, 2, ObstaclesDirection::Bottom2Top, 9, 0};
+    RUN_PRESETS[0][4] = {AreaType::LEFT_AREA, 0, ObstaclesDirection::Top2Bottom, 10, 0};
 
     // PRESET 1
-    RUN_PRESETS[1][0] = {AreaType::TOTAL_AREA, 4, ObstaclesDirection::Left2Right, 3, 0.3};
-    RUN_PRESETS[1][1] = {AreaType::TOTAL_AREA, 4, ObstaclesDirection::Right2Left, 4, 0.4};
-    RUN_PRESETS[1][2] = {AreaType::LEFT_AREA, 1, ObstaclesDirection::Top2Bottom, 4, 0.5};
-    RUN_PRESETS[1][3] = {AreaType::RIGHT_AREA, 3, ObstaclesDirection::Bottom2Top, 5, 0};
-    RUN_PRESETS[1][4] = {AreaType::LEFT_AREA, 0, ObstaclesDirection::Top2Bottom, 5, 0};
+    RUN_PRESETS[1][0] = {AreaType::LEFT_AREA, 0, ObstaclesDirection::Top2Bottom, 8, 0.3};
+    RUN_PRESETS[1][1] = {AreaType::LEFT_AREA, 1, ObstaclesDirection::Bottom2Top, 8, 0.3};
+    RUN_PRESETS[1][2] = {AreaType::TOTAL_AREA, 5, ObstaclesDirection::Left2Right, 13, 0.5};
+    RUN_PRESETS[1][3] = {AreaType::RIGHT_AREA, 2, ObstaclesDirection::Bottom2Top, 9, 0.5};
+    RUN_PRESETS[1][4] = {AreaType::LEFT_AREA, 0, ObstaclesDirection::Top2Bottom, 10, 0.3};
 
     TELON[0].setTexture(AssetManager::Instance()->getTexture(TELON_TEXTURE));
     TELON[0].setSize(240, 272);
@@ -51,8 +51,7 @@ sGame::sGame()
     TELON[1].setSize(240, 272);
     TELON[1].setPosition(240, 0);
 
-    JamEngine::Instance()->setDrawable_ZIndex(&TELON[0], 8);
-    JamEngine::Instance()->setDrawable_ZIndex(&TELON[1], 8);
+
 
 }
 
@@ -111,10 +110,10 @@ void sGame::Init(){
     CurrentUpdate = &sGame::NormalUpdate;
     masterClock.restart();
 
-    LeftArea.setAlertTargetInstance(this);
-    RightArea.setAlertTargetInstance(this);
-
     setTransition();
+
+    JamEngine::Instance()->setDrawable_ZIndex(&TELON[0], 8);
+    JamEngine::Instance()->setDrawable_ZIndex(&TELON[1], 8);
 }
 
 void sGame::Update(){
@@ -148,16 +147,16 @@ void sGame::NormalUpdate(){
     // FIXED UPDATE
     while(accumulator >= 1/UPDATE_STEP){
 
-        HERO.FixedUpdate();
 
         GameHandler.ShowWarning(HERO.getPositionX(), LeftArea, RightArea );
         setHeroToZone();
 
-        
-        HERO.saveCurrentState();
-
         checkForDelay();
+        
+        HERO.FixedUpdate();
 
+
+        HERO.saveCurrentState();
         accumulator -= 1/UPDATE_STEP;
     }
 
@@ -208,12 +207,14 @@ void sGame::setTransition(){
             ID = ARROW_DOWN;
     
         queryAlert(AssetManager::Instance()->getTexture(ID), ArrowPos[Next.PspDirTarget].ArrowPositionX, ArrowPos[Next.PspDirTarget].ArrowPositionY, 59, 34, 0.7, 0.09);
+
+        if(ActiveZone != &LeftArea)
+            HERO.SetPosition(120, 136);
         
         ActiveZone = &LeftArea;
 
         TELON[1].Visibility = true;
         TelonTarget = &TELON[0];
-        HERO.SetPosition(100, 150);
         
         TotalAreaClearTelon = false;
         TotalArea.enableDisableBackground(false);
@@ -236,12 +237,15 @@ void sGame::setTransition(){
         if(Next.PspDirTarget == 3)
             ID = ARROW_DOWN;
         queryAlert(AssetManager::Instance()->getTexture(ID), ArrowPos[Next.PspDirTarget].ArrowPositionX, ArrowPos[Next.PspDirTarget].ArrowPositionY, 59, 34, 0.7, 0.09);
+        
+        if(ActiveZone != &RightArea)
+            HERO.SetPosition(360, 136);
 
         ActiveZone = &RightArea;
         TELON[0].Visibility = true;
 
         TelonTarget = &TELON[1];
-        HERO.SetPosition(300, 150);
+
 
         TotalAreaClearTelon = false;
         TotalArea.enableDisableBackground(false);
@@ -252,15 +256,27 @@ void sGame::setTransition(){
     else{
         TotalArea.setObstaclesDirection(Next.ObstaclesDir);
         TotalArea.setObstacleInitialAndMaxVelocity(Next.InitialObstacleSpeed, 0);
+        TotalArea.setSpawnRate(0.2);
 
-        if(Next.ObstaclesDir == ObstaclesDirection::Top2Bottom)
+        if(Next.ObstaclesDir == ObstaclesDirection::Top2Bottom){
             TotalArea.setSpawnAreaAndDivisions(0, 480, -20, 10);
-        else if(Next.ObstaclesDir == ObstaclesDirection::Bottom2Top)
+            TotalArea.setObstaclesSize(40, 15);
+        }
+        else if(Next.ObstaclesDir == ObstaclesDirection::Bottom2Top){
             TotalArea.setSpawnAreaAndDivisions(0, 480, 292, 10);
-        else if(Next.ObstaclesDir == ObstaclesDirection::Left2Right)
+            TotalArea.setObstaclesSize(40, 15);
+            
+        }
+        else if(Next.ObstaclesDir == ObstaclesDirection::Left2Right){
             TotalArea.setSpawnAreaAndDivisions(0, 272, -20, 10);
-        else
+            TotalArea.setObstaclesSize(15, 40);
+
+        }
+        else{
             TotalArea.setSpawnAreaAndDivisions(0, 272, 500, 10);
+            TotalArea.setObstaclesSize(15, 40);
+
+        }
 
         uint8_t ID = ARROW_RIGHT;
         if(Next.PspDirTarget == 4)
@@ -268,12 +284,15 @@ void sGame::setTransition(){
 
         queryAlert(AssetManager::Instance()->getTexture(ID), ArrowPos[Next.PspDirTarget].ArrowPositionX, ArrowPos[Next.PspDirTarget].ArrowPositionY, 34, 59, 0.7, 0.09);
 
+        if(ActiveZone != &TotalArea)
+            HERO.SetPosition(240, 136);
+
         ActiveZone = &TotalArea;
         TELON[0].Visibility = true;
         TELON[1].Visibility = true;
         TelonTarget = &TELON[1];
-        HERO.SetPosition(300, 150);
 
+        
         TotalAreaClearTelon = true;
 
         TotalArea.enableDisableBackground(true);
@@ -309,6 +328,7 @@ void sGame::checkForDelay(){
         }
     }
     else{
+
         ActiveZone->checkPlayerCollisions(HERO.getPosition(), HERO.getSize());
         ActiveZone->FixedUpdate();
     }
