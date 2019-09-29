@@ -14,7 +14,9 @@
 #define SCREEN_WIDTH 480
 #define SCREEN_HEIGHT 272
 
-Player::Player(){
+Player::Player()
+:BoundsID(0)
+{
 
     
     // EventManager::Instance()->registerEvent(PspCtrlButtons::LEFT, (void *)&Player::MoveLeft );
@@ -27,6 +29,10 @@ Player::Player(){
     BUTTON_MAPPING[1] = {PspCtrlButtons::CIRCLE, &Player::CleanArea};
 
     eventManager = EventManager::Instance();
+
+    ZONE_X_BOUNDS[0] = {0, 240};
+    ZONE_X_BOUNDS[1] = {240, 480};
+    ZONE_X_BOUNDS[2] = {0, 480};
 }
 
 Player::~Player(){
@@ -38,7 +44,7 @@ void Player::Init(Zone* lzone, Zone* rzone){
     leftArea = lzone;
     rightArea = rzone;
     
-    JamEngine::Instance()->setDrawable_ZIndex(&PlayerSprite, 9);
+    JamEngine::Instance()->setDrawable_ZIndex(&PlayerSprite, 7);
 
     PlayerSprite.setTexture(AssetManager::Instance()->getTexture(PLAYER));
     PlayerSprite.setSize(8, 8);
@@ -66,8 +72,8 @@ void Player::FixedUpdate(){
 
     Position += SPEED;
   
-    if(Position.x < 0) Position.x = 0;
-    else if (Position.x + PLAYER_WIDTH > SCREEN_WIDTH) Position.x = SCREEN_WIDTH - PLAYER_WIDTH;
+    if(Position.x < ZONE_X_BOUNDS[BoundsID].minX) Position.x = ZONE_X_BOUNDS[BoundsID].minX;
+    else if (Position.x + PLAYER_WIDTH > ZONE_X_BOUNDS[BoundsID].maxX) Position.x = ZONE_X_BOUNDS[BoundsID].maxX - PLAYER_WIDTH;
 
     if(Position.y < 0) Position.y = 0;
     else if(Position.y + PLAYER_HEIGHT > SCREEN_HEIGHT) Position.y = SCREEN_HEIGHT - PLAYER_HEIGHT;
@@ -113,4 +119,12 @@ void Player::Interpolate(float tick){
 
     if(SPEED.x != 0 || SPEED.y != 0)
         PlayerSprite.setPosition(x, y);
+}
+
+void Player::SetPosition(float X, float Y){
+    Position.x = X;
+    Position.y = Y;
+    savePreviousState();
+    saveCurrentState();
+    PlayerSprite.setPosition(X, Y);
 }

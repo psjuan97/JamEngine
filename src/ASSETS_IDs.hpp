@@ -12,6 +12,13 @@
 #define MENUSTART 7
 #define COVER 8
 
+#define ARROW_UP 9
+#define ARROW_DOWN 10
+#define ARROW_LEFT 11
+#define ARROW_RIGHT 12
+
+#define TELON_TEXTURE 13
+
 
 
 

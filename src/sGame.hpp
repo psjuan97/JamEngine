@@ -8,6 +8,27 @@
 #include "Handler.hpp"
 #define SLOWVEL 2
 
+
+struct ArrowPositions{
+    float ArrowPositionX;
+    float ArrowPositionY;
+};
+
+enum AreaType{
+    LEFT_AREA = 0,
+    RIGHT_AREA,
+    TOTAL_AREA
+};
+
+struct LEVEL {
+    AreaType Type;
+    uint8_t PspDirTarget;
+    ObstaclesDirection ObstaclesDir;
+    float InitialObstacleSpeed;
+    float Acceleration;
+};
+
+
 class sGame : public State {
     // METHODS
     public:
@@ -28,6 +49,9 @@ class sGame : public State {
         void NormalUpdate();
         void AlertUpdate();
 
+        void setTransition();
+        void checkForDelay();
+
         inline void setMiddle(uint16_t middle){
             middleX = middle;
         };
@@ -40,16 +64,22 @@ class sGame : public State {
         /// decoracion ///
         //////////////////
         Sprite cover;
-
+        
+        Sprite TELON[2];
 
         //Entities
 	    Player HERO;
+
+        ArrowPositions ArrowPos[6];
+        std::array<LEVEL, 5> RUN_PRESETS[2];
         
         Zone LeftArea;
         Zone RightArea;
+        Zone TotalArea;
         
         Handler GameHandler;
         PopUp ALERT;
+        uint16_t ZONE_LAST_TIME = 0;
 
         // Interpolation things
         eClock masterClock;
@@ -64,6 +94,13 @@ class sGame : public State {
 
         Zone* ActiveZone;
         void (sGame::*CurrentUpdate)();
+
+        uint8_t LevelIterator;
+        bool WaitForDelay;
+        float DelayAccumulator;
+        float ChangeLevelAccumulator;
+        Sprite* TelonTarget;
+        bool TotalAreaClearTelon;
 };
 
 #endif
