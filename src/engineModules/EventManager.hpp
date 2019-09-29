@@ -50,6 +50,8 @@ class EventManager{
         
         // pMethod callbacks[MAXEvents] = {0};
 
+
+        
         bool PSP_BUTTONS_STATE[PspCtrlButtons::PSPKEYCOUNT];
 
 };
