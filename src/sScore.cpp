@@ -4,6 +4,8 @@
 #include "engineModules/EventManager.hpp"
 #include "Score.hpp"
 #include "sMenu.hpp"
+#include "sGame.hpp"
+
 #include "ASSETS_IDs.hpp"
 
 /// :FINAL_SCORE(200, 50), AGAIN(100, 50)
@@ -34,7 +36,7 @@ void sScore::Init(){
 
 void sScore::Update(){
     if(EventManager::Instance()->isAnyKeyPressed()){
-        StateMachine::Instance()->setState(new sMenu);
+        StateMachine::Instance()->setState(new sGame);
     }
 }
 

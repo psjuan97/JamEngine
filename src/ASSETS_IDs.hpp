@@ -14,6 +14,15 @@
 #define SPLASH 9
 #define MENUFIN 10
 
+#define ARROW_UP 11
+#define ARROW_DOWN 12
+#define ARROW_LEFT 13
+#define ARROW_RIGHT 14
+
+#define TELON_TEXTURE 15
+
+
+
 
 //Fonts IDs 
 #define DEFAULT_FONT 0

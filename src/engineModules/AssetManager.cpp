@@ -57,6 +57,12 @@ void AssetManager::loadInitialAssets(){
     loadTexture(PINKCUBE, "assets/Textures/Cubo_rosa_anim.png");
     loadAnimation(PINKENEMYANIM,PINKCUBE,4,eTime(40),true);
 
+    loadTexture(ARROW_UP, "assets/Textures/Up.png");
+    loadTexture(ARROW_DOWN, "assets/Textures/Down.png");
+    loadTexture(ARROW_LEFT, "assets/Textures/Left.png");
+    loadTexture(ARROW_RIGHT, "assets/Textures/Right.png");
+
+    loadTexture(TELON_TEXTURE, "assets/Textures/TELON.jpg");
 }
 
 SDL_Texture* AssetManager::loadTexture(uint8_t ID, const char* TexturePath){

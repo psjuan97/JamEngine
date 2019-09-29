@@ -53,6 +53,11 @@ class Zone{
         void InterpolateObstacles(float Tick);
         void setSlowDown();
         void CleanZone();
+        void resetClock();
+        inline void enableDisableBackground(bool flag){
+            Background.Visibility = flag;
+        };
+
     private:
         void Countdown();
         void SpawnHandler();
@@ -67,17 +72,10 @@ class Zone{
         eClock ZoneTimer;
         
         Sprite Background;
-        eText COUNTDOWN;
-
-        uint16_t ZONE_TIME_seconds;
-        uint16_t ZONE_LAST_TIME = 0;
-
 
         float ObstaclesSpeed;
         float XY_Aux;
 
-        bool END;
-        float ZoneElapsedTime;
         float Accumulator;
         float SpawnRate;
 

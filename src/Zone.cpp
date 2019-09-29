@@ -7,14 +7,13 @@
 
 
 Zone::Zone()
-:ZONE_TIME_seconds(0), ObstaclesSpeed(0), XY_Aux(0), ZoneElapsedTime(0), 
- Accumulator(0), SpawnRate(1), ObstaclesIterator(0), COUNTDOWN(230, 0), END(false)
+:ObstaclesSpeed(0), XY_Aux(0), 
+ Accumulator(0), SpawnRate(1), ObstaclesIterator(0), obstacleAnimID(0)
 {
     ObstacleSize.x = 15;
     ObstacleSize.y = 15;
 
     OBSTACLES_SPAWNPOINTS.reserve(10);
-	COUNTDOWN.setString("00");
 }
 
 Zone::~Zone(){
@@ -36,13 +35,6 @@ void Zone::setZIndex(uint8_t Z){
     for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
         JAM->setDrawable_ZIndex(&OBSTACLES[i].ObstacleSprite, Z);
     }
-}
-
-void Zone::setZoneTime(uint16_t Seconds){
-    JamEngine::Instance()->setDrawable_ZIndex(&COUNTDOWN, 2);
-
-    ZONE_TIME_seconds = Seconds;
-    ZoneTimer.restart();
 }
 
 void Zone::setSpawnAreaAndDivisions(float From, float To, float Aux, uint8_t Divisions){
@@ -99,12 +91,11 @@ void Zone::setObstaclesSize(float W, float H){
 void Zone::setObstaclesTexture(SDL_Texture* Texture){
     oTexture = Texture;
     
-}
+}obstacleAnimID
 */
 
 void Zone::setObstaclesAnim(uint8_t anim){
     obstacleAnimID = anim;
-    
 }
 
 
@@ -129,6 +120,7 @@ void Zone::setObstacleInitialAndMaxVelocity(float Initial, float MAX){
 
     math::Vector2f Speed(X_AXIS*Initial, Y_AXIS*Initial);
 
+    // std::cout << "SPEED " << Speed.x << ", " << Speed.y << std::endl;
     for(uint8_t i = 0; i < OBSTACLES.size(); ++i) {
         OBSTACLES[i].setObstacleSpeed(Speed, MAX);
     }
@@ -137,60 +129,32 @@ void Zone::setObstacleInitialAndMaxVelocity(float Initial, float MAX){
 
 void Zone::FixedUpdate(){
 
-    if(END) {
- 
-        return;
-    };
-
     float dt = ZoneTimer.restart().asSeconds();
-    ZoneElapsedTime += dt;
+
     Accumulator += dt;
 
-    if(ZoneElapsedTime > ZONE_TIME_seconds){
-        // ALERT_TARGET->queryAlert(AssetManager::Instance()->getTexture(POPUP), 100, 100, 150, 151, 3, 0.25);
-        StateMachine::Instance()->setState(new sScore);
-        END = true;
-    }
-
-    int CD = ZONE_TIME_seconds-ZoneElapsedTime;
-
-    if(CD != ZONE_LAST_TIME){
-        Countdown();
-        ZONE_LAST_TIME  = CD;
-    }
     SpawnHandler();
     ObstaclesUpdate();
-
 }
 
-void Zone::Countdown(){
-    int CD = ZONE_TIME_seconds-ZoneElapsedTime;
-    std::string Countdown = to_string(CD);
-    
-    if(CD < 10)
-        Countdown = "0"+Countdown;
-  
-
-	COUNTDOWN.setString(Countdown);
-}
+#include <iostream>
 
 void Zone::SpawnHandler(){
 
     if(Accumulator > SpawnRate){
         Accumulator -= SpawnRate;
-
         Obstacle& Target = OBSTACLES[ObstaclesIterator];
         Target.alive = true;
         Target.ObstacleSprite.Visibility = true;
 
-        int random = rand() % (OBSTACLES_SPAWNPOINTS.size());
+        int random = rand() % OBSTACLES_SPAWNPOINTS.size();
         float COORD = OBSTACLES_SPAWNPOINTS[random];
 
         if(Direction == Top2Bottom || Direction == Bottom2Top){
+            // std::cout << "random [" << random << "] " << COORD << ", " << XY_Aux << std::endl;
             Target.Position = math::Vector2f(COORD , XY_Aux);
         }
         else{
-            // std::cout << "random [" << random << "] " << XY_Aux << ", " << COORD << std::endl;
             Target.Position = math::Vector2f(XY_Aux, COORD);
         }
         
@@ -200,7 +164,6 @@ void Zone::SpawnHandler(){
         Target.ObstacleSprite.setSize(ObstacleSize.x, ObstacleSize.y);
         //Target.ObstacleSprite.setTexture(oTexture);
         Target.ObstacleSprite.setAnimation(this->obstacleAnimID);
-
 
         ++ObstaclesIterator;
         if(ObstaclesIterator >= OBSTACLES.size()) 
@@ -212,7 +175,7 @@ void Zone::ObstaclesUpdate(){
     for(uint8_t i = 0; i < OBSTACLES.size(); ++i){
         OBSTACLES[i].savePreviousState();
 
-        OBSTACLES[i].FixedUpdate(ZoneElapsedTime/ZONE_TIME_seconds);
+        OBSTACLES[i].FixedUpdate(0);
         
         OBSTACLES[i].saveCurrentState();
     }
@@ -250,6 +213,9 @@ void Zone::checkPlayerCollisions(math::Vector2f PlayerPosition, math::Vector2f P
           ) {
               CurrentObstacle.alive = false;
               CurrentObstacle.ObstacleSprite.Visibility = false;
+
+                StateMachine::Instance()->setState(new sScore);
+
             }
     }
 }
@@ -258,4 +224,8 @@ void Zone::CleanZone() {
         OBSTACLES[i].alive = false;
         OBSTACLES[i].ObstacleSprite.Visibility = false;
     }
+}
+
+void Zone::resetClock(){
+    ZoneTimer.restart();
 }

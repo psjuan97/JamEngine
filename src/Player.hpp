@@ -18,6 +18,10 @@ class Player : public Interpolable_Object {
         void Init(Zone*, Zone*);
 
         void FixedUpdate();
+        void SetPosition(float X, float Y);
+        inline void setBounds(uint8_t id){
+            BoundsID = id;
+        };
 
         virtual void Interpolate(float tick);
 
@@ -44,6 +48,12 @@ class Player : public Interpolable_Object {
 
         std::array<Button2Func, 2> BUTTON_MAPPING;
 
+        struct Bounds{
+            float minX, maxX;
+        };
+
+        Bounds ZONE_X_BOUNDS[3];
+
        // Sprite PlayerSprite;
         AnimatedSprite PlayerSprite;
         
@@ -51,6 +61,8 @@ class Player : public Interpolable_Object {
 
         Zone* leftArea;
         Zone* rightArea;
+
+        uint8_t BoundsID;
 };
 
 #endif
