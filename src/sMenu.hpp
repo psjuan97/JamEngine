@@ -16,7 +16,7 @@ class sMenu : public State {
         virtual void Exit();
 
     private:
-        eText PRESS_STARTO;
+        //eText PRESS_STARTO;
         Sprite MenuStartSprite;
 };
 
