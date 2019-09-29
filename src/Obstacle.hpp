@@ -3,6 +3,9 @@
 
 #include "Interpolable_Object.hpp"
 #include "engineModules/Sprite.hpp"
+#include "engineModules/Animation.hpp"
+#include "engineModules/AnimatedSprite.hpp"
+
 #include "enumObstacleDir.hpp"
 
 
@@ -29,7 +32,7 @@ class Obstacle : public Interpolable_Object {
 
     // VARIABLES
     private:
-        Sprite ObstacleSprite;
+        AnimatedSprite ObstacleSprite;
         float BaseSpeed;
         float SpeedBoostPercentage;
         ObstaclesDirection Direction;

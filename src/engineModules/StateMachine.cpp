@@ -37,6 +37,7 @@ void StateMachine::ProcessChanges(){
     CurrentState = QueriedState;
     CurrentState->Init();
     QueriedState = nullptr;
+    //CurrentState->Update();
     CurrentUpd = &StateMachine::UpdateCurrentState;
 }
 

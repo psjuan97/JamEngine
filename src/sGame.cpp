@@ -30,13 +30,29 @@ void sGame::queryAlert(SDL_Texture* T, float X, float Y, float W, float H, float
 
 void sGame::Init(){
     AssetManager* Assets = AssetManager::Instance();
+        std::cout << "starting loading all assetsd" << std::endl;
+
     Assets->loadInitialAssets();
+
+
+
+    cover.setTexture(Assets->getTexture(COVER));
+    cover.setX(0);
+    cover.setY(0);
+    cover.setSize(480,272);
+
+    JamEngine::Instance()->setDrawable_ZIndex(&cover,9);
 
 	LeftArea.setZoneBackground(Assets->getTexture(WHITE_BACKGROUND), 0, 0, 240, 272);
     LeftArea.setObstaclesSize(15, 15);
     LeftArea.setObstaclesDirection(ObstaclesDirection::Top2Bottom);
-    LeftArea.setObstaclesTexture(Assets->getTexture(BLACKCUBE));
+    //LeftArea.setObstaclesTexture(Assets->getTexture(GREENCUBE));
+    RightArea.setObstaclesAnim(GREENENEMYANIM);
+    std::cout << "GREEN ANIM LOADING" << std::endl;
     LeftArea.setObstacleInitialAndMaxVelocity(3, 15);
+    std::cout << "setObstacleInitialAndMaxVelocity " << std::endl;
+
+    
     LeftArea.setSpawnAreaAndDivisions(0, 242, -20, 10);
     LeftArea.setSpawnRate(0.25);
     LeftArea.setZoneTime(30);
@@ -45,7 +61,8 @@ void sGame::Init(){
 	RightArea.setZoneBackground(Assets->getTexture(BLACK_BACKGROUND), 240, 0, 240, 272);
     RightArea.setObstaclesSize(15, 15);
     RightArea.setObstaclesDirection(ObstaclesDirection::Bottom2Top);
-    RightArea.setObstaclesTexture(Assets->getTexture(WHITECUBE));
+    //RightArea.setObstaclesTexture(Assets->getTexture(PINKCUBE));
+    RightArea.setObstaclesAnim(PINKENEMYANIM);
     RightArea.setObstacleInitialAndMaxVelocity(10, 20);
     RightArea.setSpawnAreaAndDivisions(240, 480, 292, 5);
     RightArea.setSpawnRate(0.5);
@@ -73,7 +90,7 @@ void sGame::AlertUpdate(){
 }
 
 void sGame::NormalUpdate(){
-
+std::cout << "UPDATE" << std::endl;
     dt = masterClock.restart().asSeconds();
 
     SCORE += dt * 10;
@@ -88,14 +105,19 @@ void sGame::NormalUpdate(){
 
         HERO.FixedUpdate();
       
+
+
+
         GameHandler.ShowWarning(HERO.getPositionX(), LeftArea, RightArea );
         setHeroToZone();
 
-        LeftArea.FixedUpdate();
-        RightArea.FixedUpdate();
+
         
         ActiveZone->checkPlayerCollisions(HERO.getPosition(), HERO.getSize());
         HERO.saveCurrentState();
+
+        LeftArea.FixedUpdate();
+        RightArea.FixedUpdate();
 
         accumulator -= 1/UPDATE_STEP;
     }
@@ -106,6 +128,7 @@ void sGame::NormalUpdate(){
     HERO.Interpolate(tick);
     LeftArea.InterpolateObstacles(tick);
     RightArea.InterpolateObstacles(tick);
+    JamEngine::Instance()->Update();
 }
 
 void sGame::Exit(){

@@ -10,7 +10,7 @@ Sprite::Sprite()
     Size_Pos.x = 0;
     Size_Pos.y = 0;
 
-    slice = &Size_Pos;
+    slice = nullptr;
 
 }
 
@@ -48,6 +48,7 @@ void Sprite::setSize(float w, float h){
 }
 
 void Sprite::Draw(){
-    JamEngine::Instance()->drawTexture(Texture, nullptr, &Size_Pos);
+
+    JamEngine::Instance()->drawTexture(Texture, slice, &Size_Pos);
 
 }

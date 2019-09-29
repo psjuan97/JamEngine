@@ -6,7 +6,7 @@
 #include <vector>
 #include <SDL2/SDL.h>
 class Animation {
-private:
+public:
     std::vector<SDL_Rect> _frames;
     SDL_Texture* texture;
     eTime _duration;
@@ -15,6 +15,7 @@ private:
 public:
     Animation( uint8_t textureID, int nframes,
         eTime const& duration, bool looping);
+
 
     inline eTime getDuration(){
         return _duration;

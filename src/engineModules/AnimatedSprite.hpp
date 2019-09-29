@@ -21,8 +21,9 @@ class AnimatedSprite : public Sprite {
         int _indexClip = 0;
         eClock clock;
     public:
-    void setAnimation(uint8_t id);
-    void Draw();
+        AnimatedSprite();
+        void setAnimation(uint8_t id);
+        void Draw();
 
 
 
