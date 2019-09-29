@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "JamEngine.hpp"
-
+#include <random>
 static int exitRequest = 0;
 
 
@@ -46,9 +46,13 @@ int setupExitCallback() {
 ////////////////////////////////////////////////
 
 
+std::default_random_engine generator;
+std::uniform_int_distribution<int> distribution(1,3);
+
 JamEngine::JamEngine()
 :Renderer(nullptr),GameController(nullptr),Window(nullptr),camera(SCREEN_WIDTH,SCREEN_HEIGHT)
 {
+buzz = 0;
 
 
 }
@@ -59,7 +63,7 @@ JamEngine::~JamEngine(){
     endAudio();
     
     SDL_DestroyWindow(Window);
-    TTF_Quit();
+    TTF_Quit(); 
    // Mix_CloseAudio();
     SDL_Quit();
 }
@@ -118,22 +122,32 @@ bool JamEngine::Init() {
 }
 
 
-void JamEngine::drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst){
 
+void JamEngine::drawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst){
     SDL_Rect dstrect;
-    dstrect.x =   static_cast<int>(  (dst->x - ( (int)camera.getCenter().x - (int)camera.size_x/2) ) ) ;
-    dstrect.y =   static_cast<int>(  (dst->y - ( (int)camera.getCenter().y - (int)camera.size_y/2) ) ) ;
-    dstrect.w =   static_cast<int> (dst->w);
-    dstrect.h =   static_cast<int> (dst->h);
+
+        if(isBuzz){
+            buzz = distribution(generator);
+
+        }else{
+            buzz = 0;
+        }
+
+
+        dstrect.x = buzz+  static_cast<int>(  (dst->x - ( (int)camera.getCenter().x - (int)camera.size_x/2) ) ) ;
+        dstrect.y =  buzz +static_cast<int>(  (dst->y - ( (int)camera.getCenter().y - (int)camera.size_y/2) ) ) ;
+        dstrect.w = buzz+  static_cast<int> (dst->w);
+        dstrect.h = buzz+ static_cast<int> (dst->h);
+
     
-   // printf("dstrect.x %i \n", (int) dstrect.x );
-   // printf("src.x %i \n", (int) src->x );
+
+    
 
     if(src != nullptr){
-          SDL_RenderCopy(Renderer, texture, src, &dstrect);
+        SDL_RenderCopy(Renderer, texture, src, &dstrect);
 
     }else{
-            SDL_RenderCopy(Renderer, texture, nullptr, &dstrect);
+        SDL_RenderCopy(Renderer, texture, nullptr, &dstrect);
 
     }
 }
@@ -159,6 +173,11 @@ void JamEngine::Dro(){
 void JamEngine::Update(){
     //update inputs?
     //update physics?
+
+    if( buzzTimer-- == 0){
+        isBuzz = false;
+    }
+
 }
 
 bool JamEngine::isOpen(){

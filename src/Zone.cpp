@@ -95,9 +95,18 @@ void Zone::setObstaclesSize(float W, float H){
     ObstacleSize.y = H;
 }
 
+/*
 void Zone::setObstaclesTexture(SDL_Texture* Texture){
     oTexture = Texture;
+    
 }
+*/
+
+void Zone::setObstaclesAnim(uint8_t anim){
+    obstacleAnimID = anim;
+    
+}
+
 
 void Zone::setObstacleInitialAndMaxVelocity(float Initial, float MAX){
 
@@ -166,6 +175,7 @@ void Zone::Countdown(){
 }
 
 void Zone::SpawnHandler(){
+
     if(Accumulator > SpawnRate){
         Accumulator -= SpawnRate;
 
@@ -188,7 +198,10 @@ void Zone::SpawnHandler(){
         Target.savePreviousState();
 
         Target.ObstacleSprite.setSize(ObstacleSize.x, ObstacleSize.y);
-        Target.ObstacleSprite.setTexture(oTexture);
+        //Target.ObstacleSprite.setTexture(oTexture);
+        Target.ObstacleSprite.setAnimation(this->obstacleAnimID);
+
+
         ++ObstaclesIterator;
         if(ObstaclesIterator >= OBSTACLES.size()) 
             ObstaclesIterator = 0;

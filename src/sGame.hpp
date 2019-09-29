@@ -36,6 +36,11 @@ class sGame : public State {
     public:
         //PopUp ALERT;
     private:
+        /////////////
+        /// decoracion ///
+        //////////////////
+        Sprite cover;
+
 
         //Entities
 	    Player HERO;

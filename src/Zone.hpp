@@ -3,6 +3,7 @@
 
 #include "engineModules/Sprite.hpp"
 #include "engineModules/eClock.hpp"
+
 #include "Obstacle.hpp"
 #include <cstdint>
 #include <vector>
@@ -37,7 +38,9 @@ class Zone{
         void setObstaclesDirection(ObstaclesDirection Dir);
         void setObstaclesSize(float W, float H);
         void setObstacleInitialAndMaxVelocity(float Initial, float MAX);
-        void setObstaclesTexture(SDL_Texture* Texture);
+       // void setObstaclesTexture(SDL_Texture* Texture);
+        void setObstaclesAnim(uint8_t animid);
+
         void setZIndex(uint8_t Z);
 
         ObstaclesDirection getObstacleDirection();
@@ -79,8 +82,8 @@ class Zone{
         float SpawnRate;
 
         math::Vector2f ObstacleSize;
-        SDL_Texture* oTexture;
-
+        //SDL_Texture* oTexture;
+        uint8_t obstacleAnimID;
         sGame* ALERT_TARGET;
 
         ObstaclesDirection Direction;

@@ -58,7 +58,14 @@ class JamEngine {
         void setDrawable_ZIndex(Drawable* D, uint8_t Z_Index, uint8_t Position);
         void clearAllDrawables();
         void clearZLevel(uint8_t Z_Level);
+        void setBuzz(bool buzz){
+            if(buzz){
+                buzzTimer = 10;    
+            }
 
+            isBuzz = buzz;
+
+        };
         //void printDrawablepool();
 
     private:
@@ -78,6 +85,10 @@ class JamEngine {
         SDL_Joystick* GameController ;
 
         eView camera;
+
+        int buzz;
+        bool isBuzz;
+        int buzzTimer;
 };
 
 #endif

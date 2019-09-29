@@ -3,7 +3,6 @@
 #include "engineModules/JamEngine.hpp"
 #include "ASSETS_IDs.hpp"
 
-#define PlayerAnimation1 0
 
 #define BUTTON_DOWN SDL_JOYBUTTONDOWN
 #define BUTTON_UP 1540
@@ -16,8 +15,6 @@
 #define SCREEN_HEIGHT 272
 
 Player::Player(){
-    //aSprite.setAnimation(PlayerAnimation1);
-    
 
     
     // EventManager::Instance()->registerEvent(PspCtrlButtons::LEFT, (void *)&Player::MoveLeft );
@@ -49,6 +46,9 @@ void Player::Init(Zone* lzone, Zone* rzone){
 
     Position = PlayerSprite.getPosition();
     Previous.Position = Current.Position = Position;
+    PlayerSprite.setAnimation(PlayerAnim);
+
+
 }
 
 void Player::FixedUpdate(){
@@ -86,6 +86,10 @@ void Player::CheckMovement(){
 void Player::Dash(){
     math::Vector2f AuxSpeed(SPEED.x * DASH_FACTOR, SPEED.y * DASH_FACTOR);
     Position = Position + AuxSpeed;
+
+    JamEngine::Instance()->setBuzz(true);
+
+
 }
 
 void Player::CleanArea(){

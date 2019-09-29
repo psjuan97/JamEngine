@@ -1,9 +1,7 @@
 #include "eTime.hpp"
 
 //============================= TIEMPO =============================//
-eTime::eTime() {
-    _milisecond = 0;
-}
+eTime::eTime():_milisecond(0) {}
 eTime::eTime(float sec){
     this->_milisecond = sec * 1000.0f;
 }

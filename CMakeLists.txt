@@ -29,7 +29,6 @@ find_package(SDL2_ttf REQUIRED)
 find_package(Box2D REQUIRED)
 
 find_package(tinyxml2 REQUIRED )
-find_package(SDL2_mixer REQUIRED)
 
 if(PSP)
   message(STATUS "PSP COMPILATION \n" )

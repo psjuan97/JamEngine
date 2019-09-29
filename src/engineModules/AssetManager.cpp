@@ -21,18 +21,38 @@ AssetManager::~AssetManager(){
 }
 
 void AssetManager::loadInitialAssets(){
-    // loadTexture(LOGO_PNG, "assets/logo.png");
- 	// loadTexture(BIPEAL, "assets/bipedal3.png");
 
-	// loadAnimation(AnimBipedal, BIPEAL,7,eTime(200),true);
-    loadTexture(PLAYER, "assets/Textures/Player.jpg");
-    loadTexture(BLACK_BACKGROUND, "assets/Textures/Black2.png");
-    loadTexture(WHITE_BACKGROUND, "assets/Textures/White.jpg");
-    loadTexture(BLACKCUBE, "assets/Textures/Black15x15.jpg");
-    loadTexture(WHITECUBE, "assets/Textures/White15x15.jpg");
+    
+
+    loadTexture(BLACK_BACKGROUND, "assets/Textures/background_left.png");
+    loadTexture(WHITE_BACKGROUND, "assets/Textures/background_right.png");
+
+    loadTexture(COVER, "assets/Textures/background_screen_cover.png");
+
     loadTexture(POPUP, "assets/Textures/BITCONNEEEEECT.png");
     loadTexture(WARNING, "assets/Textures/Warning.jpg");
     loadTexture(MENUSTART, "assets/Textures/MenuStart.png");
+
+    ////////////////////
+    /////// HERO ///////
+    ////////////////////
+    loadTexture(PLAYER, "assets/Textures/Cubo_verde_anim.png");
+    loadAnimation(PlayerAnim,PLAYER,4,eTime(200),true);
+
+
+    /////////////////////
+    //////Enemy Green////
+    /////////////////////
+    loadTexture(GREENCUBE, "assets/Textures/Cubo_verde_anim.png");
+    loadAnimation(GREENENEMYANIM,GREENCUBE,4,eTime(40),true);
+
+
+    ///////////////////////
+    ////// Enemy Pink /////
+    ///////////////////////
+    loadTexture(PINKCUBE, "assets/Textures/Cubo_rosa_anim.png");
+    loadAnimation(PINKENEMYANIM,PINKCUBE,4,eTime(40),true);
+
 }
 
 SDL_Texture* AssetManager::loadTexture(uint8_t ID, const char* TexturePath){

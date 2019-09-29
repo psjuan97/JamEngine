@@ -12,9 +12,7 @@
 
 EventManager::EventManager(){
 
-    // for(int i = 0;  i < MAXEvents ; i++){
-    //     callbacks[i] = nullptr;
-    // }
+
 
     for(uint8_t i = 0; i < PspCtrlButtons::PSPKEYCOUNT; ++i)
         PSP_BUTTONS_STATE[i] = false;
