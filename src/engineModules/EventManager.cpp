@@ -12,8 +12,6 @@
 
 EventManager::EventManager(){
 
-
-
     for(uint8_t i = 0; i < PspCtrlButtons::PSPKEYCOUNT; ++i)
         PSP_BUTTONS_STATE[i] = false;
 
@@ -22,6 +20,9 @@ EventManager::EventManager(){
 EventManager::~EventManager(){
 
 }
+
+
+
 
 void EventManager::launch(){
     SDL_Event event;
@@ -42,7 +43,6 @@ void EventManager::launch(){
         if(event.type == SDL_JOYAXISMOTION){
             std::cout << event.jaxis.value << std::endl;
             
-
                          //X axis motion
 							if( event.jaxis.axis == 0 )
 							{

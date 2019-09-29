@@ -38,8 +38,8 @@ void AssetManager::loadInitialAssets(){
     ////////////////////
     /////// HERO ///////
     ////////////////////
-    loadTexture(PLAYER, "assets/Textures/Cubo_verde_anim.png");
-    loadAnimation(PlayerAnim,PLAYER,4,eTime(200),true);
+    loadTexture(PLAYER, "assets/Textures/heroe_anim.png");
+    loadAnimation(PlayerAnim,PLAYER,5,eTime(200),true);
 
 
     /////////////////////
