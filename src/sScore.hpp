@@ -3,6 +3,7 @@
 
 #include "engineModules/StateMachine.hpp"
 #include "engineModules/eText.hpp"
+#include "engineModules/Sprite.hpp"
 
 class sScore : public State {
     // METHODS
@@ -19,6 +20,8 @@ class sScore : public State {
     private:
         eText FINAL_SCORE;
         eText AGAIN;
+        eText ANYKEY;
+        Sprite EndGameSprite;
 };
 
 #endif

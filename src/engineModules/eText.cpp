@@ -34,7 +34,7 @@ void eText::setString(std::string str){
         SDL_Color black = {0, 0, 0, 0};  
         SDL_Color yellow = {0, 255, 255, 0};  
 
-        SDL_Surface* surfaceMessage = TTF_RenderText_Shaded( font->getSDLFont(), str.c_str() , black, yellow); 
+        SDL_Surface* surfaceMessage = TTF_RenderText_Solid( font->getSDLFont(), str.c_str() , black); 
         if(surfaceMessage != nullptr){
             texture = SDL_CreateTextureFromSurface(Renderer, surfaceMessage); //now you can convert it into a texture
             if(texture == nullptr){
