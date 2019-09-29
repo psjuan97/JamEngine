@@ -67,6 +67,7 @@ class JamEngine {
 
         };
         //void printDrawablepool();
+        void DrawUno(uint16_t n, uint16_t p);
 
     private:
         JamEngine();

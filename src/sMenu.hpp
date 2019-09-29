@@ -18,6 +18,7 @@ class sMenu : public State {
     private:
         //eText PRESS_STARTO;
         Sprite MenuStartSprite;
+        Sprite SplashSprite;
 };
 
 #endif

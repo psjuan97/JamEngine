@@ -11,7 +11,7 @@
 #define POPUP 6
 #define MENUSTART 7
 #define COVER 8
-
+#define SPLASH 9
 
 
 

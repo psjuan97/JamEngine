@@ -168,7 +168,11 @@ void JamEngine::Dro(){
     SDL_RenderPresent(Renderer);
 }
 
-
+void JamEngine::DrawUno(uint16_t n, uint16_t p){
+    Drawable* Current = DRAWABLEPOOL[n*DRAWABLES_PER_LEVEL + p];
+    Current->Draw();
+    SDL_RenderPresent(Renderer);
+}
 
 void JamEngine::Update(){
     //update inputs?
